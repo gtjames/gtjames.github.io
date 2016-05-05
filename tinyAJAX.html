@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tiny AJAX</title>
+</head>
+<body>
+<section>
+	<div id="serverState"></div>
+	<div id="Textdiv">
+		<input type="button" value="Read a small file" onclick="getFileFromServer( '/textFile.txt', 'Textdiv', false )"/>
+	</div>
+	<div id="JSONdiv">
+		<input type="button" value="Read a JSON file" onclick="getFileFromServer( '/JSONFile.json', 'JSONdiv', true )"/>
+	</div>
+	<div id="HTMLdiv">
+		<input type="button" value="Read a HTML file" onclick="getFileFromServer( '/HTMLFile.html', 'HTMLdiv', false )"/>
+	</div>
+</section>
+
+<script>
+function getFileFromServer(url, divId, isJSON)
+{
+	//	We need an object that allows us to make requests back to our server
+	var xmlhttp = new XMLHttpRequest();
+	
+	//	This object has an attribute called onreadystatechange. 
+	//	We are going to set the value of that attribute to a pointer to a function
+	//	There are a couple of ways to do that. What I am showing here is an ANONYMOUS function
+	//	Functions are usually defined as    function thisIsMyFunction () { 'put code here' }
+	//	In this case I just say function() without a function name and then provide the code for a function
+	//	You could also have a function defined someplace in your code and set onreadystatechange = thisIsMyFunction
+	//	both work
+	xmlhttp.onreadystatechange =
+			function()
+			{	//	This code is not executed immedidaitely. It is call later when the server starts to respond.
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+					//	This method is going to serve a several kinds of requests
+					//	we are taking the 2nd and 3rd fields from the onclick request and passing them to the worked function
+					doSomethingWithTheResponse(xmlhttp.responseText, divId, isJSON);
+			//	else	// this will show us what is happening before the data arrives
+			//		document.getElementById( 'serverState' ).innerHTML += "Ready State: " + xmlhttp.readyState + "  Status: " + xmlhttp.status + "<BR>";
+			}
+	//	This is where we make our request to the server. We are passing along the URL for the file we want
+	//	You can see the name of the file we are requesting in the about HTML code.
+	//	Each button has a different file defined
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+	
+	//	some time later the above anonymous function will be called and the file will be processed
+}
+
+//	We are going to receive our file and take what we received and do something with it on our web page
+function doSomethingWithTheResponse(response, divId, isJSON) 
+{
+	//	document.getElementById( 'serverState' ).innerHTML += "<BR>";
+	//	Look back at the HTML where the onclick action was defined for each of the different buttons 
+	//	The third field is a boolean. I am using it to flag the returning file as a JSON file (true) or text (false)
+	//	If the data coming back is JSON we need to parse it. Otherwise we are just going to take it as is
+	var responseText = (isJSON) ? JSON.parse(response) : response;
+
+	//	Now we will take the text and do something with it
+	document.getElementById( divId ).innerHTML = (isJSON) ? responseText.JSONKey : responseText;
+}
+</script>
+</body>
+
+</html>
