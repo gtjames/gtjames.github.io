@@ -1,0 +1,11 @@
+name: CIT&mdash;261 Examples
+
+sass:
+  style: :nested
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"

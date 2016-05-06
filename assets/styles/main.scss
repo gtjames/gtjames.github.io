@@ -1,0 +1,210 @@
+---
+---
+
+// @import "rhythm";
+
+@mixin transform($transform...) {
+  -webkit-transform: $transform;
+     -moz-transform: $transform;
+      -ms-transform: $transform;
+          transform: $transform;
+}
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+     -moz-transition: $transition;
+          transition: $transition;
+}
+
+@mixin transition-delay($transition-delay...) {
+  -webkit-transition-delay: $transition-delay;
+     -moz-transition-delay: $transition-delay;
+          transition-delay: $transition-delay;
+}
+
+@mixin box-sizing($box-sizing) {
+  -webkit-box-sizing: $box-sizing;
+     -moz-box-sizing: $box-sizing;
+          box-sizing: $box-sizing;
+}
+
+div {
+  &#contentarea{
+    position: relative;
+    width: 100%;
+    @include transform(translate3d(0, 0, 0));
+    @include transition(transform 0.5s);
+  }
+
+  &.overlay {
+    /* overlay that covers entire page when menu is open */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    background: black;
+    z-index: 99;
+    visibility: hidden;
+    @include transition(opacity 0.5s);
+
+    label {
+      /* label of overlay that closes menu when clicked on */
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+  }
+}
+
+input[type="checkbox"] {
+  &#togglebox {
+    /* checkbox used to toggle menu state */
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+    &:checked {
+      ~ {
+        div {
+          &#contentarea {
+            margin-left: 10px;
+            @include transform(translate3d(250px, 0, 0));
+          }
+          &.overlay {
+            /* overlay state when corresponding checkbox is checked */
+            opacity: 0.6;
+            visibility: visible;
+          }
+        }
+        nav {
+          &#offcanvas-menu {
+            /* nav state when corresponding checkbox is checked */
+            @include transform(translate3d(0, 0, 0));
+            visibility: visible; /* this is for browsers that don't support CSS3 translate3d in showing the menu */
+            @include transition-delay(0s); /* No delay for applying "visibility:visible" property when menu is going from "closed" to "open" */
+            ul { /* nav state when corresponding checkbox is checked */
+              margin-top: 100px;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+label {
+  &#navtoggler {
+    /* Main label icon to toggle menu state */
+    z-index: 9;
+    display: block;
+    position: relative;
+    font-size: 8px;
+    /* change font size to change label dimensions. Leave width/height below alone */
+    width: 4em;
+    height: 2.5em;
+    top: 0;
+    left: 0;
+    text-indent: -1000px;
+    border: 0.6em solid black;
+    /* border color */
+    border-width: 0.6em 0;
+    cursor: pointer;
+
+    &::before {
+      /* inner strip inside label */
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 0.6em;
+      top: 50%;
+      margin-top: -0.3em;
+      left: 0;
+      background: black;
+      /* stripes background color. Change to match border color of parent label above */
+    }
+  }
+}
+
+nav {
+  &#offcanvas-menu {
+    /* Full screen nav menu */
+    width: 250px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    visibility: hidden; /* this is for browsers that don't support CSS3 translate3d */
+    @include transform(translate3d(-250px, 0, 0));
+    @include box-sizing(border-box);
+    background: #C1F2BC;
+    display: block;
+    position: fixed;
+    text-align: center;
+    overflow: auto;
+    /* transition settings */
+    -webkit-transition: -webkit-transform 0.5s, visibility 0s 0.5s;
+    -moz-transition: -moz-transform 0.5s, visibility 0s 0.5s;
+    transition: transform 0.5s, visibility 0s 0.5s;
+
+    label { /* Large x close button inside nav */
+      &#closex {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        text-indent: -1000px;
+        z-index: 10;
+        top: 0;
+        right: 0;
+
+        &::before, &::after { /* render large cross inside close button */
+          content: "";
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 6px;
+          background: black;
+          top: 50%;
+          margin-top: -3px;
+          @include transform(rotate(-45deg));
+        }
+
+        &::after { /* render large cross inside close button */
+          @include transform(rotate(-135deg));
+        }
+      }
+    }
+  }
+
+  a{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+  }
+
+  ul{
+    list-style: none;
+    margin-top: 200px;
+    opacity: 0;
+    padding: 0;
+    position: relative;
+    font: bold 1.5em Georgia, serif; /* use google font inside nav UL */
+    @include transition(margin-top 0.2s 0.3s, opacity 0.5s 0.3s);
+    li{
+      margin-bottom: 25px;
+      a {
+        padding: 10px;
+        border-radius: 20px;
+        &:hover {
+          background: lightblue;
+        }
+      }
+    }
+  }
+}
