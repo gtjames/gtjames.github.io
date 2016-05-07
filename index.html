@@ -2,196 +2,45 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type="text/css">
-div#contentarea {
-  position: relative;
-  width: 100%;
-  -moz-transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -moz-transition: -moz-transform 0.5s;
-  /* transition settings */
+body {
+  background-color: #F5F5F5;
+  font-color: #444444;
+  font-family: Georgia, serif; }
 
-  -webkit-transition: -webkit-transform 0.5s;
-  transition: transform 0.5s;
-}
+.open-menu, nav:target + header .close-menu {
+  font-size: 1.5em;
+  display: inline;
+  background-color: #E6E6E6;
+  padding: 1em;
+  margin-left: -7px;
+  height: 1em;
+  width: 1em; }
 
-input[type="checkbox"]#togglebox {
-  /* checkbox used to toggle menu state */
-  position: absolute;
-  left: 0;
-  top: 0;
-  visibility: hidden;
-}
+.close-menu, nav:target + header .open-menu {
+  display: none; }
 
-label#navtoggler {
-  /* Main label icon to toggle menu state */
-  z-index: 9;
-  display: block;
-  position: relative;
-  font-size: 8px;
-  /* change font size to change label dimensions. Leave width/height below alone */
-  width: 4em;
-  height: 2.5em;
-  top: 0;
-  left: 0;
-  text-indent: -1000px;
-  border: 0.6em solid black;
-  /* border color */
-  border-width: 0.6em 0;
-  cursor: pointer;
-}
-
-label#navtoggler::before {
-  /* inner strip inside label */
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 0.6em;
-  top: 50%;
-  margin-top: -0.3em;
-  left: 0;
-  background: black;
-  /* stripes background color. Change to match border color of parent label above */
-}
-
-nav#offcanvas-menu {
-  /* Full screen nav menu */
-  width: 250px;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  visibility: hidden; /* this is for browsers that don't support CSS3 translate3d */
-  -moz-transform: translate3d(-250px, 0, 0);
-  -webkit-transform: translate3d(-250px, 0, 0);
-  transform: translate3d(-250px, 0, 0);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: #C1F2BC;
-  display: block;
+nav {
+  width: 0;
+  overflow: hidden;
   position: fixed;
-  text-align: center;
-  overflow: auto;
-  -moz-transition: -moz-transform 0.5s, visibility 0s 0.5s;
-  /* transition settings */
-  -webkit-transition: -webkit-transform 0.5s, visibility 0s 0.5s;
-  transition: transform 0.5s, visibility 0s 0.5s;
-}
-
-nav#offcanvas-menu label#closex{ /* Large x close button inside nav */
-  width: 50px;
-  height: 50px;
-	overflow: hidden;
-  display: block;
-  position: absolute;
-  cursor: pointer;
-	text-indent: -1000px;
-  z-index: 10;
   top: 0;
-  right: 0;
-}
+  left: 0;
+  height: 100%;
+  transition: width 0.3s ease;
+  background-color: #E6E6E6; }
+  nav a {
+    display: block; }
+  nav:target {
+    width: 20%; }
+    nav:target + header {
+      width: 80%; }
 
-nav#offcanvas-menu label#closex::before, nav label#closex::after{ /* render large cross inside close button */
-  content: "";
-  display: block;
-  position: absolute;
+header {
   width: 100%;
-  height: 6px;
-  background: black;
-  top: 50%;
-  margin-top: -3px;
-  -ms-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-nav#offcanvas-menu label#closex::after{ /* render large cross inside close button */
-  -ms-transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-  transform: rotate(-135deg);
-}
-
-nav#offcanvas-menu a{
-	text-decoration: none;
-  color: black;
-  text-transform: uppercase;
-}
-
-nav#offcanvas-menu ul{
-  list-style: none;
-  margin-top: 200px;
-	opacity: 0;
-  padding: 0;
-  position: relative;
-  font: bold 1em 'Bitter', sans-serif; /* use google font inside nav UL */
-  -moz-transition: margin-top 0.2s 0.3s, opacity 0.5s 0.3s; /* transition settings */
-  -webkit-transition: margin-top 0.2s 0.3s, opacity 0.5s 0.3s;
-  transition: margin-top 0.2s 0.3s, opacity 0.5s 0.3s;
-}
-
-nav#offcanvas-menu ul li{
-  margin-bottom: 25px;
-}
-
-nav#offcanvas-menu ul li a{
-  padding: 10px;
-  border-radius: 20px;
-}
-
-nav#offcanvas-menu ul li a:hover{
-  background: lightblue;
-}
-
-div.overlay {
-	/* overlay that covers entire page when menu is open */
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	opacity: 0;
-	background: black;
-	z-index: 99;
-	visibility: hidden;
-	transition: opacity 0.5s; /* transition settings */
-}
-
-div.overlay label {
-	/* label of overlay that closes menu when clicked on */
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
-
-input[type="checkbox"]#togglebox:checked ~ div#contentarea {
-  margin-left: 10px;
-  -moz-transform: translate3d(250px, 0, 0);
-  -webkit-transform: translate3d(250px, 0, 0);
-  transform: translate3d(250px, 0, 0);
-}
-
-input[type="checkbox"]#togglebox:checked ~ nav#offcanvas-menu {
-  /* nav state when corresponding checkbox is checked */
-  -moz-transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  visibility: visible; /* this is for browsers that don't support CSS3 translate3d in showing the menu */
-  -moz-transition-delay: 0s; /* No delay for applying "visibility:visible" property when menu is going from "closed" to "open" */
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s;
-}
-
-input[type="checkbox"]#togglebox:checked ~ nav#offcanvas-menu ul{ /* nav state when corresponding checkbox is checked */
-	margin-top: 100px;
-	opacity: 1;
-}
-
-input[type="checkbox"]#togglebox:checked ~ div.overlay{ /* overlay state when corresponding checkbox is checked */
-	opacity: 0.6;
-	visibility: visible;
-}
+  float: right;
+  transition: width 0.3s ease; }
+  header a {
+    text-decoration: none; }
 </style>
 </head>
 <body>
