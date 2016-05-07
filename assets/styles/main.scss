@@ -59,11 +59,14 @@ input[type="checkbox"] {
         }
         nav {
           &#offcanvas-menu {
+            /* fade out canvas when showing off canvas menu */
             /* nav state when corresponding checkbox is checked */
             @include transform(translate3d(0, 0, 0));
             visibility: visible; /* this is for browsers that don't support CSS3 translate3d in showing the menu */
             @include transition-delay(0s); /* No delay for applying "visibility:visible" property when menu is going from "closed" to "open" */
-            ul { /* nav state when corresponding checkbox is checked */
+            ul {
+              /* show menu items when off canvas menu is open */
+              /* nav state when corresponding checkbox is checked */
               margin-top: 100px;
               opacity: 1;
             }

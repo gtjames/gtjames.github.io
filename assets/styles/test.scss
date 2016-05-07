@@ -1,0 +1,67 @@
+---
+---
+@import "variables";
+@import "mixins";
+
+body {
+  background-color: $background-color;
+  font-color: $text-color;
+  font-family: $text-font;
+}
+
+%show-menu {
+  font-size: 1.5em;
+  display: inline;
+  background-color: $secondary-background-color;
+  padding: 1em;
+  margin-left: -7px;
+  height: 1em;
+  width: 1em;
+}
+
+%hide-menu {
+  display: none;
+}
+
+.open-menu {
+  @extend %show-menu;
+}
+
+.close-menu {
+  @extend %hide-menu;
+}
+
+nav {
+  width: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: width 0.3s ease;
+  background-color: $secondary-background-color;
+  a {
+    display: block;
+  }
+  &:target {
+    width: 20%;
+    + header {
+      width: 80%;
+      .open-menu {
+        @extend %hide-menu;
+      }
+      .close-menu {
+        @extend %show-menu;
+      }
+    }
+  }
+}
+
+header {
+  width: 100%;
+  float: right;
+  transition: width 0.3s ease;
+  a {
+    text-decoration: none;
+  }
+}
