@@ -125,7 +125,7 @@ nav#offcanvas-menu ul{
 	opacity: 0;
   padding: 0;
   position: relative;
-  font: bold 1.5em 'Bitter', sans-serif; /* use google font inside nav UL */
+  font: bold 1em 'Bitter', sans-serif; /* use google font inside nav UL */
   -moz-transition: margin-top 0.2s 0.3s, opacity 0.5s 0.3s; /* transition settings */
   -webkit-transition: margin-top 0.2s 0.3s, opacity 0.5s 0.3s;
   transition: margin-top 0.2s 0.3s, opacity 0.5s 0.3s;
@@ -195,15 +195,6 @@ input[type="checkbox"]#togglebox:checked ~ div.overlay{ /* overlay state when co
 </style>
 </head>
 <body>
-<details>
-<summary>Some Magazines of Note</summary>
-<ul>
-<li><cite>Bird Watchers Digest</cite></li>
-<li><cite>Rowers Weekly</cite></li>
-<li><cite>Fishing Monthly</cite></li>
-</ul>
-
-</details>
 	<input type="checkbox" id="togglebox" />
 	<div class="overlay"><label for="togglebox"></label></div>
 
@@ -214,11 +205,5 @@ input[type="checkbox"]#togglebox:checked ~ div.overlay{ /* overlay state when co
 		<li><a href="/ls_json.html">Local Storage and JSON</a></li>
 		</ul>
 	</nav>
-
-	<div id="contentarea">
-		<label for="togglebox" id="navtoggler">Menu</label>
-		Some body content here
-		some body content here
-	</div>
 </body>
 </html>
