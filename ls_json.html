@@ -1,0 +1,141 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>A little demonstation on Local Storage</title>
+</head>
+<body>
+I am not going to spend anytime on the user interface. This is not a demonstration on UI<p>
+classData	<div id="classData">classData</div><p>
+instantData	<div id="instantData">instantData</div><p>
+strData		<div id="strData">strData</div><p><p>
+dump data from one of the objects
+<div id="dump"></div>
+<script>
+
+//	Start by removing these strings from localStorage
+localStorage.removeItem('classData');
+localStorage.removeItem('strData');
+localStorage.removeItem('instantData');
+
+/*	Create an object that is going to hold an array myClasses: [] and just boolean variable enrolled:true */
+var classData = {
+  'myClasses': [],
+  'enrolled': true
+};
+
+/*	We are going create three identical objects
+		classData		This is a JSON object 
+						There is the myClasses Array with two items in the array
+						and three members of each item
+*/
+classData.myClasses.push({ 'classId': 'CIT-261', 'classTitle': 'Mobile App Dev', 'difficulty': 'medium' });
+classData.myClasses.push({ 'classId': 'CIT-325', 'classTitle': 'Database Administration', 'difficulty': 'hard' });
+
+/*	
+		instantData		This is also a JSON object
+						There is the myClasses Array with two items in the array
+						and three members of each item
+*/
+var instantData	=	{
+						"myClasses":
+						[
+							{
+								"classId":		"CIT-261",
+								"classTitle":	"Mobile App Dev",
+								"difficulty":	"medium"
+							},
+							{
+								"classId":		"CIT-325",
+								"classTitle":	"Database Administration",
+								"difficulty":	"hard"
+							}
+						],
+						"enrolled":true
+					};
+
+/*
+			instantData and classData are absolutely the same. We just got there a little differently
+			If you are using a debugger you can inspect the two variables
+			BUT this is a demonstration of local storage and not JSON
+			someone else can teach that in the future
+*/
+
+/*	
+		strData			This is just a string object
+						I have 'unwound' the string so that it 'looks' like the instantData variable.
+						but it is actually just a long string. 
+*/
+var	strData		=	'{'														+
+						'"myClasses":'										+
+						'['													+
+							'{'												+
+								'"classId":		"CIT-261",'					+
+								'"classTitle":	"Mobile App Dev",'			+
+								'"difficulty":	"medium"'					+
+							'},'											+
+							'{'												+
+								'"classId":		"CIT-325",'					+
+								'"classTitle":	"Database Administration",'	+
+								'"difficulty":	"hard"'						+
+							'}'												+
+						 '],'												+
+						 '"enrolled":true'									+
+					'}';
+
+	/*
+		Let's put our data into local storage
+			classData 	is a JSON object so it needs to be stringified
+			instantData is a JSON object so it needs to be stringified
+			strData 	is already a string it can go into local storage 'as is'
+	*/
+localStorage.setItem('classData',	JSON.stringify(classData));
+localStorage.setItem('instantData', JSON.stringify(instantData));
+localStorage.setItem('strData',						strData);				//	This is already a string
+
+localStorage.setItem('Z-Field', "Hey this isn't really that hard");			//	just a simple string 
+
+/*		if you are in a browser debugger, stop right here and inspect the local storage.
+		each of the strings should look the same.
+		The strData is going to look different only in the use of whitespace. All the data is the same
+*/
+/*
+		Once the data is in local storage it is frozen.
+		You probably want to do something with it in your application
+		So you need to pull it out
+*/
+var restoredClassData	= JSON.parse(localStorage.getItem('classData'));
+var restoredInstantData = JSON.parse(localStorage.getItem('instantData'));
+var restoredStrData		= 			 localStorage.getItem('strData');
+
+/*
+		JSON.stringify() will convert the string into a JSON object
+		These two code blocks do the very same thing. 
+		code block B just does it all in one line of code
+		
+	code block A	
+		var strInstantData = localStorage.getItem('instantData');
+		var restoredInstantData = JSON.parse(strInstantData);
+
+	code block B
+		var restoredInstantData = JSON.parse(localStorage.getItem('instantData'));
+*/
+
+/*
+	Here we'll just take the data from local storage and pop it into different fields on the screen
+*/
+document.getElementById("classData").innerHTML		=	localStorage.getItem('classData')
+document.getElementById("instantData").innerHTML	=	localStorage.getItem('instantData')
+document.getElementById("strData").innerHTML		=	localStorage.getItem('strData')
+
+/*
+	Here we will pull data from one of the JSON strings and display the individual fields.
+*/
+var vclassData = document.getElementById("dump");
+vclassData.innerHTML = "";
+for (i = 0; i < restoredClassData.myClasses.length; i++)
+	vclassData.innerHTML += restoredClassData.myClasses[i].classId + ":" + restoredClassData.myClasses[i].classTitle + "<p>";
+
+</script>
+</body>
+
+</html>
