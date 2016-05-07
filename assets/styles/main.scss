@@ -1,31 +1,10 @@
 ---
 ---
+@import "variables";
+@import "mixins";
 
-// @import "rhythm";
-
-@mixin transform($transform...) {
-  -webkit-transform: $transform;
-     -moz-transform: $transform;
-      -ms-transform: $transform;
-          transform: $transform;
-}
-
-@mixin transition($transition...) {
-  -webkit-transition: $transition;
-     -moz-transition: $transition;
-          transition: $transition;
-}
-
-@mixin transition-delay($transition-delay...) {
-  -webkit-transition-delay: $transition-delay;
-     -moz-transition-delay: $transition-delay;
-          transition-delay: $transition-delay;
-}
-
-@mixin box-sizing($box-sizing) {
-  -webkit-box-sizing: $box-sizing;
-     -moz-box-sizing: $box-sizing;
-          box-sizing: $box-sizing;
+body {
+  font-family: $text-font;
 }
 
 div {
@@ -108,8 +87,7 @@ label {
     top: 0;
     left: 0;
     text-indent: -1000px;
-    border: 0.6em solid black;
-    /* border color */
+    border: 0.6em solid black; // border color
     border-width: 0.6em 0;
     cursor: pointer;
 
@@ -123,7 +101,7 @@ label {
       top: 50%;
       margin-top: -0.3em;
       left: 0;
-      background: black;
+      background: $text-color;
       /* stripes background color. Change to match border color of parent label above */
     }
   }
@@ -139,8 +117,8 @@ nav {
     z-index: 100;
     visibility: hidden; /* this is for browsers that don't support CSS3 translate3d */
     @include transform(translate3d(-250px, 0, 0));
-    @include box-sizing(border-box);
-    background: #C1F2BC;
+    box-sizing: border-box;
+    background: $secondary-background-color;
     display: block;
     position: fixed;
     text-align: center;
@@ -184,8 +162,9 @@ nav {
 
   a{
     text-decoration: none;
-    color: black;
+    color: $text-color;
     text-transform: uppercase;
+    line-height: 2;
   }
 
   ul{
@@ -194,7 +173,7 @@ nav {
     opacity: 0;
     padding: 0;
     position: relative;
-    font: bold 1.5em Georgia, serif; /* use google font inside nav UL */
+    font: bold 1.5em $sans-serif-font; /* use different font inside nav UL */
     @include transition(margin-top 0.2s 0.3s, opacity 0.5s 0.3s);
     li{
       margin-bottom: 25px;
@@ -202,7 +181,7 @@ nav {
         padding: 10px;
         border-radius: 20px;
         &:hover {
-          background: lightblue;
+          background: $tertiary-color;
         }
       }
     }
