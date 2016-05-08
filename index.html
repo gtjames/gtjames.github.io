@@ -1,94 +1,12 @@
-<<<<<<< HEAD
-<!doctype html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type="text/css">
-body {
-  background-color: #F5F5F5;
-  font-color: #444444;
-  font-family: Georgia, serif; }
-
-.open-menu, nav:target + header .close-menu {
-  font-size: 1.5em;
-  display: inline;
-  background-color: #E6E6E6;
-  padding: 1em;
-  margin-left: -7px;
-  height: 1em;
-  width: 1em; }
-
-.close-menu, nav:target + header .open-menu {
-  display: none; }
-
-nav {
-  width: 0;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  transition: width 0.3s ease;
-  background-color: #E6E6E6; }
-  nav a {
-    display: block; }
-  nav:target {
-    width: 20%; }
-    nav:target + header {
-      width: 80%; }
-
-header {
-  width: 100%;
-  float: right;
-  transition: width 0.3s ease; }
-  header a {
-    text-decoration: none; }
-</style>
-</head>
-<body>
-		<ul>
-		<li><a href="/AJAX/tinyAJAX.html">AJAX</a></li>
-		<li><a href="/LocalStorage/ls_json.html">Local Storage and JSON</a></li>
-		</ul>
-	<input type="checkbox" id="togglebox" />
-	<div class="overlay"><label for="togglebox"></label></div>
-
-	<nav id="offcanvas-menu">
-		<label for="togglebox" id="closex">Close</label>
-		<ul>
-		<li><a href="/AJAX/tinyAJAX.html">AJAX</a></li>
-		<li><a href="/LocalStorage/ls_json.html">Local Storage and JSON</a></li>
-		</ul>
-	</nav>
-</body>
-</html>
-=======
 ---
 ---
-<input type="checkbox" id="togglebox"/>
-
-<div class="overlay"><label for="togglebox"></label></div>
-
-<nav id="offcanvas-menu">
-  <label for="togglebox" id="closex">Close</label>
-  <ul>
-    <li><a href="{{ site.github.url }}/tinyAJAX.html">AJAX</a></li>
-    <li><a href="{{ site.github.url }}/ls_JSON.html">Local Storage and JSON</a></li>
-  </ul>
+<nav id="main-navigation">
+  <a href="{{ site.github.url }}/AJAX/tinyAJAX.html">AJAX</a>
+  <a href="{{ site.github.url }}/AJAX/ls_JSON.html">Local Storage and JSON</a>
 </nav>
 
-<div id="contentarea">
-  <label for="togglebox" id="navtoggler">Menu</label>
-  <p>Some body content here</p>
-  <p>Some body content here</p>
-</div>
-
-<h1><code>&lt;details&gt;</code></h1>
-<details>
-  <summary>Some Magazines of Note</summary>
-  <ul>
-    <li><cite>Bird Watchers Digest</cite></li>
-    <li><cite>Rowers Weekly</cite></li>
-    <li><cite>Fishing Monthly</cite></li>
-  </ul>
-</details>
->>>>>>> dev
+<header>
+  <a href="#main-navigation" class="open-menu">&#9776;</a>
+  <a href="#" class="close-menu">&times;</a>
+  <h1>{{ site.name }}</h1>
+</header>
