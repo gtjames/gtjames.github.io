@@ -1,0 +1,25 @@
+//////////////////////
+// COLORS           //
+//////////////////////
+
+// Color definitions
+$primary-color: #F5F5F5;
+$secondary-color: #E6E6E6;
+$tertiary-color: lightblue;
+
+// Font colors
+$text-color: #444444;
+$heading-color: $text-color;
+
+// Background colors
+$background-color: $primary-color;
+$secondary-background-color: $secondary-color;
+
+//////////////////////
+// FONTS            //
+//////////////////////
+$serif-font: Georgia, serif;
+$sans-serif-font: Helvetica, Arial, sans-serif;
+
+$text-font: $serif-font;
+$heading-font: $sans-serif-font;
