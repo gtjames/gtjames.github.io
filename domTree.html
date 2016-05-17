@@ -1,0 +1,129 @@
+<HTML id="myHtml">
+<HEAD>
+<TITLE>DOM Test</TITLE>
+<STYLE id=styleID>
+<!--
+  body 
+  {
+	font-size: 1em;
+  }
+  #CellG
+  {
+  	background-color: purple;
+  }
+//-->
+</style>
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="/js/dom.js"></SCRIPT>
+</HEAD>
+
+<BODY id="myhtml2">
+<H1>This is a test page for DOM traversal.</H1>
+<table id='myTable' bgcolor=lightblue border="1">
+  <tr id="Row1">
+    <td id="CellA">Cell <b>A<br>This is a bold</b> text</td>
+    <td id="CellB">
+      <font face="Arial Black" color="#FF0000">Cell B<br></font>
+    <i><strong>This is a Bold Italic Text</strong></i>
+    </td>
+    <td ID="CellC" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" >
+      <form>
+        <SPAN>Cell C<br>
+        Form Test (the buttons don't do anything)<br>
+        <br>
+        </SPAN><input type="radio" value="V1" checked name="R1">
+        <input type="submit" value="Submit" name="B1">
+        <input type="reset" value="Reset" name="B2">
+      </form>
+    </td>
+  </tr>
+  <tr id="Row2" bgcolor=yellow>
+    <td id="CellD" bgcolor=green>Cell D
+      <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+      </ul>
+    </td>
+    <td ID="CellE" bgcolor=orange>Cell E
+      <ol>
+        <li>One</li>
+        <li ID="ElementE1">Two <b>(ElementlE1)</b>
+          <ul>
+            <li>TwoA</li>
+            <li>TwoB</li>
+          </ul>
+        </li>
+        <li>Three</li>
+        <li>Four<br>
+          <img border="0" src="/images/BYUI.jpg" width="29" height="29"></li>
+        <li>Five</li>
+      </ol>
+    </td>
+    <td ID="CellF">
+      <h1>Cell F (H1)</h1>
+      <p>Subtables</p>
+      <table width="100%" bgcolor="#CCCCFF" border="1">
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <table width="100%" bgcolor="#FFFFCC" border="2">
+              <tr>
+                <td width="50%">
+                  <table border="1" width="100%" bgcolor="#0000FF">
+                    <tr>
+                      <td width="100%">&nbsp;</td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="50%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="50%">&nbsp;</td>
+                <td width="50%">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr id="Row3">
+    <td ID="CellG">Cell G
+      <h1>H1</h1>
+      <h2>H2</h2>
+      <h3>H3</h3>
+      <h4>H4</h4>
+      <pre>PRE</pre>
+    </td>
+    <td ID="CellH"><font color="#FF0000"><b>Cell H<br>
+    </b></font><img border="0" src="/images/BYUI.jpg" width="102" height="103"></td>
+    <td ID="CellI" width="31%">Cell I&nbsp;</td>
+  </tr>
+</table>
+<script id="scriptID">
+var elements = document.getElementsByTagName("td");
+for (var i = 0; i<elements.length; i++ )
+{
+	elements[i].addEventListener("click",function(){
+			printDOMTree(this);
+		});
+}
+
+</script>
+
+<p>Enter an element ID (CellA...CellI, ElementE1, Row1,Row2,myTable,myHtml)
+<p>Click the button to see the DOM tree:
+<input type="text" value="CellA" id="CellID"/>
+<input ID="inp" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" type="submit" value="Submit"> </p>
+
+<p>(C) F. Permadi<a href="mailto:permadi@permadi.com"><br>
+permadi@permadi.com</a><br>
+</p>
+
+</BODY>
+</HTML>
+
