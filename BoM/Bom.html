@@ -15,7 +15,7 @@
     tr:nth-child(even)  {   background-color: #dddddd;      }
     .ATOZ               {   background-color: lightyellow   }
     .ZTOA               {   background-color: lightblue     }
-    .special            {   background-color: lightgreen    }
+    .special            {   background-color: lightyellow    }
 
 </style>
 
@@ -86,11 +86,12 @@
                     "</TR>";
                 var row = 1;
                 for (var word in allWords) {
+                    var special = isSpecial(word, specialWords);
                     tableList += "<TR>"+
                                     "<TD>" + row++ + "</TD>"+
-                                    "<TD class='" + isSpecial(word, specialWords) + "'>" + word + "</TD>"+
-                                    "<TD>" + allWords[word] + "</TD>"+
-                                    "<TD>" + ((isSpecial(word, specialWords) == "special") ? word : "") + "</TD>" +
+                                    "<TD class='" + special + "'>" + word + "</TD>"+
+                                    "<TD class='" + special + "'>" + allWords[word] + "</TD>"+
+                                    "<TD class='" + special + "'>" + special == "special") ? word : "") + "</TD>" +
                                 "</TR>";
                 }
                 document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
