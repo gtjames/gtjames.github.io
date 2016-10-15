@@ -82,6 +82,7 @@
                     "<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
                     "<th onclick='callSort(this, 1)'><a href='#'>Word</a></th>" +
                     "<th onclick='callSort(this, 2)'><a href='#'>Frequency</a></th>" +
+                    "<th onclick='callSort(this, 3)'><a href='#'>Highlight</a></th>" +
                     "</TR>";
                 var row = 1;
                 for (var word in allWords) {
@@ -89,6 +90,7 @@
                                     "<TD>" + row++ + "</TD>"+
                                     "<TD class='" + isSpecial(word, specialWords) + "'>" + word + "</TD>"+
                                     "<TD>" + allWords[word] + "</TD>"+
+                                    "<TD>" + ((isSpecial(word, specialWords) == "special") ? word : "") + "</TD>" +
                                 "</TR>";
                 }
                 document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
