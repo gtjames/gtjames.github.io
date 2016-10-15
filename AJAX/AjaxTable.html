@@ -73,16 +73,18 @@ table tr:nth-child(odd)		{ background-color: #f1f1f1;	}
 
 <h1>Class List</h1>
 
-I have tried to keep this kind of minimal so you can see what is going on. This works best on <b>Safari</b>. I have not put all the code in for all browsers<br><br>
+I have tried to keep this kind of minimal so you can see what is going on. This works best on <b>Safari</b>. 
+	I have not put all the code in for all browsers<br><br>
 <li>Press <B>View</B>. The class list will display all students in the class.<br>
 	Local Storage will be created for each students entry. Key is "Last, First" and the value is a JSON object of student data
-<li>Click on an <B>Entry</B> column item. The Student Name field will toggle between lightblue and normal. <br>
-    The even numbered Entities will slide around on the screen for a few seconds
+<li>Click on an <B>Entry #</B> column item. The Student Name field will toggle between lightblue and normal. <br>
+    The even numbered Entities will slide around on the screen for a few seconds when the toggle back to normal
     and Student details will be presented above the table.
 <li>Click on the <B>Student Name</B> and that student entry will be <B>deleted</B> from the table and from Local Storage
 <li>Click on <B>Clear Local Storage</B> to clear ALL of the entries in the local storage.<br>
-<li>Run your mouse over the <B>Class</B> column. Other class members of the same year will be highlighted<br><br>
-
+<li>Run your mouse over the <B>Class</B> column. Other class members of the same year will be highlighted<br>
+<li>Click on the column heading to sort ascending values for that column. Click again to do descending<br><br>
+	
 <div id="touchsurface">Swipe Me</div>
 <input type="button" value="View" onclick="getJSON()"/>
 <input type="button" value="Clear Local Storage" onclick="clearLS()"/>
@@ -93,7 +95,7 @@ I have tried to keep this kind of minimal so you can see what is going on. This 
 function getJSON()
 {
 	var xmlhttp = new XMLHttpRequest();
-	var url = "/dataFiles/fallClass.json";
+	var url = "fallClass.json";
 
 	xmlhttp.onreadystatechange=function()
 	{
