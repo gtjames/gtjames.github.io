@@ -5,10 +5,15 @@
 </head>
 <body>
 I am not going to spend anytime on the user interface. This is not a demonstration on UI<p>
-classData		<div id="classData">classData</div><p>
+All of the interesting stuff is in the HTM. I create three 'identical' objects. Two JSON using two differnet methods and a long String object<BR>
+Then I put them all into local storage. Take a look at the LocalStorage and you will see that the strings are identical even though they were created three different ways and then stringified and put in LS<BR>
+Finally I extract the strings and pop them into the page to compare. They are the same except for some extra white space.<BR>
+What I want you to see is how you can take an object put it in to LS, retrieve it, convert into an object and then use<BR>
+    
+classData	<div id="classData">classData</div><p>
 instantData	<div id="instantData">instantData</div><p>
 strData		<div id="strData">strData</div><p><p>
-dump data from one of the objects
+    <div style="color:red;">dump data from one of the objects</div>
 <div id="dump"></div>
 
 <script>
@@ -67,20 +72,20 @@ var instantData	=	{
 						but it is actually just a long string. 
 */
 var	strData		=	'{'												+
-						'"myClasses":'									+
+						'"myClasses":'								+
 						'['											+
 							'{'										+
-								'"classId":		"CIT-261",'				+
-								'"classTitle":	"Mobile App Dev",'			+
-								'"difficulty":	"medium"'					+
-							'},'										+
+								'"classId":		"CIT-261",'			+
+								'"classTitle":	"Mobile App Dev",'	+
+								'"difficulty":	"medium"'			+
+							'},'									+
 							'{'										+
-								'"classId":		"CIT-325",'				+
+								'"classId":		"CIT-325",'			+
 								'"classTitle":	"Database Administration",'	+
-								'"difficulty":	"hard"'					+
+								'"difficulty":	"hard"'				+
 							'}'										+
-						 '],'											+
-						 '"enrolled":true'								+
+						 '],'										+
+						 '"enrolled":true'							+
 					'}';
 
 	/*
@@ -89,7 +94,7 @@ var	strData		=	'{'												+
 			instantData is a JSON object so it needs to be stringified
 			strData 	is already a string it can go into local storage 'as is'
 	*/
-localStorage.setItem('classData',	    JSON.stringify   (classData));
+localStorage.setItem('classData',	JSON.stringify   (classData));
 localStorage.setItem('instantData', JSON.stringify(instantData));
 localStorage.setItem('strData',					strData);			//	This is already a string. No stringify necessary
 
@@ -107,7 +112,7 @@ localStorage.setItem('Z-Field', "Hey this isn't really that hard");			//	just a 
 		First we'll just take the string data as is from local storage and pop it into different fields on the screen
 		You'll see what a stringified JSON object looks like
 */
-document.getElementById("classData").innerHTML	=	localStorage.getItem('classData')
+document.getElementById("classData").innerHTML	    =	localStorage.getItem('classData')
 document.getElementById("instantData").innerHTML	=	localStorage.getItem('instantData')
 document.getElementById("strData").innerHTML		=	localStorage.getItem('strData')
 
@@ -119,7 +124,7 @@ document.getElementById("strData").innerHTML		=	localStorage.getItem('strData')
 		You could also get the string and assign it to a variable and then pass that variable into JSON .parse to assign to a JSON object
 		Your choice.
 */
-var restoredClassData		= JSON.parse(localStorage.getItem('classData'));
+var restoredClassData	= JSON.parse(localStorage.getItem('classData'));
 var restoredInstantData	= JSON.parse(localStorage.getItem('instantData'));
 var restoredStrData		= 		     localStorage.getItem('strData');
 
