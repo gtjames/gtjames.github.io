@@ -88,10 +88,10 @@
                 for (var word in allWords) {
                     var special = isSpecial(word, specialWords);
                     tableList += "<TR>"+
-                                    "<TD>" + row++ + "</TD>"+
-                                    "<TD class='" + special + "'>" + word + "</TD>"+
-                                    "<TD class='" + special + "'>" + allWords[word] + "</TD>"+
-                                    "<TD class='" + special + "'>" + special == "special") ? word : "") + "</TD>" +
+                                    "<TD>" + row++                                                        + "</TD>" +
+                                    "<TD class='" + special + "'>" + word                                 + "</TD>" +
+                                    "<TD class='" + special + "'>" + allWords[word]                       + "</TD>" +
+                                    "<TD class='" + special + "'>" + ((special == "special") ? word : "") + "</TD>" +
                                 "</TR>";
                 }
                 document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
