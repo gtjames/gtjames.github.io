@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <title>A little demonstation on Local Storage</title>
@@ -140,7 +140,7 @@ var restoredStrData		= 		     localStorage.getItem('strData');
 var vclassData = document.getElementById("dump");
 vclassData.innerHTML = "";
 for (i = 0; i < restoredClassData.myClasses.length; i++)
-	vclassData.innerHTML += restoredClassData.myClasses[i].classId + ":" + restoredClassData.myClasses[i].classTitle + "<p>";
+	vclassData.innerHTML += restoredClassData.myClasses[i].classId + ":" + restoredClassData.myClasses[i].classTitle + ' How hard: ' + restoredClassData.myClasses[i].difficulty + "<p>";
 
 </script>
 </body>
