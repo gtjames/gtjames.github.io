@@ -16,7 +16,6 @@
     .ATOZ               {   background-color: lightyellow;   }
     .ZTOA               {   background-color: lightblue;     }
     .special            {   background-color: lightyellow;   }
-    .Xspecial           {   backgroud-color:  cyan;          }
 
 </style>
 
@@ -88,8 +87,8 @@
                 var row = 1;
                 for (var word in allWords) {
                     var special = isSpecial(word, specialWords);
-                    tableList += "<TR class='X" + special + "'>"+
-                                    "<TD>" + row++                                + "</TD>" +
+                    tableList += "<TR>"+
+                                    "<TD class='" + special + "'>" + row++                                + "</TD>" +
                                     "<TD class='" + special + "'>" + word                                 + "</TD>" +
                                     "<TD class='" + special + "'>" + allWords[word]                       + "</TD>" +
                                     "<TD class='" + special + "'>" + ((special == "special") ? word : "") + "</TD>" +
