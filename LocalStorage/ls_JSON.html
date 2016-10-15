@@ -12,8 +12,8 @@ What I want you to see is how you can take an object put it in to LS, retrieve i
     
 classData	<div style="color:blue;" id="classData">classData</div><p>
 instantData	<div style="color:green;" id="instantData">instantData</div><p>
-strData		<div style="color:purple;" id="strData">strData</div><p><p>
-<BR>
+strData		<div style="color:purple;" id="strData">strData</div><p>
+<HR>
 	<div>dump data from one of the objects</div>
 	<div style="color:red;" id="dump"></div>
 
@@ -140,7 +140,7 @@ var restoredStrData		= 		     localStorage.getItem('strData');
 var vclassData = document.getElementById("dump");
 vclassData.innerHTML = "";
 for (i = 0; i < restoredClassData.myClasses.length; i++)
-	vclassData.innerHTML += restoredClassData.myClasses[i].classId + ":" + restoredClassData.myClasses[i].classTitle + ' How hard: ' + restoredClassData.myClasses[i].difficulty + "<p>";
+	vclassData.innerHTML += 'ClassId:' + restoredClassData.myClasses[i].classId + "<BR>Class Name: " + restoredClassData.myClasses[i].classTitle + '<BR>How hard: ' + restoredClassData.myClasses[i].difficulty + "<p>";
 
 </script>
 </body>
