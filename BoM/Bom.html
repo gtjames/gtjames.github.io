@@ -10,100 +10,126 @@
         text-align: left;
         padding: 8px;
     }
-    th                  {   background-color: lightgreen;    }
-    tr:nth-child(even)  {   background-color: #dddddd;       }
-    .ATOZ               {   background-color: lightyellow;   }
-    .ZTOA               {   background-color: lightblue;     }
-    .special            {   background-color: lightyellow;   }
+    th  {   background-color: grey;        }
+
+    tr:nth-child(even)  {   background-color: #dddddd;      }
+    .ATOZ               {   background-color: lightyellow   }
+    .ZTOA               {   background-color: lightblue     }
+    .special            {   background-color: lightgreen    }
 
 </style>
 
-<input type="file" id="files" name="file" />
-<br>
-Words to be highligted: <input type="text" id="special" />
+Highlight these words: <input type="text" id="special" noHistory=true/>
 <p>
 <span class="readBook">    <button>Read the Book of Mormon</button> </span>
 
-<div id="frequency">
-    For this to work you are going to have to go to my repo and look in the BoM folder for the file that 
-    contains the text of the Book of Mormon. My account is gtjames and the repo you care about is gtjames.github.io
-
-</div>
+<div id="frequency"></div>
 
 <script>
     var lines;
+    var	fileLoaded = false;
     var allWords = {};
 
     document.querySelector('.readBook').addEventListener('click',
                                         function(evt) { readBlob(); }, false);
+	document.getElementById('special').onkeyup = function(event) {
+		if (!fileLoaded) return;
+        var special = document.getElementById('special').value;
+        if (special.length != special.trim().length)
+			hightLightSpecialWords();
+	}
+	
+	function hightLightSpecialWords() {
+		var table = document.getElementById("wordList");
+        var tbody = table.tBodies.item(0);
 
-    function readBlob() {
-
+		//	traverse the table object and add special to the matched words
         var special = document.getElementById('special').value;
         var specialWords = (special.length > 0) ? special.split(' ') : '';
-        var files = document.getElementById('files').files;
-        if (!files.length) {
-            alert('Please select a file!');
-            return;
+        for (var s = 0; s < specialWords.length; s++)
+            console.log(specialWords[s]);
+
+		for (var i = 1, row; row = table.rows[i]; i++) {
+   			//iterate through rows
+   			//rows would be accessed using the "row" variable assigned in the for loop
+			var className = isSpecial( row.cells[1].innerText, specialWords );
+ 			row.cells[1].className = className;
+ 			row.cells[2].className = className;
+ 			row.cells[3].className = className;
+ 			row.cells[3].innerText = '';
+ 			if (className.length > 0) {
+	 			row.cells[3].innerText = row.cells[1].innerText;
+                var row = tbody.rows.item(i);
+                tbody.deleteRow(i);
+                tbody.insertBefore(row, tbody.rows.item(1));
+  			}
+   		}
+	}
+		
+    function readBlob() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "The Book of Mormon.txt";
+
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+			{
+				readTheBook(xmlhttp.responseText);
+			}
+		}
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function readTheBook(theBook) {
+        lines = theBook.split("\n");
+        /*
+        THE BOOK OF MORMON
+        An Account Written by THE HAND OF MORMON UPON PLATES TAKEN FROM THE PLATES OF NEPHI
+        Wherefore, it is an abridgment of the record of the people of Nephi, and also of the Lamanites--Written to the Lamanites, who are a remnant of the house of Israel; and also to Jew and Gentile--Written by way of commandment, and also by the spirit of prophecy and of revelation--Written and sealed up, and hid up unto the Lord, that they might not be destroyed--To come forth by the gift and power of God unto the interpretation thereof--Sealed by the hand of Moroni, and hid up unto the Lord, to come forth in due time by way of the Gentile--The interpretation thereof by the gift of God.
+        An abridgment taken from the Book of Ether also, which is a record of the people of Jared, who were scattered at the time the Lord confounded the language of the people, when they were building a tower to get to heaven--Which is to show unto the remnant of the House of Israel what great things the Lord hath done for their fathers; and that they may know the covenants of the Lord, that they are not cast off forever--And also to the convincing of the Jew and Gentile that JESUS is the CHRIST, the ETERNAL GOD, manifesting himself unto all nations--And now, if there are faults they are the mistakes of men; wherefore, condemn not the things of God, that ye may be found spotless at the judgment-seat of Christ.
+        1 Nephi THE FIRST BOOK OF NEPHI HIS REIGN AND MINISTRY An account of Lehi and his wife Sariah and his four sons, being called, (beginning at the eldest) Laman, Lemuel, Sam, and Nephi. The Lord warns Lehi to depart out of the land of Jerusalem, because he prophesieth unto the people concerning their iniquity and they seek to destroy his life. He taketh three days' journey into the wilderness with his family. Nephi taketh his brethren and returneth to the land of Jerusalem after the record of the Jews. The account of their sufferings. They take the daughters of Ishmael to wife. They take their families and depart into the wilderness. Their sufferings and afflictions in the wilderness. The course of their travels. They come to the large waters. Nephi's brethren rebel against him. He confoundeth them, and buildeth a ship. They call the name of the place Bountiful. They cross the large waters into the promised land, and so forth. This is according to the account of Nephi; or in other words, I, Nephi, wrote this record.
+        1 Nephi 1 Chapter 1
+        1 Nephi 1:1  1 I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days.
+        1 Nephi 1:2  2 Yea, I make a record in the language of my father, which consists of the learning of the Jews and the language of the Egyptians.
+        1 Nephi 1:3  3 And I know that the record which I make is true; and I make it with mine own hand; and I make it according to my knowledge.
+        1 Nephi 1:4  4 For it came to pass in the commencement of the first year of the reign of Zedekiah, king of Judah, (my father, Lehi, having dwelt at Jerusalem in all his days); and in that same year there came many prophets, prophesying unto the people that they must repent, or the great city Jerusalem must be destroyed.
+        */
+        for (var l = 0; l < lines.length; l++) {
+            if (startOfBook(lines[l])) {
+
+                for (l++; l < lines.length && !startOfBook(lines[l]); l++) {
+                	if (lines[l].search('Chapter') >= 0)
+                    	l++;
+     	        	tallyWords(removeChapterRef(lines[l]));
+            	}
+            	if (l < lines.length && startOfBook(lines[l])) l--;
+        	}
+    	}
+
+        var tableList = "<TABLE id='wordList'><TR>" +
+        	"<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
+        	"<th onclick='callSort(this, 1)'><a href='#'>Word</a></th>" +
+        	"<th onclick='callSort(this, 2)'><a href='#'>Frequency</a></th>" +
+        	"<th onclick='callSort(this, 3)'><a href='#'>Highlight</a></th>" +
+        	"</TR>";
+    	var row = 1;
+        for (var word in allWords) {
+        	tableList += "<TR>"+
+                	        "<TD>" + row++ + "</TD>"+
+                            "<TD>" + word  + "</TD>"+
+                    	    "<TD>" + allWords[word] + "</TD>"+
+                    	    "<TD></TD>"+
+                	    "</TR>";
         }
-
-        var file = files[0];
-        var reader = new FileReader();
-
-        // If we use onloadend, we need to check the readyState.
-        reader.onloadend = function(evt) {
-            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-                lines = evt.target.result.split("\n");
-                /*
-                THE BOOK OF MORMON
-                An Account Written by THE HAND OF MORMON UPON PLATES TAKEN FROM THE PLATES OF NEPHI
-                Wherefore, it is an abridgment of the record of the people of Nephi, and also of the Lamanites--Written to the Lamanites, who are a remnant of the house of Israel; and also to Jew and Gentile--Written by way of commandment, and also by the spirit of prophecy and of revelation--Written and sealed up, and hid up unto the Lord, that they might not be destroyed--To come forth by the gift and power of God unto the interpretation thereof--Sealed by the hand of Moroni, and hid up unto the Lord, to come forth in due time by way of the Gentile--The interpretation thereof by the gift of God.
-                An abridgment taken from the Book of Ether also, which is a record of the people of Jared, who were scattered at the time the Lord confounded the language of the people, when they were building a tower to get to heaven--Which is to show unto the remnant of the House of Israel what great things the Lord hath done for their fathers; and that they may know the covenants of the Lord, that they are not cast off forever--And also to the convincing of the Jew and Gentile that JESUS is the CHRIST, the ETERNAL GOD, manifesting himself unto all nations--And now, if there are faults they are the mistakes of men; wherefore, condemn not the things of God, that ye may be found spotless at the judgment-seat of Christ.
-                1 Nephi THE FIRST BOOK OF NEPHI HIS REIGN AND MINISTRY An account of Lehi and his wife Sariah and his four sons, being called, (beginning at the eldest) Laman, Lemuel, Sam, and Nephi. The Lord warns Lehi to depart out of the land of Jerusalem, because he prophesieth unto the people concerning their iniquity and they seek to destroy his life. He taketh three days' journey into the wilderness with his family. Nephi taketh his brethren and returneth to the land of Jerusalem after the record of the Jews. The account of their sufferings. They take the daughters of Ishmael to wife. They take their families and depart into the wilderness. Their sufferings and afflictions in the wilderness. The course of their travels. They come to the large waters. Nephi's brethren rebel against him. He confoundeth them, and buildeth a ship. They call the name of the place Bountiful. They cross the large waters into the promised land, and so forth. This is according to the account of Nephi; or in other words, I, Nephi, wrote this record.
-                1 Nephi 1 Chapter 1
-                1 Nephi 1:1  1 I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days.
-                1 Nephi 1:2  2 Yea, I make a record in the language of my father, which consists of the learning of the Jews and the language of the Egyptians.
-                1 Nephi 1:3  3 And I know that the record which I make is true; and I make it with mine own hand; and I make it according to my knowledge.
-                1 Nephi 1:4  4 For it came to pass in the commencement of the first year of the reign of Zedekiah, king of Judah, (my father, Lehi, having dwelt at Jerusalem in all his days); and in that same year there came many prophets, prophesying unto the people that they must repent, or the great city Jerusalem must be destroyed.
-                */
-                for (var l = 0; l < lines.length; l++) {
-                    if (startOfBook(lines[l])) {
-
-                        for (l++; l < lines.length && !startOfBook(lines[l]); l++) {
-                            if (lines[l].search('Chapter') >= 0)
-                                l++;
-                            tallyWords(removeChapterRef(lines[l]));
-                        }
-                        if (l < lines.length && startOfBook(lines[l])) l--;
-                    }
-                }
-
-                var tableList = "<TABLE id='wordList'><TR>" +
-                    "<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
-                    "<th onclick='callSort(this, 1)'><a href='#'>Word</a></th>" +
-                    "<th onclick='callSort(this, 2)'><a href='#'>Frequency</a></th>" +
-                    "<th onclick='callSort(this, 3)'><a href='#'>Highlight</a></th>" +
-                    "</TR>";
-                var row = 1;
-                for (var word in allWords) {
-                    var special = isSpecial(word, specialWords);
-                    tableList += "<TR>"+
-                                    "<TD class='" + special + "'>" + row++                                + "</TD>" +
-                                    "<TD class='" + special + "'>" + word                                 + "</TD>" +
-                                    "<TD class='" + special + "'>" + allWords[word]                       + "</TD>" +
-                                    "<TD class='" + special + "'>" + ((special == "special") ? word : "") + "</TD>" +
-                                "</TR>";
-                }
-                document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
-            }
-        };
-
-        reader.readAsText(file);
+        document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
+        fileLoaded = true;
     }
 
     function isSpecial(word, specialWords) {
         for (var s = 0; s < specialWords.length; s++)
-            if (specialWords[s] == word) return 'special';
+            if (specialWords[s] == word) 
+            	return 'special';
         return '';
     }
 
@@ -166,6 +192,7 @@ Words to be highligted: <input type="text" id="special" />
             else if (a > b) return 1 * sortOrder;
             else return 0;
         }
+        
         var table = document.getElementById(id);
         /*
          * To skip the header, ask for the tbodies. You actually can have
