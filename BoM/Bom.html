@@ -1,41 +1,135 @@
 <style>
     table {
         border-collapse: collapse;
-        width: 40%;
+        width: 80%;
     }
 
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    th  {   background-color: grey;        }
+.hideMe { display: none;  }
+.showMe { display: block; text-shadow: 0.1em 0.1em 0.15em #333 }
 
-    tr:nth-child(even)  {   background-color: #dddddd;      }
-    .ATOZ               {   background-color: lightyellow   }
-    .ZTOA               {   background-color: lightblue     }
-    .special            {   background-color: lightgreen    }
+td, th {
+    border: 1px solid;
+    padding: 8px;
+    text-shadow: 0.1em 0.1em 0.15em #333
+}
+th  {
+	background-color: AntiqueWhite;        
+	text-align: center;
+}
+
+    tr:nth-child(odd)   {   background-color: Bisque;      }
+    tr:nth-child(even)  {   background-color: Wheat;      }
+    .ATOZ, .ZTOA        {   background-color: Cornsilk     }
+    .special            {   background-color: Linen    }
 
 </style>
 
 Highlight these words: <input type="text" id="special" noHistory=true/>
+<span id="addHighlighting">    <button>Add Highlighting to:</button> </span>
 <p>
 <span class="readBook">    <button>Read the Book of Mormon</button> </span>
-
-<div id="frequency"></div>
+<table style='border-syle: none;'>
+	<TR  style='background-color:white;'>
+		<TD width="35%">
+			<div id="frequency">
+				<TABLE id='wordList'>
+					<TR>
+        				<th>Order</th>
+        				<th>Frequency</th>
+        				<th>Word</th>
+        			</TR>
+        		</table>
+        	</div>
+		</TD>
+		<TD   valign="top" width="15%">
+			<div id='references'>		</div>
+		</TD>
+		<TD   valign="top" width="25%">
+			<div id='words' class='ShowMe' >
+				<table id='highLightList'>
+					<TR>
+						<th onclick='deleteWord()'  width="40%"><a href='#'>Highlight</a></th>
+					</TR>
+				</table>
+			</div>
+			<div id="verse" class=hideMe></div>
+		</TD>
+	</TR>
+</table>
 
 <script>
     var lines;
     var	fileLoaded = false;
     var allWords = {};
+    var specialWords = [];
 
-    document.querySelector('.readBook').addEventListener('click',
-                                        function(evt) { readBlob(); }, false);
-	document.getElementById('special').onkeyup = function(event) {
-		if (!fileLoaded) return;
-        var special = document.getElementById('special').value;
-        if (special.length != special.trim().length)
+    document.getElementById('addHighlighting').addEventListener( 'click', function(evt) { addHighLighting(document.getElementById('special').value); }, false);
+    document.querySelector('.readBook'       ).addEventListener( 'click', function(evt) { readBlob(); }, false);
+	
+	function showReferences(evt) {
+        var hoverWord = evt.target.textContent;
+		var ul = "<ul>";
+			ul += "<strong><big> " + hoverWord + "</big></strong>";
+		for ( r = 0; r < allWords[hoverWord].ref.length; r++)
+			ul += "<li class='showVerse'>" + allWords[hoverWord].ref[r];
+		ul += "</ul>";
+		document.getElementById('references').innerHTML = ul;
+		
+ 	    var x = document.getElementsByClassName('showVerse' );
+ 		for (var i = 0; i < x.length; i++) {
+ 			x[i].addEventListener( 'mouseover', function(evt) { showVerse(hoverWord, evt.target.innerText); }, false);
+ 	    	x[i].addEventListener( 'mouseout',  function(evt) { hideVerse(evt); }, false);
+ 		}
+	}
+	
+	function showVerse (word, verseRef) {
+		var verse = localStorage.getItem(verseRef);
+		verse = verse.replace(new RegExp("\\b " + word + "\\b","gi"), "<strong><big> " + word + "</big></strong>");
+        document.getElementById('verse').innerHTML = verse;
+		document.getElementById('words').className = 'hideMe';
+		document.getElementById('verse').className = 'showMe';
+	}
+	function hideVerse(evt) {
+		document.getElementById('words').className = 'showMe';
+		document.getElementById('verse').className = 'hideMe';
+	}
+	
+	function addHighLighting(highLightedWord) {
+
+		var newWords = highLightedWord.split(' ');
+		
+		for ( i = 0; i < newWords.length; i++ ) {
+			var newWord = newWords[i];
+			if (newWord.length == 0) 					continue;
+			if ( specialWords.indexOf(newWord) > -1)	continue;
+
+			specialWords.push(newWord);
+			var table = document.getElementById('highLightList');
+
+			var row = table.insertRow( table.rows.length );
+			var oCell = row.insertCell(0)
+			oCell.innerHTML = "<label><input type='checkbox'>" + newWord + "</label>"
+		}
+		if (fileLoaded)
+			hightLightSpecialWords();
+	}
+
+	function deleteWord() {
+		var table = document.getElementById('highLightList');
+		var rowCount = table.rows.length;
+
+		for(var i=1; i<rowCount; i++) {
+			var row = table.rows[i];
+			if(! row.firstChild.firstChild.firstChild.checked )		continue;
+			var foundAt = specialWords.indexOf(row.firstChild.firstChild.textContent);
+			if ( foundAt == -1)										continue;
+			specialWords.splice(foundAt,1);
+			table.deleteRow(i);
+			rowCount--;
+			i--;
+		}
+
+		if (fileLoaded)
 			hightLightSpecialWords();
 	}
 	
@@ -43,22 +137,14 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 		var table = document.getElementById("wordList");
         var tbody = table.tBodies.item(0);
 
-		//	traverse the table object and add special to the matched words
-        var special = document.getElementById('special').value;
-        var specialWords = (special.length > 0) ? special.split(' ') : '';
-        for (var s = 0; s < specialWords.length; s++)
-            console.log(specialWords[s]);
-
 		for (var i = 1, row; row = table.rows[i]; i++) {
    			//iterate through rows
    			//rows would be accessed using the "row" variable assigned in the for loop
-			var className = isSpecial( row.cells[1].innerText, specialWords );
+			var className = isSpecial( row.cells[2].innerText, specialWords );
+ 			row.cells[0].className = className;
  			row.cells[1].className = className;
  			row.cells[2].className = className;
- 			row.cells[3].className = className;
- 			row.cells[3].innerText = '';
  			if (className.length > 0) {
-	 			row.cells[3].innerText = row.cells[1].innerText;
                 var row = tbody.rows.item(i);
                 tbody.deleteRow(i);
                 tbody.insertBefore(row, tbody.rows.item(1));
@@ -68,12 +154,11 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 		
     function readBlob() {
 		var xmlhttp = new XMLHttpRequest();
-		var url = "The Book of Mormon.txt";
+		var url = "TheBookOfMormon.txt";
 
 		xmlhttp.onreadystatechange=function()
 		{
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-			{
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				readTheBook(xmlhttp.responseText);
 			}
 		}
@@ -82,6 +167,8 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 	}
 
 	function readTheBook(theBook) {
+	    allWords = {};
+
         lines = theBook.split("\n");
         /*
         THE BOOK OF MORMON
@@ -97,34 +184,47 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
         */
         for (var l = 0; l < lines.length; l++) {
             if (startOfBook(lines[l])) {
-
-                for (l++; l < lines.length && !startOfBook(lines[l]); l++) {
+            	console.log(lines[l]);
+				var bookName = getBookName(lines[l]);
+				for (l++; l < lines.length && !startOfBook(lines[l]); l++) {
                 	if (lines[l].search('Chapter') >= 0)
                     	l++;
-     	        	tallyWords(removeChapterRef(lines[l]));
+     	        	tallyWords(removeChapterRef(lines[l]), lines[l]);
             	}
             	if (l < lines.length && startOfBook(lines[l])) l--;
+        //    	if (l > 50 ) break;
         	}
     	}
 
         var tableList = "<TABLE id='wordList'><TR>" +
         	"<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
-        	"<th onclick='callSort(this, 1)'><a href='#'>Word</a></th>" +
-        	"<th onclick='callSort(this, 2)'><a href='#'>Frequency</a></th>" +
-        	"<th onclick='callSort(this, 3)'><a href='#'>Highlight</a></th>" +
+        	"<th onclick='callSort(this, 1)'><a href='#'>Frequency</a></th>" +
+        	"<th onclick='callSort(this, 2)'><a href='#'>Word</a></th>" +
         	"</TR>";
     	var row = 1;
         for (var word in allWords) {
         	tableList += "<TR>"+
                 	        "<TD>" + row++ + "</TD>"+
-                            "<TD>" + word  + "</TD>"+
-                    	    "<TD>" + allWords[word] + "</TD>"+
-                    	    "<TD></TD>"+
+                    	    "<TD>" + allWords[word].count + "</TD>"+
+                            "<TD name='showReferences'>" + word  + "</TD>"+
                 	    "</TR>";
         }
         document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
         fileLoaded = true;
+		hightLightSpecialWords();
+ 	    var x = document.getElementsByName('showReferences' );
+ 		for (var i = 0; i < x.length; i++) {
+ 			x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
+ 		}
     }
+
+	function getBookName(line) {
+		var bookName = line.split(' ')[0];
+		if ( bookName.length == 1 )		bookName += ' Nephi';
+		else if (bookName == 'Words')	bookName += ' of Mormon';
+		else if (bookName == 'THE')		bookName  =  'The Book of Mormon-Introduction';
+		return bookName;
+	}
 
     function isSpecial(word, specialWords) {
         for (var s = 0; s < specialWords.length; s++)
@@ -133,26 +233,34 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
         return '';
     }
 
-    function removeChapterRef(line) {
+    function removeChapterRef(line, chapter) {
+    	var book;
         var reference = line.split(":");
         var words;
         line = line.toLowerCase();
-        if (reference.length == 1) {
-            words = line.split(/\W/);
-        }
-        else {
-            line = line.slice(reference[0].length + 1, -1);
-            words = line.split(/\W/);
-            words = words.slice(3);
-        }
-        return words
+    	book = reference[0];
+        line = line.slice(reference[0].length + 1, -1);
+        words = line.split(/\W/);
+    	book += ':' + words[0];
+        words = words.slice(3);
+
+        return {"words": words, "chapter":book};
     }
 
-    function tallyWords(words) {
+    function tallyWords(wordsAndRef, line) {
+    	var words = wordsAndRef.words;
+    	localStorage.setItem(wordsAndRef.chapter, line);
         for (var w = 0; w < words.length; w++) {
             if (words[w].length == 0)
                 continue;
-            allWords[words[w]] = (allWords[words[w]] > 0) ? allWords[words[w]] + 1 : 1;
+            if (typeof allWords[words[w]]  !== 'undefined') {
+            	allWords[words[w]].count += 1;
+            	if (allWords[words[w]].ref.indexOf(wordsAndRef.chapter) == -1)
+				    allWords[words[w]].ref.push( wordsAndRef.chapter );
+            }
+            else {
+            	allWords[words[w]] = { "count": 1, "ref":[wordsAndRef.chapter]};
+			}
         }
     }
 
@@ -163,7 +271,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
     var lastSortCol = null;
 
     function callSort(ele, column) {
-        ele.className = (ele.className == "ATOZ") ? "ZTOA" : "ATOZ";
+        ele.className = (ele.className == "ATOZ" || ele.className.length==0) ? "ZTOA" : "ATOZ";
         if (lastSortCol !== null && lastSortCol !== ele)
             lastSortCol.className = "";
         lastSortCol = ele;
