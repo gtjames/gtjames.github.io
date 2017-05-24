@@ -89,12 +89,13 @@
 
 		//	we can use any number of styles here if we like
 		var s;
+		var fontSize = Math.floor(Math.random() * 20) + 10;	// generate a number between 10 and 10+19 for the fontSize
 		switch (styleIndex % 3) {
 			case 0: //	white on red background, large font and italic
-				s = document.createTextNode("#newDiv {background-color: red; color: white; font-size: 40px; font-style: italic;}");
+				s = document.createTextNode("#newDiv {background-color: red; color: white; font-size: " + fontSize + "px; font-style: italic;}");
 				break;
 			case 1: //	yellow on blue background
-				s = document.createTextNode("#newDiv {background-color: blue; color: yellow; font-size: 20px;}");
+				s = document.createTextNode("#newDiv {background-color: blue; color: yellow; font-size: " + fontSize + "px;}");
 				break;
 			case 2: //	set styles back to the initial settings for the element
 				s = document.createTextNode("#newDiv {background-color: initial; color: initial; font-size: initial; font-style: initial;}");
