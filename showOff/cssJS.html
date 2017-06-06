@@ -8,15 +8,13 @@
 <body>
     <main>
 		<div class="children">
-			
-			
+
 			<div class="flip-card">
 			  <div class="back" id='jsBack'>
 				  Thanks Abbey nice work</div>
 			  <div class="front" id='jsFront'>Abbey Rollins</div>
 			</div>
-			
-			
+
 			<div class="flip-card">
 			  <div class="back">
 				  <span>Age: Elizabethan </span><br>
@@ -27,7 +25,7 @@
 			  </div>
 			  <div class="front">The back side can be anything</div>
 			</div>
-			
+
 			<div class="flip-card">
 			  <div class="back">
 				  <span>Age: Jurassic</span><br>
@@ -38,28 +36,22 @@
 			  </div>
 			  <div class="front">Card Flips are handy for revealing new data</div>
 			</div>
-		
+
 		</div>
 		<br>
 	<input type="button" value="Flip 1st Card" onclick="flipCard()"/>
 <script>
 
-var flipBack = false;		//	toggle to flip card back to front and front to back
+function flipCard( ) {
+    //  toggle the class used to flip the front and back cards
+    toggleClass('jsFront', 'frontFlip');
+    toggleClass('jsBack', 'backFlip');
+}
 
-function flipCard( )
-{
-	var f = document.getElementById('jsFront');
-	var b = document.getElementById('jsBack');
-	//	reset cards to normal
-	f.className = 'front';
-	b.className = 'back';
-
-	flipBack = !flipBack;
-	//	have to toggled to flip back?
-	if (flipBack == true) {
-		f.classList.add('frontFlip');
-		b.classList.add('backFlip');
-	}
+function toggleClass(elementId, classId) {
+    var x = document.getElementById(elementId);
+    if (x.classList.contains(classId))  x.classList.remove(classId);
+    else                                x.classList.add(classId);
 }
 
 </script>
