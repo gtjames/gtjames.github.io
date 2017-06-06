@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Card Flip</title>
+    <link href="cssJS.css" rel="stylesheet">
+</head>
+<body>
+    <main>
+		<div class="children">
+			
+			
+			<div class="flip-card">
+			  <div class="back" id='jsBack'>
+				  Thanks Abbey nice work</div>
+			  <div class="front" id='jsFront'>Abbey Rollins</div>
+			</div>
+			
+			
+			<div class="flip-card">
+			  <div class="back">
+				  <span>Age: Elizabethan </span><br>
+				  <span>Hobbies: Mind Reading</span><br>
+				  <span>State: Mindless</span><br>
+				  <span>Favorite Beatle: Scarab</span><br>
+				  <img src="scarab.gif" width=100% height=60% />
+			  </div>
+			  <div class="front">The back side can be anything</div>
+			</div>
+			
+			<div class="flip-card">
+			  <div class="back">
+				  <span>Age: Jurassic</span><br>
+				  <span>Hobbies: Alchemy, Kitten Juggling</span><br>
+				  <span>State: Plasma</span><br>
+				  <span>Favorite Beatle: George</span><br>
+				  <img src="TheBeatles.jpg" width=100% height=60% />
+			  </div>
+			  <div class="front">Card Flips are handy for revealing new data</div>
+			</div>
+		
+		</div>
+		<br>
+	<input type="button" value="Flip 1st Card" onclick="flipCard()"/>
+<script>
+
+var flipBack = false;		//	toggle to flip card back to front and front to back
+
+function flipCard( )
+{
+	var f = document.getElementById('jsFront');
+	var b = document.getElementById('jsBack');
+	//	reset cards to normal
+	f.className = 'front';
+	b.className = 'back';
+
+	flipBack = !flipBack;
+	//	have to toggled to flip back?
+	if (flipBack == true) {
+		f.classList.add('frontFlip');
+		b.classList.add('backFlip');
+	}
+}
+
+</script>
+    </main>
+</body>
+</html>
