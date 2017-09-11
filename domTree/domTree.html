@@ -113,12 +113,27 @@ for (var i = 0; i<elements.length; i++ )
 		});
 }
 
+function moveIt ( cellId1, cellId2 ) {
+	var afterOne = cellId1.nextSibling();
+	b4One.insertA
+	var b4One = cellId1.previousSibling();
+cellId1.parentNode.removeChild(cellId1);
+cellId2.parentNode.removeChild(cellId2);
+element.insertBefore(para, child);
+}
+
 </script>
 
 <p>Enter an element ID (CellA...CellI, ElementE1, Row1,Row2,myTable,myHtml)
 <p>Click the button to see the DOM tree:
 <input type="text" value="CellA" id="CellID"/>
 <input ID="inp" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" type="submit" value="Submit"> </p>
+
+<p>Move this ID 
+<input type="text" id="Cell1"/>
+<p>to this ID
+<input type="text" id="Cell2"/>
+<input ID="inp" onClick="moveIt(document.getElementById('Cell1').value, document.getElementById('Cell2').value);" type="submit" value="Submit"> </p>
 
 <p>(C) F. Permadi<a href="mailto:permadi@permadi.com"><br>
 permadi@permadi.com</a><br>
