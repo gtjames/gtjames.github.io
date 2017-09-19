@@ -64,7 +64,7 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 	var responseText = (isJSON) ? JSON.parse(response) : response;
 
 	//	Now we will take the text and do something with it
-	document.getElementById( divId ).innerHTML = (isJSON) ? responseText.JSONKey : responseText;
+	document.getElementById( divId ).innerHTML = (isJSON) ? responseText.user : responseText;
 }
 </script>
 </body>
