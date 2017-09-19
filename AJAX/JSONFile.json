@@ -1,11 +1,11 @@
 {
-	"JSONKey"	:	"<BR>Value for the Key<BR>",
+	"thisIsTheKey"	:	"<BR>This is the value<BR>",
 	"color"		:	"#4020D0",
 	"size"		:	21,
 	"font"		:	"courier",
 	"user"		:	{
 						"name"		:	"Student #1",
-						"course"	: "CIT-261",
-						"scores"	: [90, 78, 98, 32, 101]
+						"course"	:	"CIT-261",
+						"scores"	:	[90, 78, 98, 32, 101]
 					}
 }
