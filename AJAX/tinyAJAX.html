@@ -17,6 +17,7 @@
 	<div id="JSONdiv">
 		<input type="button" value="Read a JSON file" onclick="getFileFromServer( '/AJAX/JSONFile.json', 'JSONdiv', true )"/>
 	</div>
+	<div id="JSONdiv2"></div>
 	<div id="HTMLdiv">
 		<input type="button" value="Read a HTML file" onclick="getFileFromServer( '/AJAX/HTMLFile.html', 'HTMLdiv', false )"/>
 	</div>
@@ -64,7 +65,10 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 	var responseText = (isJSON) ? JSON.parse(response) : response;
 
 	//	Now we will take the text and do something with it
-	document.getElementById( divId ).innerHTML = (isJSON) ? responseText.user : responseText;
+	document.getElementById( divId ).innerHTML = (isJSON) ? "this is from the user object in the JSON file " + responseText.user : responseText;
+	if (isJson)
+		document.getElementById( divId+"2" ).innerHTML = response;
+	
 }
 </script>
 </body>
