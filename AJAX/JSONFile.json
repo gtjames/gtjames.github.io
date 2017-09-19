@@ -5,7 +5,7 @@
 	"font"		:	"courier",
 	"user"		:	{
 						"name"		:	"Student #1",
-						"course"	: "CIT-261"
+						"course"	: "CIT-261",
 						"scores"	: [90, 78, 98, 32, 101]
 					}
 }
