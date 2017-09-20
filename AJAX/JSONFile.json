@@ -1,5 +1,5 @@
 {
-	"thisIsTheKey"	:	"<BR>This is the value<BR>",
+	"thisIsTheKey"	:	"<DIV style="color:red">This is the value</DIV><BR>",
 	"color"		:	"#4020D0",
 	"size"		:	21,
 	"font"		:	"courier",
