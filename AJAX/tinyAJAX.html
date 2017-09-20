@@ -76,7 +76,8 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 		document.getElementById( divId+"2" ).innerHTML = "Just the text<BR>" + response;
 		document.getElementById( divId ).innerHTML = "Fields from the JSON Object<BR>" + 
 			"User Name: " + responseText.user.name + "<BR>" +
-			"JSON id Key:value pairs - " + responseText.thisIsTheKey + "<BR>";
+			"JSON is just Key:value pairs - " + responseText.thisIsTheKey + "<BR>";
+		document.getElementById( divId ).style.color = responseText.color;
 	}
 	else {
 		document.getElementById( divId ).innerHTML = responseText;
