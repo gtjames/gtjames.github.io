@@ -6,18 +6,22 @@
 <body>
 <section>
 	This is a MINIMAL example of AJAX.<BR>
-	<strong>Read a small file</strong> will read a text file and replace the button with the text of the source file<BR>
-	<strong>Read a JSON file</strong> will read a JSON file and replace the button with the text of the source file<BR>
-	<strong>Read an HTML file</strong> will read an HTML file and replace the button with the HTML of the source file<BR>
 	Click and view the source to see how basic this example is.<BR>
+	<BR>
+	<strong>Read a small file</strong> will read a text file and replace the button with the text of the source file<BR>
+	<BR>
 	<div id="serverState"></div>
 	<div id="Textdiv">
 		<input type="button" value="Read a small file" onclick="getFileFromServer( '/AJAX/textFile.txt', 'Textdiv', false )"/>
 	</div>
+	<strong>Read a JSON file</strong> will read a JSON file and replace the button with the text of the source file<BR>
+	<BR>
 	<div id="JSONdiv">
 		<input type="button" value="Read a JSON file" onclick="getFileFromServer( '/AJAX/JSONFile.json', 'JSONdiv', true )"/>
 	</div>
 	<div id="JSONdiv2"></div>
+	<strong>Read an HTML file</strong> will read an HTML file and replace the button with the HTML of the source file<BR>
+	<BR>
 	<div id="HTMLdiv">
 		<input type="button" value="Read a HTML file" onclick="getFileFromServer( '/AJAX/HTMLFile.html', 'HTMLdiv', false )"/>
 	</div>
@@ -65,7 +69,7 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 	var responseText = (isJSON) ? JSON.parse(response) : response;
 
 	//	Now we will take the text and do something with it
-	document.getElementById( divId ).innerHTML = (isJSON) ? "this is from the user object in the JSON file " + responseText.user : responseText;
+	document.getElementById( divId ).innerHTML = (isJSON) ? "this is from the user object in the JSON file " + responseText.user.name : responseText;
 	if (isJSON)
 		document.getElementById( divId+"2" ).innerHTML = response;
 	
