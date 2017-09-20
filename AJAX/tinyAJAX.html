@@ -22,6 +22,7 @@
 	</div>
 	<BR>
 	<div id="JSONdiv2"></div>
+	<BR>
 	<strong>Read an HTML file</strong> will read an HTML file and replace the button with the HTML of the source file<BR>
 	<BR>
 	<div id="HTMLdiv">
@@ -71,10 +72,15 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 	var responseText = (isJSON) ? JSON.parse(response) : response;
 
 	//	Now we will take the text and do something with it
-	document.getElementById( divId ).innerHTML = (isJSON) ? "this is from the user object in the JSON file " + responseText.user.name : responseText;
-	if (isJSON)
-		document.getElementById( divId+"2" ).innerHTML = response;
-	
+	if (isJSON) {
+		document.getElementById( divId+"2" ).innerHTML = "Just the text<BR>" + response;
+		document.getElementById( divId ).innerHTML = "Fields from the JSON Object<BR>" + 
+			"User Name: " + responseText.user.name + "<BR>" +
+			"JSON id Key:value pairs - " + responseText.thisIsTheKey + "<BR>";
+	}
+	else {
+		document.getElementById( divId ).innerHTML = responseText;
+	}
 }
 </script>
 </body>
