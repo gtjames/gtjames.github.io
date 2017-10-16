@@ -114,8 +114,8 @@ for (var i = 0; i<elements.length; i++ )
 }
 
 function moveIt ( cellId1, cellId2 ) {
-	var elements1 = document.getElementsById(cellId1);
-	var elements2 = document.getElementsById(cellId2);
+	var elements1 = document.getElementById(cellId1);
+	var elements2 = document.getElementById(cellId2);
 	var beforeOne = elements1.previousElementSibling();
 	var beforeTwo = elements1.previousElementSibling();
 	elements1.parentNode.removeChild(elements1);
