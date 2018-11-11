@@ -103,7 +103,7 @@ function buildTable(response)
 function getJSON()
 {
 	var xmlhttp = new XMLHttpRequest();
-	var url = "jeopardy.json";
+	var url = "js/jeopardy.json";
 	
 	xmlhttp.onreadystatechange=function()	
 							{
