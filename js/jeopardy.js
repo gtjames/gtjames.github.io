@@ -34,7 +34,7 @@ function completeCard(ele)
 		frontFace.innerHTML  =  "Team " + team;
 		frontFace.classList.add("Color"  + team);
 		localStorage.removeItem(answerKey);
-		document.getElementById(ele.id).src = "images/yay.png";
+		document.getElementById(ele.id).src = "images/Yay.png";
 	}
 	else
 	{
