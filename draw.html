@@ -1,0 +1,331 @@
+<head>
+    <meta charset="utf-8">
+    <title>My Debts</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            border: 0;
+            overflow: hidden;
+            /*  Disable scrollbars */
+            display: block;
+            /* No floating content on sides */
+        }
+
+        #canvas {}
+
+        .bubble {
+            position: relative;
+            background: green;
+            float: left;
+            /* because the image at left */
+        }
+
+        .bubbleborder {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .bubbletext {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 170px;
+            padding: 80px 16px 16px 16px;
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id='canvas' style='position: absolute; left: 0px; top: 0px;'>	</canvas>
+    <div    id='xy'>xy</div>
+    <script type="text/javascript">
+        let stepX, stepY;
+        // Obtain a reference to the context and canvas element
+        let ctx, htmlCanvas;
+        let cx, cy, pointer;
+        let my_gradient;
+        let colors = ['red', 'orange', 'yellow', 'green', 'blue'];
+        let debts = [
+      	 [100,  610,  620,  930,  140, 850, 460, 1070, 1080, 1090]
+        ,[200,  801,  202,  203,  204, 700, 1400]
+        ,[300,  301,  302,  303,  304, 305, 306, 307, 308]
+        ,[400,  401,  402,  403,  404, 405]
+        ];
+        let allDebts = [];
+		let maxGraph = 0;
+		let stepHeight;
+		let maxMonths = 0;
+        init();
+
+        function init() {
+        	for (let d = 0; d < debts.length; d++) {
+				maxMonths = Math.max(debts[d].length, maxMonths);
+        	}
+        	for (let d = 0; d < debts.length; d++) {
+    			allDebts[d] = [];
+	        	for (let m = 0; m < maxMonths; m++)
+    	    		allDebts[d][m] = 0;
+        	}
+    		allDebts[debts.length] = [];
+	        for (let m = 0; m < maxMonths; m++) {
+    			allDebts[debts.length][m] = 0;
+    		}
+        	for (let i = 0; i < debts.length; i++) {
+        		for (let j = 0; j < maxMonths; j++) {
+        			allDebts[i+1][j] = allDebts[i][j] + ((Math.Nan==debts[i][j] ) ? 0 : debts[i][j]);
+	        		maxGraph = Math.max(allDebts[i+1][j], maxGraph);
+        		}
+	        }
+	        maxGraph = Math.floor((maxGraph+200)/100)*100;
+            htmlCanvas = document.getElementById('canvas');
+            ctx = document.querySelector("canvas").getContext("2d");
+            ctx.canvas.onmousedown = dragStart;
+            ctx.canvas.onmousemove = dragStep;
+            ctx.canvas.onmouseup   = dragEnd;
+            ctx.canvas.onmouseout  = dragEnd;
+
+            document.addEventListener("DOMContentLoaded", draw, false);
+            let el = document.getElementsByTagName("canvas")[0];
+            el.addEventListener("touchstart", touchstart, false);
+            el.addEventListener("touchmove", touchmove, false);
+            el.addEventListener("touchend", touchend, false);
+            el.addEventListener("touchcancel", touchcancel, false);
+
+            // Register an event listener to
+            // call the resizeCanvas() function each time the window is resized.
+            window.addEventListener('resize', resizeCanvas, false);
+
+            // Draw canvas border for the first time.
+            resizeCanvas();
+        }
+
+        function resizeCanvas() {
+            htmlCanvas = document.getElementById('canvas'),
+            htmlCanvas.width = window.innerWidth;
+            htmlCanvas.height = window.innerHeight;
+            draw();
+        }
+
+        function drawGrid () {
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = '2';
+            ctx.strokeRect(5, 5, window.innerWidth-10, window.innerHeight-10);
+
+	        ctx.setTransform(1, 0, 0, -1, 0, ctx.canvas.height);
+			ctx.strokeStyle = 'black';
+			for (y = 0; y < maxGraph; y += stepHeight) {		//	we are drawing the tick marks on the vertical axis
+				ctx.beginPath();						//	the tick marks are in 200$ increments
+				myPoint(ctx, true,  0,  0, y*stepY, 0);
+				myPoint(ctx, false, 0, 20, y*stepY, 0);
+				ctx.stroke();
+			}
+
+ 			for (x = 0; x <= maxMonths; x++) {		//	we are drawing the tick marks on the horizontal axis
+				ctx.beginPath();
+				myPoint(ctx, true,  x*stepX,  0,  0, 0);
+				myPoint(ctx, false, x*stepX,  0, 20, 0);
+				ctx.stroke();
+			}
+	        ctx.setTransform(1, 0, 0, 1, 0, 0);				//	now we have to transform back to default space to 
+	        ctx.font="16px sanserif";						//	put our text in the proper orientation
+ 			for (x = 0; x < maxMonths; x++) {
+	   	        ctx.strokeText(" "+x, x*stepX+5, ctx.canvas.height-10);
+			}
+			for (y = 0; y < maxGraph; y += stepHeight) {		//	we are drawing the tick marks on the vertical axis
+	   	        ctx.strokeText(" "+y, 5, ctx.canvas.height-y*stepY);
+			}
+		}
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stepX = Math.floor(ctx.canvas.width / maxMonths);
+            stepY = ctx.canvas.height / maxGraph;		//	$s / px
+            stepHeight = Math.round(maxGraph/11);
+            if(stepHeight < 0.005) stepHeight = 10;
+
+            drawDebts();
+            drawGrid();
+
+            if (pointer) {
+	            ctx.setTransform(1, 0, 0, -1, 0, ctx.canvas.height);
+                //  draw a pointer over a graph point
+                ctx.beginPath();
+                ctx.strokeStyle = 'yellow';
+                ctx.fillStyle = my_gradient;
+                myPoint(ctx, true,  cx,   0, cy,   0);
+                myPoint(ctx, false, cx, -14, cy, -20);
+                myPoint(ctx, false, cx,  14, cy, -20);
+                ctx.fill();
+                ctx.stroke();
+                drawBubble(ctx, 50, 50, 200, 100, 20, cx, cy);
+            }
+        }
+
+        function drawDebts() {
+			ctx.setTransform(1, 0, 0, -1, 0, ctx.canvas.height);
+            my_gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, ctx.canvas.height);
+            my_gradient.addColorStop(0,   "black");
+            my_gradient.addColorStop(0.2, "orange");
+            my_gradient.addColorStop(0.4, "red");
+            my_gradient.addColorStop(0.5, "green");
+            my_gradient.addColorStop(0.7, "purple");
+            my_gradient.addColorStop(0.8, "blue");
+
+            ctx.lineWidth = 1;
+            for (let d = 0; d < allDebts.length-1; d++) {
+                ctx.beginPath();
+                ctx.strokeStyle = 'black';
+                ctx.fillStyle = colors[d % colors.length];
+                myPoint(ctx, true, 0, 0, allDebts[d][0] * stepY, 0);
+                for (x = 0; x < allDebts[d].length; x++) {
+                    myPoint(ctx, false,  x    * stepX, 5, allDebts[d][x] * stepY, 5);
+                    myPoint(ctx, false, (x+1) * stepX, 5, allDebts[d][x] * stepY, 5);
+                }
+                for (let x = allDebts[d+1].length - 1; x >= 0; x--) {
+                    myPoint(ctx, false, (x+1)  * stepX, 5, allDebts[d+1][x] * stepY, 5);
+                    myPoint(ctx, false,      x * stepX, 5, allDebts[d+1][x] * stepY, 5);
+                }
+                myPoint(ctx, false, 0, 0, allDebts[d][0] * stepY, 0);
+                ctx.fill();
+                ctx.stroke();
+            }
+            // 
+//             for (let d = 0; d < debts.length; d++) {
+//                 ctx.beginPath();
+//                 ctx.strokeStyle = colors[d];
+//                 ctx.fillStyle = colors[d];
+//                 myPoint(ctx, true, 0, 0, debts[d][0] / stepY, 0);
+//                 for (x = 1; x < debts[d].length; x++) {
+//                     myPoint(ctx, false, x * stepX, 0, debts[d][x-1] / stepY, 0);
+//                     myPoint(ctx, false, x * stepX, 0, debts[d][x]   / stepY, 0);
+//                 }
+//                 myPoint(ctx, false, (debts[d].length-1) * stepX, 0, 0, 0);
+//                 ctx.fill();;
+//                 ctx.stroke();
+//             }
+//             
+
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+	    	ctx.strokeStyle = "black";
+            for (let d = 0; d < debts.length; d++) {
+                for (let x = 0; x < debts[d].length; x++) {
+	    	        ctx.strokeText(allDebts[d][x]+"*"+debts[d][x], (x+0.5) * stepX+0, ctx.canvas.height-((allDebts[d][x] +debts[d][x]) * stepY-10));
+				}
+			}
+		}
+
+        function myPoint(ctx, start, x, deltaX, y, deltaY) {
+            if (start)     ctx.moveTo( x + deltaX, y + deltaY);
+            else           ctx.lineTo( x + deltaX, y + deltaY);
+        }
+
+        function drawBubble(ctx, x, y, w, h, radius, px, py) {
+            let month = Math.floor(px / stepX, 1);
+            let amt   = Math.floor(py / stepY);
+            let delta = 10000;
+            let line  = 0;
+            let con1, con2;
+            for (d = 0; d < allDebts.length; d++) {
+                if ( Math.abs(allDebts[d][month] - amt) < delta ) {
+                    delta = Math.abs(allDebts[d][month] - amt);
+                    line = d;
+                }
+            }
+            py = htmlCanvas.height - py+5;
+
+            let xy = document.getElementById("xy");
+            xy.innerHTML = " amt " + amt + " delta " + delta + "<BR>py:" + py;
+
+          	ctx.setTransform(1, 0, 0, 1, 0, 0);// ctx.canvas.height);
+            let r = x + w;
+            let b = y + h;
+            if (py < y || py > y + h) {
+                con1 = Math.min(Math.max(x + radius,      px - 10), r - radius - 20);
+                con2 = Math.min(Math.max(x + radius + 20, px + 10), r - radius);
+            } else {
+                con1 = Math.min(Math.max(y + radius,      py - 10), b - radius - 20);
+                con2 = Math.min(Math.max(y + radius + 20, py + 10), b - radius);
+            }
+            let dir;
+            if (py <  y) dir = 2;
+            if (py >  y) dir = 3;
+            if (px <  x && py >= y && py <= b) dir = 0;
+            if (px >  x && py >= y && py <= b) dir = 1;
+            if (px >= x && px <= r && py >= y && py <= b) dir = -1;
+
+            ctx.beginPath();
+            ctx.strokeStyle = colors[line];
+            ctx.lineWidth = "2";
+            myPoint         (ctx, true,  x + radius, 0,  y, 0);
+            if (dir == 2) {
+                myPoint     (ctx, false, con1,       0,  y, 0);
+                myPoint     (ctx, false, px,         0, py, 0);
+                myPoint     (ctx, false, con2,       0,  y, 0);
+                myPoint     (ctx, false, r - radius, 0,  y, 0);
+            } else myPoint  (ctx, false, r - radius, 0,  y, 0);
+            ctx.quadraticCurveTo(r, y, r, y + radius);
+            if (dir == 1) {
+                myPoint     (ctx, false, r,  0,  con1,       0);
+                myPoint     (ctx, false, px, 0,  py,         0);
+                myPoint     (ctx, false, r,  0,  con2,       0);
+                myPoint     (ctx, false, r,  0,  b - radius, 0);
+            } else myPoint  (ctx, false, r,  0,  b - radius, 0);
+            ctx.quadraticCurveTo(r, b, r - radius, b);
+            if (dir == 3) {
+                myPoint     (ctx, false, con2,       0,  b, 0);
+                myPoint     (ctx, false, px,         0, py, 0);
+                myPoint     (ctx, false, con1,       0,  b, 0);
+                myPoint     (ctx, false, x + radius, 0,  b, 0);
+            } else myPoint  (ctx, false, x + radius, 0,  b, 0);
+            ctx.quadraticCurveTo(x, b, x, b - radius);
+            if (dir == 0) {
+                myPoint     (ctx, false,  x, 0, con2,       0);
+                myPoint     (ctx, false, px, 0, py,         0);
+                myPoint     (ctx, false,  x, 0, con1,       0);
+                myPoint     (ctx, false,  x, 0, y + radius, 0);
+            } else myPoint  (ctx, false,  x, 0, y + radius, 0);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+
+            ctx.fillStyle = "#d0d0d0";
+            ctx.fill();
+
+            ctx.stroke();
+
+            ctx.font="24px sansserif";
+            console.log(line + " " + month);
+            console.log(debts[line][month]);
+            
+            ctx.strokeText("mm " + month + " # " + line + " $ " + debts[line][month], x+10, ( y+20 ));
+        }
+
+        function dragStep(e) {
+            cx = e.offsetX;
+            cy = htmlCanvas.height - 5 - e.offsetY;
+            draw();
+        }
+
+        function placePointer(ev) {
+            if (ev.touches.length == 0) return;
+            cx = ev.touches[0].clientX;
+            cy = htmlCanvas.height - ev.touches[0].clientY;
+            draw();
+        }
+
+        function dragStart()        {  pointer = true;    }
+        function dragEnd()          {  pointer = false;   }
+        function touchstart (ev)    {  pointer = true;    }
+        function touchmove  (ev)    {  placePointer(ev);  }
+        function touchend   (ev)    {  pointer = false;   }
+        function touchcancel(ev)    {  pointer = false;   }
+
+    </script>
+
+</body>
+
+</html>
