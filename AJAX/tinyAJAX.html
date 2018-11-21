@@ -28,8 +28,8 @@
 	<div id="HTMLdiv">
 		<input type="button" value="Read a HTML file" onclick="getFileFromServer( '/AJAX/HTMLFile.html', 'HTMLdiv', false )"/>
 	</div>
-	<div id="HTMLdiv">
-		<input type="button" value="Read a Movie Data file" onclick="getFileFromServer( 'http://api.myapifilms.com/imdb/idIMDB?title=matrix&token=d54d8e12-964c-48c3-9ac9-cc017ed04f1a', 'HTMLdiv', true )"/>
+	<div id="Moviediv">
+		<input type="button" value="Read a Movie Data file" onclick="getFileFromServer( 'http://api.myapifilms.com/imdb/idIMDB?title=matrix&token=d54d8e12-964c-48c3-9ac9-cc017ed04f1a', 'Moviediv', true )"/>
 	</div>
 </section>
 
@@ -52,7 +52,10 @@ function getFileFromServer(url, divId, isJSON)
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 					//	This method is going to serve a several kinds of requests
 					//	we are taking the 2nd and 3rd fields from the onclick request and passing them to the worked function
-					doSomethingWithTheResponse(xmlhttp.responseText, divId, isJSON);
+					if (url.length > 30)
+						showMovie( JSON.parse(xmlhttp.responseText), divId);
+					else
+						doSomethingWithTheResponse(xmlhttp.responseText, divId, isJSON);
 			//	else	// this will show us what is happening before the data arrives
 			//		document.getElementById( 'serverState' ).innerHTML += "Ready State: " + xmlhttp.readyState + "  Status: " + xmlhttp.status + "<BR>";
 			}
@@ -85,6 +88,11 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 	else {
 		document.getElementById( divId ).innerHTML = responseText;
 	}
+}
+function showMovie(movie, divId) 
+{
+	//	Now we will take the text and do something with it
+	document.getElementById( divId ).innerHTML = "Movie Title:" + movie.title + "<BR>";
 }
 </script>
 </body>
