@@ -28,6 +28,9 @@
 	<div id="HTMLdiv">
 		<input type="button" value="Read a HTML file" onclick="getFileFromServer( '/AJAX/HTMLFile.html', 'HTMLdiv', false )"/>
 	</div>
+	<div id="HTMLdiv">
+		<input type="button" value="Read a Movie Data file" onclick="getFileFromServer( 'http://api.myapifilms.com/imdb/idIMDB?title=matrix&token=d54d8e12-964c-48c3-9ac9-cc017ed04f1a', 'HTMLdiv', true )"/>
+	</div>
 </section>
 
 <script>
