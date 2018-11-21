@@ -37,7 +37,8 @@
 function getFileFromServer(url, divId, isJSON)
 {
 	//	We need an object that allows us to make requests back to our server
-	var xmlhttp = new XMLHttpRequest();
+	var req = new XMLHttpRequest();
+  	req.setRequestHeader("Access-Control-Allow-Origin: $http_origin");
 	
 	//	This object has an attribute called onreadystatechange. 
 	//	We are going to set the value of that attribute to a pointer to a function
@@ -46,24 +47,24 @@ function getFileFromServer(url, divId, isJSON)
 	//	In this case I just say function() without a function name and then provide the code for a function
 	//	You could also have a function defined someplace in your code and set onreadystatechange = thisIsMyFunction
 	//	both work
-	xmlhttp.onreadystatechange =
+	req.onreadystatechange =
 			function()
 			{	//	This code is not executed immedidaitely. It is call later when the server starts to respond.
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+				if (req.readyState == 4 && req.status == 200)
 					//	This method is going to serve a several kinds of requests
 					//	we are taking the 2nd and 3rd fields from the onclick request and passing them to the worked function
 					if (url.length > 30)
-						showMovie( JSON.parse(xmlhttp.responseText), divId);
+						showMovie( JSON.parse(req.responseText), divId);
 					else
-						doSomethingWithTheResponse(xmlhttp.responseText, divId, isJSON);
+						doSomethingWithTheResponse(req.responseText, divId, isJSON);
 			//	else	// this will show us what is happening before the data arrives
-			//		document.getElementById( 'serverState' ).innerHTML += "Ready State: " + xmlhttp.readyState + "  Status: " + xmlhttp.status + "<BR>";
+			//		document.getElementById( 'serverState' ).innerHTML += "Ready State: " + req.readyState + "  Status: " + req.status + "<BR>";
 			}
 	//	This is where we make our request to the server. We are passing along the URL for the file we want
 	//	You can see the name of the file we are requesting in the about HTML code.
 	//	Each button has a different file defined
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
+	req.open("GET", url, true);
+	req.send();
 	
 	//	some time later the above anonymous function will be called and the file will be processed
 }
