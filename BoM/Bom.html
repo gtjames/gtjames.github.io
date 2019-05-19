@@ -48,7 +48,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 		</TD>
 		<TD   valign="top" width="25%">
 			<div id='words' class='ShowMe' >
-				<table id='highLightList'>
+				<table id='highlightList'>
 					<TR>
 						<th id='deleteSpecial' width="40%"><a href='#'>Highlight</a></th>
 						<th>Hits</th>
@@ -66,16 +66,16 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
     var allWords = {};			//	Object to hold word and reference array
     var specialWords = [];		//	array of words we want to analyze
 
-    document.getElementById('addHighlighting').addEventListener( 'click', function(evt) { addHighLighting(document.getElementById('special').value); }, false);
+    document.getElementById('addHighlighting').addEventListener( 'click', function(evt) { addHighlighting(document.getElementById('special').value); }, false);
     document.getElementById('readBook'       ).addEventListener( 'click', function(evt) { readBlob();   }, false);
     document.getElementById('deleteSpecial'  ).addEventListener( 'click', function(evt) { deleteWord(); }, false);
 	
 	//	take the words in the entry field
-	//		save them to the highLightList 
+	//		save them to the highlightList 
 	//		give them each a checkbox so they can be deleted
-	function addHighLighting(highLightedWord) {
+	function addHighlighting(highlightedWord) {
 
-		var newWords = highLightedWord.toLowerCase().split(' ');
+		var newWords = highlightedWord.toLowerCase().split(' ');
 		var phrases = [];
 		for (var i = 0; i < newWords.length; i++) {
 			var u = newWords[i].indexOf("_");
@@ -92,7 +92,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 			if ( specialWords.indexOf(newWord) > -1)	continue;
 
 			specialWords.push(newWord);
-			var table = document.getElementById('highLightList');
+			var table = document.getElementById('highlightList');
 
 			var row = table.insertRow( table.rows.length );
 			var oCell = row.insertCell(0);
@@ -127,7 +127,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 			if ( specialWords.indexOf(newPhrase) > -1)	continue;
 
 			specialWords.push(newPhrase);
-			var table = document.getElementById('highLightList');
+			var table = document.getElementById('highlightList');
 
 			var row = table.insertRow( table.rows.length );
 			var oCell = row.insertCell(0);
@@ -137,7 +137,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 		}
 		
 		if (fileLoaded) {
-			hiLightSpecialWords();
+		    highlightSpecialWords();
 	 	    var x = document.getElementsByName('showReferences2' );
  			for (var i = 0; i < x.length; i++) {
  				x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
@@ -148,7 +148,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 	//	search each unique word in the book of Mormon
 	//		if that word is in the specialWords list
 	//		more that row up to the top of the list
-	function hiLightSpecialWords() {
+	function highlightSpecialWords() {
 		var table = document.getElementById("wordList");
         var tbody = table.tBodies.item(0);
 
@@ -171,7 +171,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 	//		they are no longer special. remove them from the list
 	//		if the book is read mark the special words in the full word list
 	function deleteWord() {
-		var table = document.getElementById('highLightList');
+		var table = document.getElementById('highlightList');
 		var rowCount = table.rows.length;
 
 		for(var i=1; i<rowCount; i++) {
@@ -185,25 +185,25 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 			i--;
 		}
 
-		//	refresh the words that should be highlighed as special
+		//	refresh the words that should be highlighted as special
 		if (fileLoaded)
-			hilightSpecialWords();
+			highlightSpecialWords();
 	}
 	
 	//	load the Book of Mormon from disk
     function readBlob() {
-		var xmlhttp = new XMLHttpRequest();
-		var url = "TheBookOfMormon.txt";
+	var xmlhttp = new XMLHttpRequest();
+	var url = "TheBookOfMormon.txt";
 
-		xmlhttp.onreadystatechange=function()
-		{
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				readTheBook(xmlhttp.responseText);
-			}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			readTheBook(xmlhttp.responseText);
 		}
-		xmlhttp.open("GET", url, true);
-		xmlhttp.send();
 	}
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+    }
 
 	//	we have the book loaded
 	//	split all of the text into separate lines
@@ -251,11 +251,11 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
         }
         document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
         fileLoaded = true;
-		hiLightSpecialWords();
- 	    var x = document.getElementsByName('showReferences' );
- 		for (var i = 0; i < x.length; i++) {
- 			x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
- 		}
+	highlightSpecialWords();
+ 	var x = document.getElementsByName('showReferences' );
+ 	for (var i = 0; i < x.length; i++) {
+		x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
+ 	}
     }
 
 	//	eliminate the leading verse reference on each line
