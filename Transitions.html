@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+div {
+  width: 100px;
+  height: 100px;
+  background: red;
+  transition: width 2s, height 3s, background 3s, transform 2s, border-radius 2s;
+}
+
+.width:hover   { width:  200px; }
+.height:hover  { height: 120px; }
+.bgcolor:hover { background: yellow; }
+.skewX:hover   { transform:  skewX(20deg); }
+.skewY:hover   { transform:  skewY(20deg); }
+.rotate:hover  { transform:  rotate(180deg); }
+.radius:hover  { border-radius: 50px;  }
+.all:hover     { border-radius: 50px; background:blue; transform: rotate(180deg);  }
+
+</style>
+</head>
+<body>
+
+<h1>The transition Property</h1>
+
+<p>Hover over the div element below, to see the transition effect:</p>
+<div class=width>Width</div>
+<div class=height>Height</div>
+<div class=bgcolor>background</div>
+<div class=skewX>Skew X</div>
+<div class=skewY>Skew Y</div>
+<div class=rotate>rotate</div>
+<div class=radius>radius</div>
+<div class=all>radius</div>
+
+</body>
+</html>
