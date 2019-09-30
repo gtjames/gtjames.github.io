@@ -28,9 +28,6 @@
 	<div id="HTMLdiv">
 		<input type="button" value="Read a HTML file" onclick="getFileFromServer( '/AJAX/HTMLFile.html', 'HTMLdiv', false )"/>
 	</div>
-	<div id="Moviediv">
-		<input type="button" value="Read a Movie Data file" onclick="getFileFromServer( 'https://www.myapifilms.com/imdb/idIMDB?idIMDB=tt0034583&token=d54d8e12-964c-48c3-9ac9-cc017ed04f1a', 'Moviediv', true )"/>
-        </div>
 </section>
 
 <script>
@@ -93,6 +90,10 @@ function doSomethingWithTheResponse(response, divId, isJSON)
 function showMovie(movie, divId) 
 {
 	//	Now we will take the text and do something with it
+//		<div id="Moviediv">
+//		<input type="button" value="Read a Movie Data file" onclick="getFileFromServer( 'https://www.myapifilms.com/imdb/idIMDB?idIMDB=tt0034583&token=d54d8e12-964c-48c3-9ac9-cc017ed04f1a', 'Moviediv', true )"/>
+//      </div>
+
 	document.getElementById( divId ).innerHTML = "Movie Title:" + movie.title + "<BR>";
 }
 </script>
