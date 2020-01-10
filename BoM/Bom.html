@@ -29,6 +29,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 <br>If you enter a phrase instead of a single word, separate the words with "_"
 <br>i.e. it_came_to_pass
 <p>
+	<span id="status"></span>
 <span id="readBook">    <button>Read the Book of Mormon</button> </span>
 <table style='border-syle: none;'>
 	<TR  style='background-color:white;'>
@@ -150,7 +151,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 	//		move that row up to the top of the list
 	function highlightSpecialWords() {
 		var table = document.getElementById("wordList");
-        var tbody = table.tBodies.item(0);
+	        var tbody = table.tBodies.item(0);
 
 		for (var i = 1, row; row = table.rows[i]; i++) {
    			//iterate through rows
@@ -208,8 +209,9 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 	//	we have the book loaded
 	//	split all of the text into separate lines
 	//	analyze each verse to extract all words and tally them
-	function readTheBook(theBook) {
-	    allWords = {};
+function readTheBook(theBook) {
+	var status = document.getElementById('status');
+	allWords = {};
 
         lines = theBook.split("\n");
         /*
@@ -243,6 +245,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
         	"</TR>";
     	var row = 1;
         for (var word in allWords) {
+                status.innerHTML = allWords[word];
         	tableList += "<TR>"+
                 	        "<TD>" + row++ + "</TD>"+
                     	    "<TD>" + allWords[word].count + "</TD>"+
@@ -256,6 +259,7 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
  	for (var i = 0; i < x.length; i++) {
 		x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
  	}
+        status.innerHTML = "";
     }
 
 	//	eliminate the leading verse reference on each line
