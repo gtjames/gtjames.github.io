@@ -45,6 +45,9 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
         	</div>
 		</TD>
 		<TD   valign="top" width="15%">
+			<div>
+				<canvas id="myChart" width="400" height="250"></canvas>
+			</div>
 			<div id='references'></div>
 		</TD>
 		<TD   valign="top" width="25%">
@@ -60,7 +63,48 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 		</TD>
 	</TR>
 </table>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js" integrity="sha512-RGbSeD/jDcZBWNsI1VCvdjcDULuSfWTtIva2ek5FtteXeSjLfXac4kqkDRHVGf1TwsXCAqPTF7/EYITD0/CTqw==" crossorigin="anonymous"></script>
+<script>
+let bookIndex = {'Intro': 0, '1' : 1,  '2' : 2,  'Jacob'   : 3,  'Enos' : 4,
+			'Jarom'   : 5,  'Omni'    : 6,  'Words' : 7,
+			'Mosiah'  : 8,  'Alma'    : 9,  'Helaman' : 10,  '3' : 11,
+			'4' : 12, 'Mormon'  : 13, 'Ether'   : 14, 'Moroni'  : 15}
+let wordFreq = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var myChart;
+function wordFrequency(currentWord) {
+	var ctx = document.getElementById('myChart');
+	if (myChart) {    myChart.destroy();  }
+	myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ['Intro', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon',
+			'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni' ],
+			datasets: [{
+				label: `Word Frequency by Book for: ${currentWord}`,
+				data: wordFreq,
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {scales: {y: { beginAtZero: true }}}
+	});
+	}
+</script>
 <script>
     var lines;					//	will hold every line of the Book of Mormon
     var	fileLoaded = false;		//	don't do somethings if the book is not loaded
@@ -245,7 +289,7 @@ function readTheBook(theBook) {
         	"</TR>";
     	var row = 1;
         for (var word in allWords) {
-                status.innerHTML = allWords[word];
+			status.innerHTML = allWords[word];
         	tableList += "<TR>"+
                 	        "<TD>" + row++ + "</TD>"+
                     	    "<TD>" + allWords[word].count + "</TD>"+
@@ -254,11 +298,11 @@ function readTheBook(theBook) {
         }
         document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
         fileLoaded = true;
-	highlightSpecialWords();
- 	var x = document.getElementsByName('showReferences' );
- 	for (var i = 0; i < x.length; i++) {
-		x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
- 	}
+		highlightSpecialWords();
+		var x = document.getElementsByName('showReferences' );
+		for (var i = 0; i < x.length; i++) {
+			x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
+		}
         status.innerHTML = "";
     }
 
@@ -287,13 +331,17 @@ function readTheBook(theBook) {
 	//		display all references in the showVerse column
 	function showReferences(evt) {
         var hoverWord = evt.target.textContent;		//	get word from the cell
+		wordFreq = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 		var ul = "<ul>";
-			ul += "<strong><big> " + hoverWord + "</big></strong>" + " : " + allWords[hoverWord].count;	//	make the top entry the word we are listing
-		for ( r = 0; r < allWords[hoverWord].ref.length; r++)
+		ul += "<h3><strong>" + hoverWord + "</strong>" + " : " + allWords[hoverWord].count + "</h3>";	//	make the top entry the word we are listing
+		for ( r = 0; r < allWords[hoverWord].ref.length; r++) {
 			ul += "<li class='showVerse'>" + allWords[hoverWord].ref[r];
+			let book = allWords[hoverWord].ref[r].split(' ')[0];
+			wordFreq[bookIndex[book]]++;
+		}
 		ul += "</ul>";
 		document.getElementById('references').innerHTML = ul;		// in the references column, stuff the list of all references
-		
+		wordFrequency(hoverWord);
 		//	get a list of all of the verses
 		//	give them all an event for mouse over and mouse out
  	    var x = document.getElementsByClassName('showVerse' );
