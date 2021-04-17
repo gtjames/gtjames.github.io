@@ -1,60 +1,90 @@
 <style>
 
-    table {
-        border-collapse: collapse;
-        width: 80%;
-    }
+	table {
+		border-collapse: collapse;
+		/*width: 80%;*/
+	}
 
 	td, th {
-    	border: 1px solid;
-    	padding: 8px;
+		border: 1px solid;
+		padding: 8px;
+		vertical-align: top;
 	}
-	
+
 	th  {
-		background-color: AntiqueWhite;        
+		background-color: AntiqueWhite;
 		text-align: center;
 	}
 
-    tr:nth-child(odd)   {   background-color: Bisque;   }
-    tr:nth-child(even)  {   background-color: Wheat;    }
-    .ATOZ, .ZTOA        {   background-color: Cornsilk  }
-    .special            {   background-color: Linen     }
+	tr:nth-child(odd)   {   background-color: Bisque;   }
+	tr:nth-child(even)  {   background-color: Wheat;    }
+	.ATOZ, .ZTOA        {   background-color: Cornsilk  }
+	.special            {   background-color: Linen     }
 	.hideMe 			{	display: none;  }
 	.showMe 			{	display: block; }
 
+	h4	{ margin: 4;}
+
+	.container {
+		position: relative;
+		height: 90%;
+		background-color: rgb(230, 230, 233);
+		padding: 10px 0 10px 0;
+		box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1), 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+		border-radius: 8px;
+	}
+
+	.box {
+		padding: 0 20px 0 20px;
+		color: rgb(116, 124, 142);
+		font-size: 15px;
+		overflow: auto;
+		height: 400px;
+	}
+
+	.small_box {
+		height: 165px;
+	}
 </style>
 
-Highlight these words: <input type="text" id="special" noHistory=true/>
+<label for="special">Highlight these words: </label>
+<input type="text" id="special">
 <span id="addHighlighting">    <button>Add Highlighting to:</button> </span>
-<br>If you enter a phrase instead of a single word, separate the words with "_"
-<br>i.e. it_came_to_pass
+<br>If you enter a phrase instead of a single word, separate the words with "_" i.e. it_came_to_pass
 <p>
-	<span id="status"></span>
-<span id="readBook">    <button>Read the Book of Mormon</button> </span>
-<table style='border-syle: none;'>
+<table>
 	<TR  style='background-color:white;'>
-		<TD width="35%">
-			<div id="frequency">
-				<TABLE id='wordList'>
-					<TR>
-        				<th>Order</th>
-        				<th>Frequency</th>
-        				<th>Word</th>
-        			</TR>
-        		</table>
-        	</div>
+		<TD width="25%">
+			<div class="container">
+				<div class="box">
+					<div id="frequency">
+						<TABLE id='wordList'>
+							<TR>
+								<th>Order</th>
+								<th>Frequency</th>
+								<th>Word</th>
+							</TR>
+						</table>
+					</div>
+				</div>
+			</div>
+			<span id="readBook">    <button>Read the Book of Mormon</button> </span>
 		</TD>
-		<TD   valign="top" width="15%">
+		<TD width="50%">
+			<div class="container">
+				<div class="box small_box">
+					<div id='references'></div>
+				</div>
+			</div>
 			<div>
 				<canvas id="myChart" width="400" height="250"></canvas>
 			</div>
-			<div id='references'></div>
 		</TD>
-		<TD   valign="top" width="25%">
+		<TD width="25%">
 			<div id='words' class='ShowMe' >
 				<table id='highlightList'>
 					<TR>
-						<th id='deleteSpecial' width="40%"><a href='#'>Highlight</a></th>
+						<th id='deleteSpecial'><a href='#'>Highlight</a></th>
 						<th>Hits</th>
 					</TR>
 				</table>
@@ -65,128 +95,128 @@ Highlight these words: <input type="text" id="special" noHistory=true/>
 </table>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js" integrity="sha512-RGbSeD/jDcZBWNsI1VCvdjcDULuSfWTtIva2ek5FtteXeSjLfXac4kqkDRHVGf1TwsXCAqPTF7/EYITD0/CTqw==" crossorigin="anonymous"></script>
 <script>
-let bookIndex = {'Intro': 0, '1' : 1,  '2' : 2,  'Jacob'   : 3,  'Enos' : 4,
-			'Jarom'   : 5,  'Omni'    : 6,  'Words' : 7,
-			'Mosiah'  : 8,  'Alma'    : 9,  'Helaman' : 10,  '3' : 11,
-			'4' : 12, 'Mormon'  : 13, 'Ether'   : 14, 'Moroni'  : 15}
-let wordFreq = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-var myChart;
-function wordFrequency(currentWord) {
-	var ctx = document.getElementById('myChart');
-	if (myChart) {    myChart.destroy();  }
-	myChart = new Chart(ctx, {
-		type: 'bar',
-		data: {
-			labels: ['Intro', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon',
-			'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni' ],
-			datasets: [{
-				label: `Word Frequency by Book for: ${currentWord}`,
-				data: wordFreq,
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {scales: {y: { beginAtZero: true }}}
-	});
+	let bookIndex = {'Intro': 0, '1' : 1,  '2' : 2,  'Jacob'   : 3,  'Enos' : 4,
+		'Jarom'   : 5,  'Omni'    : 6,  'Words' : 7,
+		'Mosiah'  : 8,  'Alma'    : 9,  'Helaman' : 10,  '3' : 11,
+		'4' : 12, 'Mormon'  : 13, 'Ether'   : 14, 'Moroni'  : 15}
+	let wordFreq = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	let myChart;
+	function wordFrequency(currentWord) {
+		let ctx = document.getElementById('myChart');
+		if (myChart) {    myChart.destroy();  }
+		myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ['Intro', '1 Nephi', '2 Nephi', 'Jacob', 'Enos', 'Jarom', 'Omni', 'Words of Mormon',
+					'Mosiah', 'Alma', 'Helaman', '3 Nephi', '4 Nephi', 'Mormon', 'Ether', 'Moroni' ],
+				datasets: [{
+					label: `Word Frequency by Book for: ${currentWord}`,
+					data: wordFreq,
+					backgroundColor: [
+						'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)',
+						'rgba(255, 206, 86, 0.2)',
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+						'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(75, 192, 192, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {scales: {y: { beginAtZero: true }}}
+		});
 	}
 </script>
 <script>
-    var lines;					//	will hold every line of the Book of Mormon
-    var	fileLoaded = false;		//	don't do somethings if the book is not loaded
-    var allWords = {};			//	Object to hold word and reference array
-    var specialWords = [];		//	array of words we want to analyze
+	let lines;					//	will hold every line of the Book of Mormon
+	let	fileLoaded = false;		//	don't do somethings if the book is not loaded
+	let allWords = {};			//	Object to hold word and reference array
+	let specialWords = [];		//	array of words we want to analyze
 
-    document.getElementById('addHighlighting').addEventListener( 'click', function(evt) { addHighlighting(document.getElementById('special').value); }, false);
-    document.getElementById('readBook'       ).addEventListener( 'click', function(evt) { readBlob();   }, false);
-    document.getElementById('deleteSpecial'  ).addEventListener( 'click', function(evt) { deleteWord(); }, false);
-	
+	document.getElementById('addHighlighting').addEventListener( 'click', function(evt) { addHighlighting(document.getElementById('special').value); }, false);
+	document.getElementById('readBook'       ).addEventListener( 'click', function(evt) { readBlob();   }, false);
+	document.getElementById('deleteSpecial'  ).addEventListener( 'click', function(evt) { deleteWord(); }, false);
+
 	//	take the words in the entry field
-	//		save them to the highlightList 
+	//		save them to the highlightList
 	//		give them each a checkbox so they can be deleted
 	function addHighlighting(highlightedWord) {
 
-		var newWords = highlightedWord.toLowerCase().split(' ');
-		var phrases = [];
-		for (var i = 0; i < newWords.length; i++) {
-			var u = newWords[i].indexOf("_");
+		let newWords = highlightedWord.toLowerCase().split(' ');
+		let phrases = [];
+		for (let i = 0; i < newWords.length; i++) {
+			let u = newWords[i].indexOf("_");
 			if (u >= 0) {
 				phrases.push(newWords[i].replace(/_/g, " ").toLowerCase());
 				newWords.splice(i, 1);
 				i--;
 			}
 		}
-		
-		for ( i = 0; i < newWords.length; i++ ) {
-			var newWord = newWords[i];
-			if (newWord.length == 0) 					continue;
+
+		for ( let i = 0; i < newWords.length; i++ ) {
+			let newWord = newWords[i];
+			if (newWord.length === 0) 					continue;
 			if ( specialWords.indexOf(newWord) > -1)	continue;
 
 			specialWords.push(newWord);
-			var table = document.getElementById('highlightList');
+			let table = document.getElementById('highlightList');
 
-			var row = table.insertRow( table.rows.length );
-			var oCell = row.insertCell(0);
-			oCell.innerHTML = "<input type='checkbox'><label name='showReferences2'>" + newWord + "</label></input>";
+			let row = table.insertRow( table.rows.length );
+			let oCell = row.insertCell(0);
+			oCell.innerHTML = "<input type='checkbox'><label class='showReferences2'>" + newWord + "</label></input>";
 			oCell = row.insertCell(1);
 			oCell.innerHTML = "" + allWords[newWord].count;
 		}
 
-			for (var i = 0; i < localStorage.length; i++) {
-    			var verseText = localStorage.getItem(localStorage.key(i)).toLowerCase();
-				for ( p = 0; p < phrases.length; p++ )  {
-	    			if (verseText.indexOf(phrases[p]) >= 0)	{
-						//	is there a reference to this word in the allWords list
-        		    	if (typeof allWords[phrases[p]] !== 'undefined') {
-        	    			allWords[phrases[p]].count += 1;
-    		        		//	we only need one verse reference list if the word is in the verse multiple times
-	    	        		if (allWords[phrases[p]].ref.indexOf(phrases[p]) == -1) {
-						    	allWords[phrases[p]].ref.push(localStorage.key(i));
-						    }
-            			}
-            			else {		//	new word in list
-    	        			allWords[phrases[p]] = { "count": 1, "ref":[localStorage.key(i)]};
+		for (let i = 0; i < localStorage.length; i++) {
+			let verseText = localStorage.getItem(localStorage.key(i)).toLowerCase();
+			for ( let p = 0; p < phrases.length; p++ )  {
+				if (verseText.indexOf(phrases[p]) >= 0)	{
+					//	is there a reference to this word in the allWords list
+					if (typeof allWords[phrases[p]] !== 'undefined') {
+						allWords[phrases[p]].count += 1;
+						//	we only need one verse reference list if the word is in the verse multiple times
+						if (allWords[phrases[p]].ref.indexOf(phrases[p]) === -1) {
+							allWords[phrases[p]].ref.push(localStorage.key(i));
 						}
 					}
-    			}
+					else {		//	new word in list
+						allWords[phrases[p]] = { "count": 1, "ref":[localStorage.key(i)]};
+					}
+				}
 			}
+		}
 
-		
-		for ( i = 0; i < phrases.length; i++ ) {
-			var newPhrase = phrases[i];
-			if (newPhrase.length == 0) 					continue;
+
+		for ( let i = 0; i < phrases.length; i++ ) {
+			let newPhrase = phrases[i];
+			if (newPhrase.length === 0) 				continue;
 			if ( specialWords.indexOf(newPhrase) > -1)	continue;
 
 			specialWords.push(newPhrase);
-			var table = document.getElementById('highlightList');
+			let table = document.getElementById('highlightList');
 
-			var row = table.insertRow( table.rows.length );
-			var oCell = row.insertCell(0);
-			oCell.innerHTML = "<input type='checkbox'><label name='showReferences2'>" + newPhrase + "</label></input>"
+			let row = table.insertRow( table.rows.length );
+			let oCell = row.insertCell(0);
+			oCell.innerHTML = "<input type='checkbox'><label class='showReferences2'>" + newPhrase + "</label></input>"
 			oCell = row.insertCell(1);
 			oCell.innerHTML = "" + allWords[newPhrase].count;
 		}
-		
+
 		if (fileLoaded) {
-		    highlightSpecialWords();
-	 	    var x = document.getElementsByName('showReferences2' );
- 			for (var i = 0; i < x.length; i++) {
- 				x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
- 			}
+			highlightSpecialWords();
+			let x = document.getElementsByClassName('showReferences2' );
+			for (let i = 0; i < x.length; i++) {
+				x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
+			}
 		}
 	}
 
@@ -194,36 +224,36 @@ function wordFrequency(currentWord) {
 	//		if that word is in the specialWords list
 	//		move that row up to the top of the list
 	function highlightSpecialWords() {
-		var table = document.getElementById("wordList");
-	        var tbody = table.tBodies.item(0);
+		let table = document.getElementById("wordList");
+		let tbody = table.tBodies.item(0);
 
-		for (var i = 1, row; row = table.rows[i]; i++) {
-   			//iterate through rows
-   			//rows would be accessed using the "row" variable assigned in the for loop
-			var className = isSpecial( row.cells[2].innerText, specialWords );
- 			row.cells[0].className = className;
- 			row.cells[1].className = className;
- 			row.cells[2].className = className;
- 			if (className.length > 0) {
-                var row = tbody.rows.item(i);
-                tbody.deleteRow(i);
-                tbody.insertBefore(row, tbody.rows.item(1));
-  			}
-   		}
+		for (let i = 1, row; row = table.rows[i]; i++) {
+			//iterate through rows
+			//rows would be accessed using the "row" variable assigned in the for loop
+			let className = isSpecial( row.cells[2].innerText, specialWords );
+			row.cells[0].className = className;
+			row.cells[1].className = className;
+			row.cells[2].className = className;
+			if (className.length > 0) {
+				let row = tbody.rows.item(i);
+				tbody.deleteRow(i);
+				tbody.insertBefore(row, tbody.rows.item(1));
+			}
+		}
 	}
-	
+
 	//	look for the checked specialWords
 	//		they are no longer special. remove them from the list
 	//		if the book is read mark the special words in the full word list
 	function deleteWord() {
-		var table = document.getElementById('highlightList');
-		var rowCount = table.rows.length;
+		let table = document.getElementById('highlightList');
+		let rowCount = table.rows.length;
 
-		for(var i=1; i<rowCount; i++) {
-			var row = table.rows[i];
+		for(let i=1; i<rowCount; i++) {
+			let row = table.rows[i];
 			if(! row.firstChild.firstChild.checked )		continue;
-			var foundAt = specialWords.indexOf(row.firstChild.firstChild.textContent);
-			if ( foundAt == -1)										continue;
+			let foundAt = specialWords.indexOf(row.firstChild.firstChild.textContent);
+			if ( foundAt === -1)							continue;
 			specialWords.splice(foundAt,1);
 			table.deleteRow(i);
 			rowCount--;
@@ -234,31 +264,30 @@ function wordFrequency(currentWord) {
 		if (fileLoaded)
 			highlightSpecialWords();
 	}
-	
-	//	load the Book of Mormon from disk
-    function readBlob() {
-	var xmlhttp = new XMLHttpRequest();
-	var url = "TheBookOfMormon.txt";
 
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			readTheBook(xmlhttp.responseText);
+	//	load the Book of Mormon from disk
+	function readBlob() {
+		let xmlhttp = new XMLHttpRequest();
+		let url = "TheBookOfMormon.txt";
+
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+				readTheBook(xmlhttp.responseText);
+			}
 		}
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
 	}
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-    }
 
 	//	we have the book loaded
 	//	split all of the text into separate lines
 	//	analyze each verse to extract all words and tally them
-function readTheBook(theBook) {
-	var status = document.getElementById('status');
-	allWords = {};
+	function readTheBook(theBook) {
+		allWords = {};
 
-        lines = theBook.split("\n");
-        /*
+		lines = theBook.split("\n");
+		/*
         THE BOOK OF MORMON
         An Account Written by THE HAND OF MORMON UPON PLATES TAKEN FROM THE PLATES OF NEPHI
         Wherefore, it is an abridgment of the record of the people of Nephi, and also of the Lamanites--Written to the Lamanites, who are a remnant of the house of Israel; and also to Jew and Gentile--Written by way of commandment, and also by the spirit of prophecy and of revelation--Written and sealed up, and hid up unto the Lord, that they might not be destroyed--To come forth by the gift and power of God unto the interpretation thereof--Sealed by the hand of Moroni, and hid up unto the Lord, to come forth in due time by way of the Gentile--The interpretation thereof by the gift of God.
@@ -270,71 +299,71 @@ function readTheBook(theBook) {
         1 Nephi 1:3  3 And I know that the record which I make is true; and I make it with mine own hand; and I make it according to my knowledge.
         1 Nephi 1:4  4 For it came to pass in the commencement of the first year of the reign of Zedekiah, king of Judah, (my father, Lehi, having dwelt at Jerusalem in all his days); and in that same year there came many prophets, prophesying unto the people that they must repent, or the great city Jerusalem must be destroyed.
         */
-        for (var l = 0; l < lines.length; l++) {
-            if (startOfBook(lines[l])) {
+		for (let l = 0; l < lines.length; l++) {
+			if (startOfBook(lines[l])) {
 				for (l++; l < lines.length && !startOfBook(lines[l]); l++) {
-                	if (lines[l].search('Chapter') >= 0)
-                    	l++;
-     	        	tallyWords(removeChapterRef(lines[l]), lines[l]);
-            	}
-            	if (l < lines.length && startOfBook(lines[l])) l--;
-        //    	if (l > 50 ) break;
-        	}
-    	}
+					if (lines[l].search('Chapter') >= 0)
+						l++;
+					tallyWords(removeChapterRef(lines[l]), lines[l]);
+				}
+				if (l < lines.length && startOfBook(lines[l])) l--;
+				//    	if (l > 50 ) break;
+			}
+		}
 
-        var tableList = "<TABLE id='wordList'><TR>" +
-        	"<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
-        	"<th onclick='callSort(this, 1)'><a href='#'>Frequency</a></th>" +
-        	"<th onclick='callSort(this, 2)'><a href='#'>Word</a></th>" +
-        	"</TR>";
-    	var row = 1;
-        for (var word in allWords) {
-			status.innerHTML = allWords[word];
-        	tableList += "<TR>"+
-                	        "<TD>" + row++ + "</TD>"+
-                    	    "<TD>" + allWords[word].count + "</TD>"+
-                            "<TD name='showReferences'>" + word  + "</TD>"+
-                	    "</TR>";
-        }
-        document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
-        fileLoaded = true;
+		let tableList = "<TABLE id='wordList'><TR>" +
+				"<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
+				"<th onclick='callSort(this, 1)'><a href='#'>Frequency</a></th>" +
+				"<th onclick='callSort(this, 2)'><a href='#'>Word</a></th>" +
+				"</TR>";
+		let row = 1;
+		for (let word in allWords) {
+			let rowText = `<TR>
+					<TD>${row++}</TD>
+					<TD>${allWords[word].count}</TD>
+					<TD name='showReferences'>${word}</TD>
+					</TR>`;
+			tableList += rowText;
+		}
+		document.getElementById('frequency').innerHTML = tableList + "</TABLE>";
+		fileLoaded = true;
 		highlightSpecialWords();
-		var x = document.getElementsByName('showReferences' );
-		for (var i = 0; i < x.length; i++) {
+		let x = document.getElementsByName('showReferences' );
+		for (let i = 0; i < x.length; i++) {
 			x[i].addEventListener( 'mouseover', function(evt) { showReferences(evt); }, false);
 		}
-        status.innerHTML = "";
-    }
+	}
 
 	//	eliminate the leading verse reference on each line
 	//	return JSON with list of words and the reference
-    function removeChapterRef(line, chapter) {
-    	var book;
-        var reference = line.split(":");
-        var words;
-        line = line.toLowerCase();
-    	book = reference[0];
-        line = line.slice(reference[0].length + 1, -1);
-        words = line.split(/\W/);
-    	book += ':' + words[0];
-        words = words.slice(3);
+	function removeChapterRef(line, chapter) {
+		let book;
+		let reference = line.split(":");
+		let words;
+		line = line.toLowerCase();
+		book = reference[0];
+		line = line.slice(reference[0].length + 1, -1);
+		words = line.split(/\W/);
+		book += ':' + words[0];
+		words = words.slice(3);
 
-        return {"words": words, "chapter":book};
-    }
+		return {"words": words, "chapter":book};
+	}
 
 	//	this is the only way to know that we have moved from one book to the next
 	function startOfBook(line) {
-        return (line.search('BOOK OF') >= 0 || line.search('WORDS OF') >= 0);
-    }
+		return (line.search('BOOK OF') >= 0 || line.search('WORDS OF') >= 0);
+	}
 
-	//	when the mouse hovers over a verse 
+	//	when the mouse hovers over a verse
 	//		display all references in the showVerse column
 	function showReferences(evt) {
-        var hoverWord = evt.target.textContent;		//	get word from the cell
+		let hoverWord = evt.target.textContent;		//	get word from the cell
 		wordFreq = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-		var ul = "<ul>";
-		ul += "<h3><strong>" + hoverWord + "</strong>" + " : " + allWords[hoverWord].count + "</h3>";	//	make the top entry the word we are listing
-		for ( r = 0; r < allWords[hoverWord].ref.length; r++) {
+		let ul = "";
+		ul += "<h4><strong>" + hoverWord + "</strong>" + " : " + allWords[hoverWord].count + "</h4>";	//	make the top entry the word we are listing
+		ul += "<ul>";
+		for ( let r = 0; r < allWords[hoverWord].ref.length; r++) {
 			ul += "<li class='showVerse'>" + allWords[hoverWord].ref[r];
 			let book = allWords[hoverWord].ref[r].split(' ')[0];
 			wordFreq[bookIndex[book]]++;
@@ -344,11 +373,11 @@ function readTheBook(theBook) {
 		wordFrequency(hoverWord);
 		//	get a list of all of the verses
 		//	give them all an event for mouse over and mouse out
- 	    var x = document.getElementsByClassName('showVerse' );
- 		for (var i = 0; i < x.length; i++) {
- 			x[i].addEventListener( 'mouseover', function(evt) { showVerse(hoverWord, evt.target.innerText); }, false);
- 	    	x[i].addEventListener( 'mouseout',  function(evt) { hideVerse(evt); }, false);
- 		}
+		let x = document.getElementsByClassName('showVerse' );
+		for (let i = 0; i < x.length; i++) {
+			x[i].addEventListener( 'mouseover', function(evt) { showVerse(hoverWord, evt.target.innerText); }, false);
+			x[i].addEventListener( 'mouseout',  function(evt) { hideVerse(evt); }, false);
+		}
 	}
 
 	//	the mouse is over a verse reference
@@ -356,112 +385,112 @@ function readTheBook(theBook) {
 	//		replace all references with bold, uppercase text
 	//		replace the special words section with the verse text
 	function showVerse (word, verseRef) {
-		var verse = localStorage.getItem(verseRef);
+		let verse = localStorage.getItem(verseRef);
 		verse = verse.replace(new RegExp("\\b " + word + "\\b","gi"), "<strong> " + word.toUpperCase() + "</strong>");
-        document.getElementById('verse').innerHTML = verse;
+		document.getElementById('verse').innerHTML = verse;
 		document.getElementById('words').className = 'hideMe';
 		document.getElementById('verse').className = 'showMe';
 	}
-	
+
 	//	the mouse has departed the verse reference
 	//		hide the verse text and show the special word section again
 	function hideVerse(evt) {
 		document.getElementById('words').className = 'showMe';
 		document.getElementById('verse').className = 'hideMe';
 	}
-	
+
 	//	is this word one of our special words
 	//		if so we want to assign a 'special' class id to it
-    function isSpecial(word, specialWords) {
-        for (var s = 0; s < specialWords.length; s++)
-            if (specialWords[s] == word) 
-            	return 'special';
-        return '';
-    }
+	function isSpecial(word, specialWords) {
+		for (let s = 0; s < specialWords.length; s++)
+			if (specialWords[s] === word)
+				return 'special';
+		return '';
+	}
 
 	//	This is why we wrote this code
 	//		wordsAndRef		the verse reference and a list of the words in the verse
 	//		line			the line 'as is' with reference and just text
 	//		save the line in localStorage
 	//		add the individual words to the allWords object, save each reference
-    function tallyWords(wordsAndRef, line) {
-    	
-    	var words = wordsAndRef.words;
-    	localStorage.setItem(wordsAndRef.chapter, line);
-    	
-    	//	loop through each word in the verse
-        for (var w = 0; w < words.length; w++) {
-            if (words[w].length == 0)
-                continue;
+	function tallyWords(wordsAndRef, line) {
+
+		let words = wordsAndRef.words;
+		localStorage.setItem(wordsAndRef.chapter, line);
+
+		//	loop through each word in the verse
+		for (let w = 0; w < words.length; w++) {
+			if (words[w].length === 0)
+				continue;
 
 			//	is there a reference to this word in the allWords list
-            if (typeof allWords[words[w]]  !== 'undefined') {
-            	allWords[words[w]].count += 1;
-            	//	we only need one verse reference list if the word is in the verse multiple times
-            	if (allWords[words[w]].ref.indexOf(wordsAndRef.chapter) == -1)
-				    allWords[words[w]].ref.push( wordsAndRef.chapter );
-            }
-            else {		//	new word in list
-            	allWords[words[w]] = { "count": 1, "ref":[wordsAndRef.chapter]};
+			if (typeof allWords[words[w]]  !== 'undefined') {
+				allWords[words[w]].count += 1;
+				//	we only need one verse reference list if the word is in the verse multiple times
+				if (allWords[words[w]].ref.indexOf(wordsAndRef.chapter) === -1)
+					allWords[words[w]].ref.push( wordsAndRef.chapter );
 			}
-        }
-    }
+			else {		//	new word in list
+				allWords[words[w]] = { "count": 1, "ref":[wordsAndRef.chapter]};
+			}
+		}
+	}
 
-//--------------------------------------------------------------------------
-//		our sorting algorithms
-//--------------------------------------------------------------------------
-    var lastSortCol = null;
+	//--------------------------------------------------------------------------
+	//		our sorting algorithms
+	//--------------------------------------------------------------------------
+	let lastSortCol = null;
 
-    function callSort(ele, column) {
-        ele.className = (ele.className == "ATOZ" || ele.className.length==0) ? "ZTOA" : "ATOZ";
-        if (lastSortCol !== null && lastSortCol !== ele)
-            lastSortCol.className = "";
-        lastSortCol = ele;
-        return sort_table_rows('wordList', column, (ele.className == "ATOZ") ? 1 : -1)
-    }
+	function callSort(ele, column) {
+		ele.className = (ele.className === "ATOZ" || ele.className.length === 0) ? "ZTOA" : "ATOZ";
+		if (lastSortCol !== null && lastSortCol !== ele)
+			lastSortCol.className = "";
+		lastSortCol = ele;
+		return sort_table_rows('wordList', column, (ele.className === "ATOZ") ? 1 : -1)
+	}
 
-    var is_number_pattern = /^\d+(\.\d+)?$/;
-    /* Column 0 is the first column */
-    function sort_table_rows(id, column_number, sortOrder) {
+	let is_number_pattern = /^\d+(\.\d+)?$/;
+	/* Column 0 is the first column */
+	function sort_table_rows(id, column_number, sortOrder) {
 
-        function sort_by_chosen_column(a, b) {
-            /* Fetch the text from the row, excluding spaces */
-            a = a.cells.item(column_number);
-            a = (a.innerText || a.textContent);
-            a = a.replace(/^\s+/, "").replace(/\s+$/, "");
+		function sort_by_chosen_column(a, b) {
+			/* Fetch the text from the row, excluding spaces */
+			a = a.cells.item(column_number);
+			a = (a.innerText || a.textContent);
+			a = a.replace(/^\s+/, "").replace(/\s+$/, "");
 
-            b = b.cells.item(column_number);
-            b = (b.innerText || b.textContent);
-            b = b.replace(/^\s+/, "").replace(/\s+$/, "");
+			b = b.cells.item(column_number);
+			b = (b.innerText || b.textContent);
+			b = b.replace(/^\s+/, "").replace(/\s+$/, "");
 
-            /* Special handling for numbers */
-            if (a.match(is_number_pattern) && b.match(is_number_pattern)) return (parseFloat(a) - parseFloat(b)) * sortOrder;
+			/* Special handling for numbers */
+			if (a.match(is_number_pattern) && b.match(is_number_pattern)) return (parseFloat(a) - parseFloat(b)) * sortOrder;
 
-            /* All the rest is alphabetical order */
-            else if (a < b) return -1 * sortOrder;
-            else if (a > b) return 1 * sortOrder;
-            else return 0;
-        }
-        
-        var table = document.getElementById(id);
-        /*
+			/* All the rest is alphabetical order */
+			else if (a < b) return -1 * sortOrder;
+			else if (a > b) return 1 * sortOrder;
+			else return 0;
+		}
+
+		let table = document.getElementById(id);
+		/*
          * To skip the header, ask for the tbodies. You actually can have
          * more than one.
          */
-        for (var i = 0; i < table.tBodies.length; i++) {
-            var tbody = table.tBodies.item(i);
-            /* Move into an array */
-            var rows = [];
-            while (tbody.rows.length > 1) {
-                rows.push(tbody.rows.item(1));
-                tbody.deleteRow(1);
-            }
-            /* Sort the array */
-            rows = rows.sort(sort_by_chosen_column);
-            /* Move back out */
-            while (rows.length > 0)
-                tbody.appendChild(rows.shift());
-        }
-        return false;
-    }
+		for (let i = 0; i < table.tBodies.length; i++) {
+			let tbody = table.tBodies.item(i);
+			/* Move into an array */
+			let rows = [];
+			while (tbody.rows.length > 1) {
+				rows.push(tbody.rows.item(1));
+				tbody.deleteRow(1);
+			}
+			/* Sort the array */
+			rows = rows.sort(sort_by_chosen_column);
+			/* Move back out */
+			while (rows.length > 0)
+				tbody.appendChild(rows.shift());
+		}
+		return false;
+	}
 </script>
