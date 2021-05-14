@@ -23,7 +23,7 @@
 	.hideMe 			{	display: none;  }
 	.showMe 			{	display: block; }
 
-	h4	{ margin: 4;}
+	h4	{ margin: 4px;}
 
 	.container {
 		position: relative;
@@ -141,9 +141,9 @@
 	let allWords = {};			//	Object to hold word and reference array
 	let specialWords = [];		//	array of words we want to analyze
 
-	document.getElementById('addHighlighting').addEventListener( 'click', function(evt) { addHighlighting(document.getElementById('special').value); }, false);
-	document.getElementById('readBook'       ).addEventListener( 'click', function(evt) { readBlob();   }, false);
-	document.getElementById('deleteSpecial'  ).addEventListener( 'click', function(evt) { deleteWord(); }, false);
+	document.getElementById('addHighlighting').addEventListener( 'click', () => { addHighlighting(document.getElementById('special').value); }, false);
+	document.getElementById('readBook'       ).addEventListener( 'click', () => { readBlob();   }, false);
+	document.getElementById('deleteSpecial'  ).addEventListener( 'click', () => { deleteWord(); }, false);
 
 	//	take the words in the entry field
 	//		save them to the highlightList
@@ -171,7 +171,7 @@
 
 			let row = table.insertRow( table.rows.length );
 			let oCell = row.insertCell(0);
-			oCell.innerHTML = "<input type='checkbox'><label class='showReferences2'>" + newWord + "</label></input>";
+			oCell.innerHTML = `<input type='checkbox'><label class='showReferences2'>${newWord}</label></input>`;
 			oCell = row.insertCell(1);
 			oCell.innerHTML = "" + allWords[newWord].count;
 		}
@@ -179,6 +179,8 @@
 		for (let i = 0; i < localStorage.length; i++) {
 			let verseText = localStorage.getItem(localStorage.key(i)).toLowerCase();
 			for ( let p = 0; p < phrases.length; p++ )  {
+let count = (verseText.match(new RegExp("\\b" + phrases[p] + "\\b","gi")) || []).length;
+console.log(count + " " + phrases[p]);
 				if (verseText.indexOf(phrases[p]) >= 0)	{
 					//	is there a reference to this word in the allWords list
 					if (typeof allWords[phrases[p]] !== 'undefined') {
@@ -194,7 +196,6 @@
 				}
 			}
 		}
-
 
 		for ( let i = 0; i < phrases.length; i++ ) {
 			let newPhrase = phrases[i];
@@ -227,7 +228,7 @@
 		let table = document.getElementById("wordList");
 		let tbody = table.tBodies.item(0);
 
-		for (let i = 1, row; row = table.rows[i]; i++) {
+		for (let i = 1, row; (row = table.rows[i]) !== undefined; i++) {
 			//iterate through rows
 			//rows would be accessed using the "row" variable assigned in the for loop
 			let className = isSpecial( row.cells[2].innerText, specialWords );
@@ -252,7 +253,7 @@
 		for(let i=1; i<rowCount; i++) {
 			let row = table.rows[i];
 			if(! row.firstChild.firstChild.checked )		continue;
-			let foundAt = specialWords.indexOf(row.firstChild.firstChild.textContent);
+			let foundAt = specialWords.indexOf(row.firstChild.textContent);
 			if ( foundAt === -1)							continue;
 			specialWords.splice(foundAt,1);
 			table.deleteRow(i);
@@ -375,8 +376,8 @@
 		//	give them all an event for mouse over and mouse out
 		let x = document.getElementsByClassName('showVerse' );
 		for (let i = 0; i < x.length; i++) {
-			x[i].addEventListener( 'mouseover', function(evt) { showVerse(hoverWord, evt.target.innerText); }, false);
-			x[i].addEventListener( 'mouseout',  function(evt) { hideVerse(evt); }, false);
+			x[i].addEventListener( 'mouseover', (evt) => showVerse(hoverWord, evt.target.innerText), false);
+			x[i].addEventListener( 'mouseout',  () => hideVerse(), false);
 		}
 	}
 
@@ -386,7 +387,7 @@
 	//		replace the special words section with the verse text
 	function showVerse (word, verseRef) {
 		let verse = localStorage.getItem(verseRef);
-		verse = verse.replace(new RegExp("\\b " + word + "\\b","gi"), "<strong> " + word.toUpperCase() + "</strong>");
+		verse = verse.replace(new RegExp("\\b" + word + "\\b","gi"), "<strong>" + word.toUpperCase() + "</strong>");
 		document.getElementById('verse').innerHTML = verse;
 		document.getElementById('words').className = 'hideMe';
 		document.getElementById('verse').className = 'showMe';
@@ -394,7 +395,7 @@
 
 	//	the mouse has departed the verse reference
 	//		hide the verse text and show the special word section again
-	function hideVerse(evt) {
+	function hideVerse() {
 		document.getElementById('words').className = 'showMe';
 		document.getElementById('verse').className = 'hideMe';
 	}
