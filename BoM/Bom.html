@@ -314,14 +314,14 @@ console.log(count + " " + phrases[p]);
 
 		let tableList = "<TABLE id='wordList'><TR>" +
 				"<th onclick='callSort(this, 0)'><a href='#'>Order</a></th>" +
-				"<th onclick='callSort(this, 1)'><a href='#'>Frequency</a></th>" +
+				"<th onclick='callSort(this, 1)'><a href='#'>Frequency<br>Times / Verses</a></th>" +
 				"<th onclick='callSort(this, 2)'><a href='#'>Word</a></th>" +
 				"</TR>";
 		let row = 1;
 		for (let word in allWords) {
 			let rowText = `<TR>
 					<TD>${row++}</TD>
-					<TD>${allWords[word].count}</TD>
+					<TD>${allWords[word].count} / ${allWords[word].ref.length}</TD>
 					<TD name='showReferences'>${word}</TD>
 					</TR>`;
 			tableList += rowText;
@@ -362,12 +362,15 @@ console.log(count + " " + phrases[p]);
 		let hoverWord = evt.target.textContent;		//	get word from the cell
 		wordFreq = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 		let ul = "";
-		ul += "<h4><strong>" + hoverWord + "</strong>" + " : " + allWords[hoverWord].count + "</h4>";	//	make the top entry the word we are listing
+		ul += "<h4><strong>'" + hoverWord + "'</strong>" + " appeared " + allWords[hoverWord].count + " times in " + allWords[hoverWord].ref.length + " verses</h4>";	//	make the top entry the word we are listing
 		ul += "<ul>";
-		for ( let r = 0; r < allWords[hoverWord].ref.length; r++) {
-			ul += "<li class='showVerse'>" + allWords[hoverWord].ref[r];
-			let book = allWords[hoverWord].ref[r].split(' ')[0];
-			wordFreq[bookIndex[book]]++;
+		for ( let reference of allWords[hoverWord].ref) {
+			ul += `<li class='showVerse'>${reference}</li>`;
+			let book = reference.split(' ')[0];
+			let verseText = localStorage.getItem(reference).toLowerCase();
+			let gregEx = new RegExp('\\b'+hoverWord+'\\b', "gi");
+			let count = verseText.match(gregEx).length;
+			wordFreq[bookIndex[book]] += count;
 		}
 		ul += "</ul>";
 		document.getElementById('references').innerHTML = ul;		// in the references column, stuff the list of all references
@@ -420,19 +423,19 @@ console.log(count + " " + phrases[p]);
 		localStorage.setItem(wordsAndRef.chapter, line);
 
 		//	loop through each word in the verse
-		for (let w = 0; w < words.length; w++) {
-			if (words[w].length === 0)
+		for (let word of words) {
+			if (word.length === 0)
 				continue;
 
 			//	is there a reference to this word in the allWords list
-			if (typeof allWords[words[w]]  !== 'undefined') {
-				allWords[words[w]].count += 1;
+			if (typeof allWords[word]  !== 'undefined') {
+				allWords[word].count += 1;
 				//	we only need one verse reference list if the word is in the verse multiple times
-				if (allWords[words[w]].ref.indexOf(wordsAndRef.chapter) === -1)
-					allWords[words[w]].ref.push( wordsAndRef.chapter );
+				if (allWords[word].ref.indexOf(wordsAndRef.chapter) === -1)
+					allWords[word].ref.push( wordsAndRef.chapter );
 			}
 			else {		//	new word in list
-				allWords[words[w]] = { "count": 1, "ref":[wordsAndRef.chapter]};
+				allWords[word] = { "count": 1, "ref":[wordsAndRef.chapter]};
 			}
 		}
 	}
