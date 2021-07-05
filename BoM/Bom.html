@@ -368,7 +368,7 @@ console.log(count + " " + phrases[p]);
 			ul += `<li class='showVerse'>${reference}</li>`;
 			let book = reference.split(' ')[0];
 			let verseText = localStorage.getItem(reference).toLowerCase();
-			let gregEx = new RegExp('\\b'+hoverWord+'\\b', "gi");
+			let gregEx = new RegExp(hoverWord, "gi");              // this will just look for the string not words
 			let count = verseText.match(gregEx).length;
 			wordFreq[bookIndex[book]] += count;
 		}
