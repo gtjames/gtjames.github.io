@@ -1,50 +1,51 @@
-<HTML id="myHtml">
+<HTML lang="en" id="myHtml">
 <HEAD>
-<TITLE>DOM Test</TITLE>
-<STYLE id=styleID>
-<!--
-  body 
-  {
-	font-size: 1em;
-  }
-  #CellG
-  {
-  	background-color: purple;
-  }
-//-->
-</style>
-<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="/js/dom.js"></SCRIPT>
+  <TITLE>DOM Test</TITLE>
+  <STYLE id=styleID>
+    body { font-size: 1em; }
+    #CellG { background-color: purple; }
+    table, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+  <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="../js/dom.js"></SCRIPT>
 </HEAD>
 
 <BODY id="myhtml2">
 <H1>This is a test page for DOM traversal.</H1>
-<p>This is a fun piece of code to explore the DOM. Click on a cell to see the underlying DOM structure</p>
-<table id='myTable' bgcolor=lightblue border="1">
+<p>This is a fun piece of code to explore the DOM. Click on a cell to see the underlying DOM structure.<br>
+  An event listener has been added to ALL TD tags. Click the BLUE cell in 'Cell F'</p>
+<table id='myTable' style="background-color: lightblue;">
   <tr id="Row1">
     <td id="CellA">Cell <b>A<br>This is a bold</b> text</td>
     <td id="CellB">
-      <font face="Arial Black" color="#FF0000">Cell B<br></font>
-    <i><strong>This is a Bold Italic Text</strong></i>
+      <span style="font-family: Arial Black; color: #FF0000; ">Cell B<br></span>
+      <i><strong>This is a Bold Italic Text</strong></i>
     </td>
     <td ID="CellC" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" >
       <form>
         <SPAN>Cell C<br>
         Form Test (the buttons don't do anything)<br>
         <br>
-        </SPAN><input type="radio" value="V1" checked name="R1">
+        </SPAN>
+        <label for="radioButton1"></label>
+        <input type="radio" value="V1" checked name="RB1" id="radioButton1">
+        <label for="radioButton2"></label>
+        <input type="radio" value="V2" checked name="RB1" id="radioButton2">
         <input type="submit" value="Submit" name="B1">
         <input type="reset" value="Reset" name="B2">
       </form>
     </td>
   </tr>
-  <tr id="Row2" bgcolor=yellow>
-    <td id="CellD" bgcolor=green>Cell D
+  <tr id="Row2" style="background-color: yellow">
+    <td id="CellD" style="background-color: green">Cell D
       <ul>
         <li>Item1</li><li>Item2</li>
         <li>Item3</li>
       </ul>
     </td>
-    <td ID="CellE" bgcolor=orange>Cell E
+    <td ID="CellE" style="background-color: orange">Cell E
       <ol>
         <li>One</li>
         <li ID="ElementE1">Two <b>(ElementlE1)</b>
@@ -55,15 +56,16 @@
         </li>
         <li>Three</li>
         <li>Four<br>
-          <img border="0" src="/images/BYUI.jpg" width="50" height="50"></li>
-          <img border="0" src="/images/UNT.jpg" width="50" height="40"></li>
-        <li>Five</li>
+          <img src="/images/BYUI.jpg" width=50px height=50px alt="">
+          <img src="/images/UNT.jpg" width=50px height=40px alt="">
+          Five
+        </li>
       </ol>
     </td>
     <td ID="CellF">
       <h1>Cell F (H1)</h1>
       <p>Subtables</p>
-      <table width="100%" bgcolor="#CCCCFF" border="1">
+      <table style="background-color: #CCCCFF; width: 100%">
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
@@ -71,20 +73,20 @@
         <tr>
           <td>&nbsp;</td>
           <td>
-            <table width="100%" bgcolor="#FFFFCC" border="2">
+            <table style="background-color: #FFFFCC; width:100%">
               <tr>
-                <td width="50%">
-                  <table border="1" width="100%" bgcolor="#0000FF">
+                <td style="width: 50%">
+                  <table style="background-color: #0000FF; width:100%">
                     <tr>
-                      <td width="100%">&nbsp;</td>
+                      <td style="width: 100%">&nbsp;</td>
                     </tr>
                   </table>
                 </td>
-                <td width="50%">&nbsp;</td>
+                <td style="width: 50%">&nbsp;</td>
               </tr>
               <tr>
-                <td width="50%">&nbsp;</td>
-                <td width="50%">&nbsp;</td>
+                <td style="width: 50%">&nbsp;</td>
+                <td style="width: 50%">&nbsp;</td>
               </tr>
             </table>
           </td>
@@ -101,57 +103,53 @@
       <pre>PRE</pre>
     </td>
     <td ID="CellH" style="color:#FF8000"><b>Cell H<br></b>
-    <img border="0" src="/images/BYUI.jpg" width="100" height="100">
-    <img border="0" src="/images/UNT.jpg" width="100" height="80">
+      <img src="/images/BYUI.jpg" width=100px height=100px alt="">
+      <img src="/images/UNT.jpg" width=100px height=80px alt="">
     </td>
-    <td ID="CellI" width="31%">Cell I&nbsp;</td>
+    <td ID="CellI" style="width: 31%">Cell I&nbsp;</td>
   </tr>
 </table>
 <script id="scriptID">
-var elements = document.getElementsByTagName("td");
-for (var i = 0; i<elements.length; i++ )
-{
-	elements[i].addEventListener("click",function(){
-			printDOMTree(this);
-		});
-}
+  let elements = document.getElementsByTagName("td");
+  Array.from(elements).forEach(td => td.addEventListener("click",() => printDOMTree(td)))
 
-function moveIt ( cellId1, cellId2 ) {
-	var elements1 = document.getElementById(cellId1);
-	var elements2 = document.getElementById(cellId2);
-	
-	var beforeOne = elements1.nextElementSibling;
-	var beforeTwo = elements2.nextElementSibling;
-	
-	var parent1 = elements1.parentNode;
-	var parent2 = elements2.parentNode;
-	
-	parent1.removeChild(elements1);
-	parent2.removeChild(elements2);
-	
-	parent1.insertBefore(beforeTwo, elements1);
-	parent2.insertBefore(beforeOne, elements2);
-}
+  //  or you can do it the long way
+  // for (let td of elements)
+  // {
+  //   td.addEventListener("click",function(){
+  //     printDOMTree(this);
+  //   });
+  // }
+
+  function moveIt ( cellId1, cellId2 ) {
+    let elements1 = document.getElementById(cellId1);
+    let elements2 = document.getElementById(cellId2);
+
+    let beforeOne = elements1.nextElementSibling;
+    let beforeTwo = elements2.nextElementSibling;
+
+    let parent1 = elements1.parentNode;
+    let parent2 = elements2.parentNode;
+
+    parent1.removeChild(elements1);
+    parent2.removeChild(elements2);
+
+    parent1.insertBefore(beforeTwo, elements1);
+    parent2.insertBefore(beforeOne, elements2);
+  }
 
 </script>
 
-<p>Enter an element ID (CellA...CellI, ElementE1, Row1,Row2,myTable,myHtml)
-<p>Click the button to see the DOM tree:
-<input type="text" value="CellA" id="CellID"/>
-<input ID="inp" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" type="submit" value="Submit"> </p>
+<p>Enter an element ID (CellA...CellI, ElementE1, Row1,Row2,myTable,myHtml,scriptID)<p>
+  <label for="CellID">Click the button to see the DOM tree for the ID entered:</label>
+  <input type="text" value="CellA" id="CellID"/>
+  <input ID="inp" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" type="submit" value="Submit"> </p>
 
-<p>Move this ID 
+<label for="Cell1">(WIP) Move this ID</label>
 <input type="text" id="Cell1"/>
-<p>to this ID
+<label for="Cell2">to this ID</label>
 <input type="text" id="Cell2"/>
-<input ID="inp" onClick="moveIt(document.getElementById('Cell1').value, document.getElementById('Cell2').value);" type="submit" value="Submit"> </p>
-
-<p>
-found some of the source code from this guy<br>
-(C) F. Permadi<a href="mailto:permadi@permadi.com"><br>
-permadi@permadi.com</a><br>
-</p>
+<input ID="inp2" onClick="moveIt(document.getElementById('Cell1').value, document.getElementById('Cell2').value);" type="submit" value="Submit">
 
 </BODY>
 </HTML>
-
