@@ -1,7 +1,7 @@
 // UI comp
 //https://medium.com/swlh/build-your-own-hi-siri-with-80-lines-of-javascript-code-653540c77502
 const startBtn = document.createElement("button");
-startBtn.innerHTML = "Speak to me";
+startBtn.innerHTML = "How can I help?";
 const result = document.createElement("div");
 const processing = document.createElement("p");
 document.write("<body><h1>My Siri</h1><p>Give it a try with 'hello', 'how are you', 'what's your name', 'what time is it', 'stop', ... </p></body>");
