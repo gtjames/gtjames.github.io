@@ -1,6 +1,6 @@
 function flip (event)
 {
-	var element = event.currentTarget;
+	let element = event.currentTarget;
 	/* Toggle the setting of the classList attribute */
 	/* this will flip the card the other direction */
 	element.classList.toggle('flipped')
@@ -11,18 +11,18 @@ var		bad = 1, oldKey = "", attempts = {}, teams = {};
 function completeCard(ele) 
 {
 	var	answerKey = ele.id.slice(0,-1);
-	var team      = ele.id.slice(5,6);
-	var card = JSON.parse(localStorage.getItem(answerKey));
+	let team      = ele.id.slice(5,6);
+	let card = JSON.parse(localStorage.getItem(answerKey));
 	if (card === null) return;
 	
 	var	frontFace = document.getElementById("front" + answerKey);
 	var	backFace  = document.getElementById("back"  + answerKey);
 
-	if (oldKey != answerKey) bad = 1;
+	if (oldKey !== answerKey) bad = 1;
 	oldKey = answerKey
 	switch (team * 1)
 	{
-		case	0:	bad *= -1;	document.getElementById(ele.id).src = (bad == -1) ? "images/minus.png" : "images/Team0.png"; return;
+		case	0:	bad *= -1;	document.getElementById(ele.id).src = (bad === -1) ? "images/minus.png" : "images/Team0.png"; return;
 		case	1:	
 		case	2:	
 		case	3:	
@@ -30,7 +30,7 @@ function completeCard(ele)
 		case	5:	backFace.innerHTML = card.question; return;
 	}
 	
-	if (bad == 1)
+	if (bad === 1)
 	{
 		frontFace.innerHTML  =  "Team " + team;
 		frontFace.classList.add("Color"  + team);
@@ -40,7 +40,7 @@ function completeCard(ele)
 	else
 	{
 		attempts[answerKey]++;
-		if (attempts[answerKey] == 4)
+		if (attempts[answerKey] === 4)
 		{
 			localStorage.removeItem(answerKey);
 			frontFace.innerHTML = "Oops!";
@@ -57,8 +57,8 @@ function completeCard(ele)
 function buildTable(response) 
 {
 	localStorage.clear();
-	var jeopardy = JSON.parse(response);
-	var out = "";
+	let jeopardy = JSON.parse(response);
+	let out;
 
 	out =	"<table id=JeoparyBoard><th>Team #</th>";
 	for(i = 0; i < jeopardy.categories.length; i++) 	
@@ -73,22 +73,22 @@ function buildTable(response)
 		{
 			if (row >= jeopardy.counter) 
 				break;
-			var category = jeopardy.categories[cat];
+			let category = jeopardy.categories[cat];
 			out += "<td>";
 			out += "<div class='flip-container' >";
 			out += "<div id='card' class='card' onclick='flip(event)'>";
 			out += 		"<div id='frontR" + row + "-C" + cat + "' class='front face value" + row + "' ></div>";
 			out += 		"<div id='backR"  + row + "-C" + cat + "'  class='back face'><p>" + category.answers[row].answer + "<br>";
-			for (var team = 0; team < jeopardy.teamCount; team++)
-				out +=	 	"<img id='R"  + row + "-C" + cat + team + "' src='images/Team" + team + ".png' onclick='completeCard(this)'/>";
-			out += 			"<img id='R"  + row + "-C" + cat + "5' src='images/Answer.png' onclick='completeCard(this)'/>";
+			for (let team = 0; team < jeopardy.teamCount; team++)
+				out +=	 	"<img alt='' id='R"  + row + "-C" + cat + team + "' src='images/Team" + team + ".png' onclick='completeCard(this)'/>";
+			out += 			"<img alt='' id='R"  + row + "-C" + cat + "5' src='images/Answer.png' onclick='completeCard(this)'/>";
 			out += 			"</p></div>";
 			out += "</div></div>";
 			out += "</td>";
 						
 			if(typeof(Storage) !== "undefined") 
 			{
-				var key = "R" + row + "-C" + cat;
+				let key = "R" + row + "-C" + cat;
 				attempts[key] = 0;
 				localStorage.setItem(key , JSON.stringify(category.answers[row]));
 			}
@@ -103,14 +103,14 @@ function buildTable(response)
 
 function getJSON()
 {
-	var xmlhttp = new XMLHttpRequest();
-	var url = "js/jeopardy.json";
+	let xmlhttp = new XMLHttpRequest();
+	let url = "js/jeopardy.json";
 	
 	xmlhttp.onreadystatechange=function()	
-							{
-								if (xmlhttp.readyState == 4)		//	 && xmlhttp.status == 200 
-									buildTable(xmlhttp.responseText);
-							}
+	{
+		if (xmlhttp.readyState === 4)		//	 && xmlhttp.status == 200
+			buildTable(xmlhttp.responseText);
+	}
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 }
