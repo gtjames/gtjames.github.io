@@ -2,7 +2,7 @@ function flip (event)
 {
 	var element = event.currentTarget;
 	/* Toggle the setting of the classList attribute */
-	/* this will flip the card the orther direction */
+	/* this will flip the card the other direction */
 	element.classList.toggle('flipped')
 }
 
