@@ -343,7 +343,7 @@
 		function readBlob() {
 			var xobj = new XMLHttpRequest();
     		xobj.overrideMimeType("application/text");
-    		xobj.open('GET', './theBookOfMormon.txt', true);
+    		xobj.open('GET', './TheBookOfMormon.txt', true);
     		xobj.onreadystatechange = function() {
         		if (xobj.readyState == 4 && (xobj.status === 200 || xobj.status === 0) ) {
             		// .open will NOT return a value but simply returns undefined in async mode so use a callback
