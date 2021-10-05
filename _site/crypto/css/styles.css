@@ -1,0 +1,28 @@
+.jumbotron {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  background-color: #0080e7;
+}
+
+.list-group-item-action:hover {
+  background-color: #1c1e22;
+}
+
+.list-overview {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.badge {
+  font-size: 1em;
+}
+
+body {background-color: lightblue;}
+.card {background-color: lightgrey;}
+
+tr:nth-child(5n) { background-color: steelblue;}
+:nth-child(5n) { background-color: lightyellow;}
+
+tr:nth-child(7n) { background-color: lightcoral;}
+:nth-child(7n) { background-color: lightcoral;}
+
+tr:nth-last-child(1){ background-color: lightgrey;}

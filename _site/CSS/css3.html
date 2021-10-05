@@ -1,0 +1,114 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<link href="css3.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+	<h3>Hover to automatically trigger the rotations</h3>
+	<p><button onclick="useJS('JSAndCSS')">Trigger Rotation</button> Transformation with JavaScript. Click again to undo. The code just adds a class to the div to rotate the div. A second click removes class and the transform reverses.</p>
+	<div id='JSAndCSS' class="block1 rotate">Hover over me</div>
+
+	<hr>
+	<h3>Hover over me and I change immediately.</h3>
+	<p><button onclick="addTransitionTime()">Inject Transition time</button> Click again to remove the transition time.</p>
+	<p><button onclick="useJS('transitionDiv')">Trigger Rotation</button> Transformation with JavaScript.</p>
+	<div id="transitionDiv">
+		<h4>Go CSS!!</h4>
+	</div>
+
+	<hr>
+	<h3>Try out different styles using JavaScript</h3>
+	<button onclick="flipStyle()">Rotate through some styles!</button>
+	<p id="newDiv">Now, let's add a new style element and attach it to this paragraph!</p>
+
+	<hr>
+	<h3>Form fields that grow and get your attention</h3>
+	<form id="form">
+		First name: <input id="field" type="text" name="firstname"><br>
+		 Last name: <input id="field" type="text" name="lastname">
+	</form>
+
+</body>
+<script>
+	var styleIndex = 0;
+	var transitionTime = 2;
+
+	/*
+		useJS
+			left alone the div only changes on a hover event.
+			Click on the button and we add a new class to the element
+			The 'rollover' class will cause the element to inherit the CSS defined
+			for that class and BOOM the div will rotate
+
+			I have made this class generic. Pass in an elementId and it will
+			add or remove the rollover class to any element you specific.
+			Then that element will start to rotate
+	*/
+	function useJS(elementId) {
+		var x = document.getElementById(elementId);
+		if (x.classList.contains('rollover')) x.classList.remove("rollover");
+		else x.classList.add("rollover");
+	}
+
+	/*
+		addTransitionTime
+			This function will set the transition time to 2 or 0 seconds.
+			It will toggle back and forth between them.
+			Hover after the button click to see the change.
+	*/
+	function addTransitionTime() {
+		//	set transition = "all 2s or "all 0s"
+		document.getElementById("transitionDiv").style.transition = "all " + transitionTime + "s";
+		transitionTime = (transitionTime == 2) ? 0 : 2;
+	}
+
+	/*
+		flipStyle
+			check first to see if a newStyle element exists. if so remove it
+			now create a new STYLE element.
+			Give it an ID so we can grab it later to delete
+			create a text node. This is just a generic text node you could add to any element
+			now we add it to our STYLE element and it becomes a CSS definition for any element
+			with the id of 'newDiv'
+			We will alternate through three different CSS definintions just to show we can add what ever we want
+	*/
+	function flipStyle(style) {
+		//	Get the Style element, if it exists
+		var oldStyle = document.getElementById('newStyle');
+
+		//	find the parent and then have the parent remove the child
+		if (oldStyle != undefined)
+			oldStyle.parentNode.removeChild(oldStyle);
+
+		//	create a new element. This element happens to be a <STYLE> element
+		//	Give it an id so we can get a hold of it latter
+		var newStyle = document.createElement("STYLE");
+		newStyle.id = 'newStyle';
+
+		//	we can use any number of styles here if we like
+		var s;
+		var fontSize = Math.floor(Math.random() * 20) + 10;	// generate a number between 10 and 10+19 for the fontSize
+		switch (styleIndex % 3) {
+			case 0: //	white on red background, large font and italic
+				s = document.createTextNode("#newDiv {background-color: red; color: white; font-size: " + fontSize + "px; font-style: italic;}");
+				break;
+			case 1: //	yellow on blue background
+				s = document.createTextNode("#newDiv {background-color: blue; color: yellow; font-size: " + fontSize + "px;}");
+				break;
+			case 2: //	set styles back to the initial settings for the element
+				s = document.createTextNode("#newDiv {background-color: initial; color: initial; font-size: initial; font-style: initial;}");
+				break;
+		}
+		styleIndex++;
+
+		//	Add style attributes to our style element
+		newStyle.appendChild(s);
+
+		//	add the style element to the document
+		document.head.appendChild(newStyle);
+	}
+</script>
+
+</html>
