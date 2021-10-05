@@ -1,0 +1,41 @@
+body {
+  background-color: #F5F5F5;
+  font-color: #444444;
+  font-family: Georgia, serif; }
+
+nav:target + header .close-menu, .open-menu {
+  font-size: 1.5em;
+  display: inline;
+  background-color: #E6E6E6;
+  padding: 1em;
+  margin-left: -7px;
+  height: 1em;
+  width: 1em; }
+
+nav:target + header .open-menu, .close-menu {
+  display: none; }
+
+nav {
+  width: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: width 0.3s ease;
+  background-color: #E6E6E6; }
+  nav a {
+    display: block; }
+  nav:target {
+    width: 20%; }
+    nav:target + header {
+      width: 80%; }
+
+header {
+  width: 100%;
+  float: right;
+  transition: width 0.3s ease; }
+  header a {
+    text-decoration: none; }
+
+/*# sourceMappingURL=test.css.map */

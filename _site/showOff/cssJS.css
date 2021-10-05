@@ -1,0 +1,61 @@
+main {
+    height: 400px;
+    background: #aff767;
+}
+
+.children {
+   display: flex;
+}
+
+.flip-card {
+    width: 240px;
+    height: 200px;
+    margin: 20px;
+    padding: 10px 10px;
+}
+
+.flip-card > .front {
+    position: absolute;
+	-webkit-transform: perspective(600px) rotateY(0deg);
+	transform: perspective(600px) rotateY(0deg);
+	background: #f2db30;
+    width: 240px;
+    height: 200px;
+    border-radius: 7px;
+    border: 8px solid white;
+    -webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	transition: -webkit-transform .5s linear 0s;
+	transition: transform .5s linear 0s;
+}
+
+.flip-card > .back {
+	position: absolute;
+	-webkit-transform: perspective(600px) rotateY(180deg);
+	transform: perspective(600px) rotateY(180deg);
+	background: #00e5e6;
+    width:240px;
+    height:200px;
+    border-radius: 7px;
+    border: 8px solid white;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	transition: -webkit-transform .5s linear 0s;
+	transition: transform .5s linear 0s;
+}
+
+.flip-card:hover > .front, .flip-card > .frontFlip  {
+	-webkit-transform: perspective(600px) rotateY(-180deg);
+	transform: perspective(600px) rotateY(-180deg);
+}
+
+.flip-card:hover > .back, .flip-card > .backFlip  {
+	-webkit-transform: perspective(600px) rotateY(0deg);
+	transform: perspective(600px) rotateY(0deg);
+}
+
+.front {
+    text-align: center;
+    padding-top: 10px;
+    font-family: 'Oswald', sans-serif;
+}

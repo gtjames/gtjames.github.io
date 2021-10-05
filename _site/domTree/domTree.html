@@ -1,0 +1,155 @@
+<HTML lang="en" id="myHtml">
+<HEAD>
+  <TITLE>DOM Test for the strong minded</TITLE>
+  <STYLE id=styleID>
+    body { font-size: 1em; }
+    #CellG { background-color: purple; }
+    table, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+  <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="../js/dom.js"></SCRIPT>
+</HEAD>
+
+<BODY id="myhtml2">
+<H1>Traversing the DOM</H1>
+<p>This is a fun piece of code to explore the DOM. Click on a cell to see the underlying DOM structure.<br>
+  An event listener has been added to ALL TD tags. Click the BLUE cell in 'Cell F'. We have TDs inside of TDs ...</p>
+<table id='myTable' style="background-color: lightblue;">
+  <tr id="Row1">
+    <td id="CellA">Cell <b>A<br>This is a bold</b> text</td>
+    <td id="CellB">
+      <span style="font-family: Arial Black; color: #FF0000; ">Cell B<br></span>
+      <i><strong>This is a Bold Italic Text</strong></i>
+    </td>
+    <td ID="CellC" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" >
+      <form>
+        <SPAN>Cell C<br>
+        Form Test (the buttons don't do anything)<br>
+        <br>
+        </SPAN>
+        <label for="radioButton1"></label>
+        <input type="radio" value="V1" checked name="RB1" id="radioButton1">
+        <label for="radioButton2"></label>
+        <input type="radio" value="V2" checked name="RB1" id="radioButton2">
+        <input type="submit" value="Submit" name="B1">
+        <input type="reset" value="Reset" name="B2">
+      </form>
+    </td>
+  </tr>
+  <tr id="Row2" style="background-color: yellow">
+    <td id="CellD" style="background-color: green">Cell D
+      <ul>
+        <li>Item1</li><li>Item2</li>
+        <li>Item3</li>
+      </ul>
+    </td>
+    <td ID="CellE" style="background-color: orange">Cell E
+      <ol>
+        <li>One</li>
+        <li ID="ElementE1">Two <b>(ElementlE1)</b>
+          <ul>
+            <li>TwoA</li>
+            <li>TwoB</li>
+          </ul>
+        </li>
+        <li>Three</li>
+        <li>Four<br>
+          <img alt="" height=50px src="/images/BYUI.jpg" width=50px>
+          <img alt="" height=40px src="/images/UNT.jpg" width=50px>
+          Five
+        </li>
+      </ol>
+    </td>
+    <td ID="CellF">
+      <h1>Cell F (H1)</h1>
+      <p>Subtables</p>
+      <table style="background-color: #CCCCFF; width: 100%">
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <table style="background-color: #FFFFCC; width:100%">
+              <tr>
+                <td style="width: 50%">
+                  <table style="background-color: #0000FF; width:100%">
+                    <tr>
+                      <td style="width: 100%">&nbsp;</td>
+                    </tr>
+                  </table>
+                </td>
+                <td style="width: 50%">&nbsp;</td>
+              </tr>
+              <tr>
+                <td style="width: 50%">&nbsp;</td>
+                <td style="width: 50%">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr id="Row3">
+    <td ID="CellG">Cell G
+      <h1>H1</h1>
+      <h2>H2</h2>
+      <h3>H3</h3>
+      <h4>H4</h4>
+      <pre>PRE</pre>
+    </td>
+    <td ID="CellH" style="color:#FF8000"><b>Cell H<br></b>
+      <img src="/images/BYUI.jpg" width=100px height=100px alt="">
+      <img src="/images/UNT.jpg" width=100px height=80px alt="">
+    </td>
+    <td ID="CellI" style="width: 31%">Cell I&nbsp;</td>
+  </tr>
+</table>
+<script id="scriptID">
+  let elements = document.getElementsByTagName("td");
+  Array.from(elements).forEach(td => td.addEventListener("click",() => printDOMTree(td)))
+
+  //  or you can do it the long way
+  // for (let td of elements)
+  // {
+  //   td.addEventListener("click",function(){
+  //     printDOMTree(this);
+  //   });
+  // }
+
+  function moveIt ( cellId1, cellId2 ) {
+    let elements1 = document.getElementById(cellId1);
+    let elements2 = document.getElementById(cellId2);
+
+    let beforeOne = elements1.nextElementSibling;
+    let beforeTwo = elements2.nextElementSibling;
+
+    let parent1 = elements1.parentNode;
+    let parent2 = elements2.parentNode;
+
+    parent1.removeChild(elements1);
+    parent2.removeChild(elements2);
+
+    parent1.insertBefore(beforeTwo, elements1);
+    parent2.insertBefore(beforeOne, elements2);
+  }
+
+</script>
+
+<p>Enter an element ID (CellA...CellI, ElementE1, Row1,Row2,myTable,myHtml,scriptID)<p>
+  <label for="CellID">Click the button to see the DOM tree for the ID entered:</label>
+  <input type="text" value="CellA" id="CellID"/>
+  <input ID="inp" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" type="submit" value="Submit"> </p>
+
+<label for="Cell1">(WIP) Move this ID</label>
+<input type="text" id="Cell1"/>
+<label for="Cell2">to this ID</label>
+<input type="text" id="Cell2"/>
+<input ID="inp2" onClick="moveIt(document.getElementById('Cell1').value, document.getElementById('Cell2').value);" type="submit" value="Submit">
+
+</BODY>
+</HTML>

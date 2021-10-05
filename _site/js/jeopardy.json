@@ -1,0 +1,187 @@
+{
+	"teamCount":"5",
+	"answerCount":"5",
+	"categories":
+	[
+		{
+			"category":"Java",
+			"answers":
+			[
+    			{
+					"amount":	"200",
+					"question":	"What is Java?",
+					"answer":	"This langage runs on move than 3,000,000,000 devices",
+					"extra":	1
+    			},
+    			{
+					"amount":	"400",
+					"question":	"What is Java?",
+					"answer":	"This is the primary development language for most mobile devices",
+					"extra":	1
+    			},
+    			{
+					"amount":	"600",
+					"question":	"What is Java?",
+					"answer":	"This language is supported by the most development tools and IDEs?",
+					"extra":	1
+    			},
+    			{
+					"amount":	"800",
+					"question":	"What is Java?",
+					"answer":	"This language is taught in a 9 week boot camp at Edge Tech",
+					"extra":	1
+    			},
+    			{
+					"amount":	"1000",
+					"question":	"What is Java?",
+					"answer":	"This language can you start learning today with free downloads from the internet",
+					"extra":	1    
+				}
+			]
+		},
+		{
+			"category":"C#",
+			"answers":	
+			[
+		    	{
+					"amount":	"200",
+					"question":	"What is C#?",
+					"answer":	"This language is supported by one of the largest companies in the world",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"400",
+					"question":	"What is C#?",
+					"answer":	"This language is one of the most sought after skills in the DFW IT Market",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"600",
+					"question":	"What is C#?",
+					"answer":	"This language offers the most consistency in development tools",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"800",
+					"question":	"What is C#?",
+					"answer":	"This language is taught in a 9 week boot camp at Edge Tech?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"1000",
+					"question":	"What is C#?",
+					"answer":	"Some other wonderful thing?",
+					"extra":	1
+				}
+			]
+		},
+		{
+			"category":"JavaScript",
+			"answers":	
+			[
+		    	{
+					"amount":	"200",
+					"question":	"What is JavaScript?",
+					"answer":	"This language is the common denominator for all web browsers.",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"400",
+					"question":	"What is JavaScript?",
+					"answer":	"What language lets you rapidly create simple web apps?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"600",
+					"question":	"What is JavaScript?",
+					"answer":	"What language is supported on every browser?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"800",
+					"question":	"What is JavaScript?",
+					"answer":	"What language is taught in a 9 week boot camp at Edge Tech?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"1000",
+					"question":	"What is JavaScript?",
+					"answer":	"What language can you start learning today with free downloads from the internet?",
+					"extra":	1
+				}
+			]
+		},
+		{
+			"category":"Edge Tech Academy",
+			"answers":	
+			[
+		    	{
+					"amount":	"200",
+					"question":	"What is Edge Tech Academy?",
+					"answer":	"They offer a free 3 week training course in Web development for $0?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"400",
+					"question":	"What is Edge Tech Academy?",
+					"answer":	"They offer training in state of the art languages for fullstack web development?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"600",
+					"question":	"What is Edge Tech Academy?",
+					"answer":	"Who has two of the coolest IT trainers this planet has ever seen?",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"800",
+					"question":	"What is Edge Tech Academy?",
+					"answer":	"They are starting a 9 week Java or JavaScript source in Oct",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"1000",
+					"question":	"What is Edge Tech Academy?",
+					"answer":	"They train you to create full-stack web applications you can be proud of",
+					"extra":	1
+				}
+			]
+		},
+		{
+			"category":"",
+			"answers":	
+			[
+		    	{
+					"amount":	"200",
+					"question":	"",
+					"answer":	"",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"400",
+					"question":	"",
+					"answer":	"",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"600",
+					"question":	"",
+					"answer":	"",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"800",
+					"question":	"",
+					"answer":	"",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"1000",
+					"question":	"",
+					"answer":	"",
+					"extra":	1
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"version": 3,
+	"file": "test.css",
+	"sources": [
+		"test.scss",
+		"_sass/_variables.scss",
+		"_sass/_mixins.scss"
+	],
+	"sourcesContent": [
+		"@import \"variables\";\n@import \"mixins\";\n\nbody {\n  background-color: $background-color;\n  font-color: $text-color;\n  font-family: $text-font;\n}\n\n%show-menu {\n  font-size: 1.5em;\n  display: inline;\n  background-color: $secondary-background-color;\n  padding: 1em;\n  margin-left: -7px;\n  height: 1em;\n  width: 1em;\n}\n\n%hide-menu {\n  display: none;\n}\n\n.open-menu {\n  @extend %show-menu;\n}\n\n.close-menu {\n  @extend %hide-menu;\n}\n\nnav {\n  width: 0;\n  overflow: hidden;\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  transition: width 0.3s ease;\n  background-color: $secondary-background-color;\n  a {\n    display: block;\n  }\n  &:target {\n    width: 20%;\n    + header {\n      width: 80%;\n      .open-menu {\n        @extend %hide-menu;\n      }\n      .close-menu {\n        @extend %show-menu;\n      }\n    }\n  }\n}\n\nheader {\n  width: 100%;\n  float: right;\n  transition: width 0.3s ease;\n  a {\n    text-decoration: none;\n  }\n}\n",
+		"//////////////////////\n// COLORS           //\n//////////////////////\n\n// Color definitions\n$primary-color: #F5F5F5;\n$secondary-color: #E6E6E6;\n$tertiary-color: lightblue;\n\n// Font colors\n$text-color: #444444;\n$heading-color: $text-color;\n\n// Background colors\n$background-color: $primary-color;\n$secondary-background-color: $secondary-color;\n\n//////////////////////\n// FONTS            //\n//////////////////////\n$serif-font: Georgia, serif;\n$sans-serif-font: Helvetica, Arial, sans-serif;\n\n$text-font: $serif-font;\n$heading-font: $sans-serif-font;\n",
+		"// http://caniuse.com/#search=transform\n@mixin transform($transform...) {\n  -webkit-transform: $transform;\n          transform: $transform;\n}\n\n// http://caniuse.com/#search=transition\n@mixin transition($transition...) {\n  -webkit-transition: $transition;\n          transition: $transition;\n}\n\n// http://caniuse.com/#search=transition\n@mixin transition-delay($transition-delay...) {\n  -webkit-transition-delay: $transition-delay;\n          transition-delay: $transition-delay;\n}\n"
+	],
+	"names": [],
+	"mappings": "AAGA,AAAA,IAAI,CAAC;EACH,gBAAgB,ECCF,OAAO;EDArB,UAAU,ECKC,OAAO;EDJlB,WAAW,ECcA,OAAO,EAAE,KAAK,GDb1B;;AAwBD,AAtBA,GAsBG,CAYC,MAAM,GAEJ,MAAM,CAKN,WAAW,EA3BjB,UAAU,CAdC;EACT,SAAS,EAAE,KAAK;EAChB,OAAO,EAAE,MAAM;EACf,gBAAgB,ECNA,OAAO;EDOvB,OAAO,EAAE,GAAG;EACZ,WAAW,EAAE,IAAI;EACjB,MAAM,EAAE,GAAG;EACX,KAAK,EAAE,GAAG,GACX;;AAcD,AAZA,GAYG,CAYC,MAAM,GAEJ,MAAM,CAEN,UAAU,EApBhB,WAAW,CARA;EACT,OAAO,EAAE,IAAI,GACd;;AAUD,AAAA,GAAG,CAAC;EACF,KAAK,EAAE,CAAC;EACR,QAAQ,EAAE,MAAM;EAChB,QAAQ,EAAE,KAAK;EACf,GAAG,EAAE,CAAC;EACN,IAAI,EAAE,CAAC;EACP,MAAM,EAAE,IAAI;EACZ,UAAU,EAAE,eAAe;EAC3B,gBAAgB,ECjCA,OAAO,GDiDxB;EAxBD,AASE,GATC,CASD,CAAC,CAAC;IACA,OAAO,EAAE,KAAK,GACf;EAXH,AAYE,GAZC,CAYC,MAAM,CAAC;IACP,KAAK,EAAE,GAAG,GAUX;IAvBH,AAcI,GAdD,CAYC,MAAM,GAEJ,MAAM,CAAC;MACP,KAAK,EAAE,GAAG,GAOX;;AAIL,AAAA,MAAM,CAAC;EACL,KAAK,EAAE,IAAI;EACX,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,eAAe,GAI5B;EAPD,AAIE,MAJI,CAIJ,CAAC,CAAC;IACA,eAAe,EAAE,IAAI,GACtB"
+}

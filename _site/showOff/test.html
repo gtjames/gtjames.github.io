@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>DOM Manipulation</title>
+		<script>
+            function insertBeforeX() {
+                var newItem = document.createElement("li");
+                newItem.innerText = "Toyota"
+                var list = document.getElementById("carList");
+                list.insertBefore(newItem, list.childNodes[0]);
+            }
+            function removeChildX() {
+                var list = document.getElementById("carList");
+                list.removeChild(list.childNodes[0]);
+            }
+
+            function appendChildX() {
+                var newItem = document.createElement("li");
+                newItem.innerText = "Honda"
+                var list = document.getElementById("carList");
+                list.appendChild(newItem)
+
+            }
+
+            function creatingElementX(){
+                var newParagraph = document.createElement("p");
+                newParagraph.innerText = "This is new paragraph."
+                document.body.appendChild(newParagraph);
+            }
+		</script>
+    </head>
+    <body>
+        <h1>Janine Ortiz's 261 Sandbox</h1>
+        <h2>DOM Manipulation Using createElement, appendChild, insertBefore, removeChild, etc.</h2>
+
+		<div>
+				<p>Insert an item to the beginning list.</p>
+				<button onclick="insertBeforeX()">Insert Before</button>
+
+				<p>Remove the first item in the list</p>
+				<button onclick="removeChildX()">Remove First</button>
+
+				<p>Add an item to the end of the list</p>
+				<button onclick="appendChildX()">Append to end</button>
+
+			<h4>Creating New elements</h4>
+				<p id="p1">This is the first paragraph.</p>
+                <p id="p2">This is the second paragraph.</p>
+                <button onclick="creatingElementX()">Create</button>
+
+		</div>
+    </body>
+</html>

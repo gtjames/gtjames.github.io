@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+div {
+  width: 100px;
+  height: 100px;
+  background: Chartreuse;
+  transition: width 2s, height 3s, background 3s, transform 2s, border-radius 2s, box-shadow 2s, padding 2s;
+}
+
+.bgcolor:hover { background: green; }
+.all:hover     { background: magenta; border-radius: 50px; transform: rotate(180deg);  }
+.width:hover   { background: orange;  width:  200px; }
+.height:hover  { background: yellow;  height: 120px; }
+.radius:hover  { background: cyan;    border-radius: 50px;  }
+.shadow:hover  { background: snow;    box-shadow: 15px 15px #888888; }
+
+.translate:hover { background: gray;    transform: translate(100px, 100px); }
+.rotate:hover    { background: sienna;  transform: rotate(180deg); }
+.scale:hover     { background: salmon;  transform: scale(1.2, 1.2); }
+.skewX:hover     { background: blue;    transform: skewX(20deg); }
+.skewY:hover     { background: purple;  transform: skewY(20deg); }
+.skewXY:hover    { background: tan;     transform: skew(20deg, 20deg); }  
+
+.rotateX:hover   { background: Plum;      transform: rotateX(180deg); }
+.rotateY:hover   { background: SkyBlue;   transform: rotateY(180deg); }
+.rotateZ:hover   { background: PaleGreen; transform: rotateZ(180deg); }
+</style>
+</head>
+<body>
+
+<h1>The transition Property</h1>
+
+<p>Hover over the div element below, to see the transition effect:</p>
+<div class=bgcolor>Background</div>
+<div class=all>Do Lots</div>
+<div class=width>Width</div>
+<div class=height>Height</div>
+<div class=radius>Radius Change</div>
+<div class=shadow>Shadow</div>
+<hr>
+<p>Hover over the div element below, to see the transition effect of a Transform:</p>
+<div class=translate>Translate</div>
+<div class=rotate>Rotate</div>
+<div class=scale>Scale</div>
+<div class=skewX>Skew X</div>
+<div class=skewY>Skew Y</div>
+<div class=skewXY>Skew X and Y</div>
+
+<div class=rotateX>Rotate X</div>
+<div class=rotateY>Rotate Y</div>
+<div class=rotateZ>Rotate Z</div>
+
+</body>
+</html>

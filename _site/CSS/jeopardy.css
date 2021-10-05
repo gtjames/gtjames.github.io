@@ -1,0 +1,120 @@
+body 
+{
+	margin:					0px;
+	-webkit-user-select:	none;
+	background-color:		navy;
+}
+/* Styles the "Card Flip" page and creates a placeholder for the card */
+.flip-container
+{
+	/* Set these dimensions so the card can be properly displayed in Safari on iPhone */
+	height:				140px;
+	width:				190px;
+	background-color: 	white;
+	
+	/* Disable tap highlighting */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	
+	/* Give some depth to the card */
+	perspective:         600;
+	-webkit-perspective: 600;
+}
+
+.card 
+{
+    position: relative;
+	height:		120px;
+	width:		170px;
+	left:		10px;
+	top:		10px;
+	
+	/* Ensure that the card lives correctly in 3D space */
+	-webkit-transform-style: preserve-3d;
+    transform-style:         preserve-3d;
+
+	-webkit-transition-property: -webkit-transform;
+	-webkit-transition-duration: 1.0s;
+    transition:                  1.0s;    
+}
+
+
+/* Applies the flip animation to the card */
+.card.flipped, .flip-container:hover .card
+{
+    transform:         rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
+}
+
+/* Styles the card and hides its "back side" when the card is flipped */
+.face 
+{
+	position: 				absolute;
+	height:					120px;
+	width:					170px;
+	/* Give a round layout to the card */
+	border-radius:			10px;
+	-webkit-border-radius:	10px;
+	/* Drop shadow around the card */
+	box-shadow:				0px 2px 6px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow:		0px 2px 6px rgba(0, 0, 0, 0.5);
+	display:				flex;
+	justify-content:		center;
+	align-items:			center;
+	font-size:				1.7em;
+
+    backface-visibility:         hidden;
+	-webkit-backface-visibility: hidden;
+}
+
+.face > p 
+{
+	margin-top:		24px;
+	margin-bottom:	0;
+	text-align:		center;
+	font-size:		18px;
+}
+
+th { font-size: 1.3em;	color:	white;	}
+td { width: 16%; font-size: 1.5em; text-align:center;}		
+
+div 
+{
+	border-radius:			10px;
+	-webkit-border-radius:	10px;
+}
+
+.front 
+{
+    background-color:	lightblue;
+
+    transform:			rotateY(0deg);
+    -webkit-transform:	rotateY(0deg);
+}
+
+.back 
+{
+    background-color:		#4000ff;
+	font-size:		12px;
+	
+	 transform: 			rotateY(180deg);
+	-webkit-transform: 		rotateY(180deg);
+}
+
+.value0		{background: url('../images/jeopardy.png')   -3px     -3px; }
+.value1		{background: url('../images/jeopardy.png')   -3px   -129px; }
+.value2		{background: url('../images/jeopardy.png')   -3px   -255px; }
+.value3		{background: url('../images/jeopardy.png')   -3px   -381px; }
+.value4		{background: url('../images/jeopardy.png')   -3px   -507px; }
+
+.Color1		{background: url('../images/jeopardy.png') -177px    -3px; }
+.Color2		{background: url('../images/jeopardy.png') -177px  -129px; }
+.Color3		{background: url('../images/jeopardy.png') -177px  -255px; }
+.Color4		{background: url('../images/jeopardy.png') -177px  -381px; }
+.Color5		{background: url('../images/jeopardy.png') -177px  -507px; }
+		
+.Team0	{	background-color: black;	color: red;	}
+.Team1	{	background-color: red;		}
+.Team2	{	background-color: green;	}
+.Team3	{	background-color: blue;		}
+.Team4	{	background-color: orange;	}
+.Team5	{	background-color: yellow;	}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 {
+	border-bottom: 3px solid #cc9900;
+	color: #996600;
+	font-size: 30px;
+}
+table, th , td  {
+	border: 1px solid grey;
+	border-collapse: collapse;
+	padding: 5px;
+}
+
+/*	Highlight every other row of the table-layout */
+table tr:nth-child(odd)		{ background-color: #f1f1f1;	}
+
+/*	If the DOM object has a class of highlight make the text blue	*/
+.highlight					{ background-color: blue;		}
+
+/*	When the DOM object has a class of clicked set the background color to lightblue	*/
+.clicked					{ background-color: lightblue;	}
+
+/*	When the DOM object has a class of slidingText move and transform the text	*/
+.slidingText				{ -webkit-animation: cssAnimateSlidingText 3s ease 0s 1 forwards }
+.ATOZ						{ background-color: lightyellow }
+.ZTOA						{ background-color: brown }
+
+/*	When the DOM object has a class of wiggle-me on Hover wiggle the text 	*/
+.wiggle-me:hover			{ -ms-animation:wiggle .3s 2;-moz-animation:wiggle .3s 2;-webkit-animation:wiggle .3s 2;animation:wiggle .3s 2;}
+
+@-ms-keyframes		wiggle	{0%{	-ms-transform:rotate(3deg);}50%{	-ms-transform:rotate(-3deg);}100%{	  -ms-transform:rotate(3deg);}}
+@-moz-keyframes		wiggle	{0%{   -moz-transform:rotate(3deg);}50%{   -moz-transform:rotate(-3deg);}100%{   -moz-transform:rotate(3deg);}}
+@-webkit-keyframes	wiggle	{0%{-webkit-transform:rotate(3deg);}50%{-webkit-transform:rotate(-3deg);}100%{-webkit-transform:rotate(3deg);}}
+@keyframes			wiggle	{0%{		transform:rotate(3deg);}50%{		transform:rotate(-3deg);}100%{		  transform:rotate(3deg);}}
+
+@-webkit-keyframes cssAnimateSlidingText {
+	0%		{-webkit-transform: rotate(0deg)  scale(1) skew(0deg)   translate(0px);}
+	25%		{-webkit-transform: rotate(45deg) scale(2) skew(-45deg) translate(120px);}
+	75%		{-webkit-transform: rotate(0deg)  scale(1) skew(0deg)   translate(240px);}
+	100%	{-webkit-transform: rotate(0deg)  scale(1) skew(0deg)   translate(0px);}
+}
+
+.animateTheShape {
+	width: 10px;
+	height: 10px;
+	position: relative;
+	-webkit-animation-name: animateShape; /* Chrome, Safari, Opera */
+	-webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+	animation-name: animateShape;
+	animation-duration: 2s;
+}
+
+/*  */
+@-webkit-keyframes animateShape {
+	0%   {background-color:red;}
+	25%  {background-color:yellow; border-radius: 50%;}
+	50%  {background-color:blue;   border-radius:  0%;}
+	75%  {background-color:green;  border-radius: 50%;}
+	100% {background-color:cyan;   }
+}
+/* Standard syntax Safari, Chrome, FireFox */
+@keyframes animateShape {
+	0%   {background-color:blue;}
+	33%  {background-color:green;  border-radius: 50%;}
+	66%  {background-color:yellow; border-radius: 0%; }
+	100% {background-color:orange; border-radius: 50%;}
+}
+</style>
+</head>
+<body>
+
+<h1>Class List</h1>
+
+I have tried to keep this kind of minimal so you can see what is going on. This works best on <b>Safari</b>. 
+	I have not put all the code in for all browsers<br><br>
+<li>Press <B>View</B>. The class list will display all students in the class. (First and Last Names have been switched as have majors and year in school)<br>
+	Local Storage will be created for each students entry. Key is "Last, First" and the value is a JSON object of student data
+<li>Click on an <B>Entry #</B> column item. The Student Name field will toggle between lightblue and normal. <br>
+    The even numbered Entities will slide around on the screen for a few seconds when the toggle back to normal
+    and Student details will be presented above the table.
+<li>Click on the <B>Student Name</B> and that student entry will be <B>deleted</B> from the table and from Local Storage
+<li>Click on <B>Clear Local Storage</B> to clear ALL of the entries in the local storage.<br>
+<li>Run your mouse over the <B>Class</B> column. Other class members of the same year will be highlighted<br>
+<li>Click on the column heading to sort ascending values for that column. Click again to do descending<br><br>
+	
+<div id="touchsurface">Swipe Me</div>
+<input type="button" value="View" onclick="getJSON()"/>
+<input type="button" value="Clear Local Storage" onclick="clearLS()"/>
+<div id="div"><br><br><br><br></div>
+<div id="id01"></div>
+
+<script>
+function getJSON()
+{
+	var xmlhttp = new XMLHttpRequest();
+	var url = "fallClass.json";
+
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+		{
+			buildTable(xmlhttp.responseText);
+		}
+	}
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
+
+function buildTable(response)
+{
+	document.getElementById("div").innerHTML = "<br><br><br>";
+	var cit261 = JSON.parse(response);
+	var out =	"<table id=studentList><tr>" +
+					"<th onclick='callSort(this, 0)'><a href='#'>Entry</a></th>"	+
+					"<th onclick='callSort(this, 1)'><a href='#'>Student Name</a></th>"	+
+					"<th onclick='callSort(this, 2)'><a href='#'>Class</a></th>"	+
+					"<th onclick='callSort(this, 3)'><a href='#'>Major</a></th>"	+
+					"<th onclick='callSort(this, 4)'><a href='#'>Team Project</a></th></tr>";
+
+	for(i = 0; i < cit261.length; i++)
+	{
+		out += "<tr>" +
+			"<td class='animateTheShape' onClick='getMajor(this)'>" + i + "</td>" +
+			"<td class='slidingText'     onClick='deleteStudent(this)'>" + cit261[i].LastName + ", " + cit261[i].FirstName + "</td>" +
+			"<td                         onmouseover='highlightYear(this)'>" + cit261[i].Class + "</td>" +
+			"<td class='wiggle-me'>" + cit261[i].Major + "</td>" +
+			"<td class='wiggle-me'>" + cit261[i].teamProject + "</td>" +
+		"</tr>";
+
+		//	save the student record to Local Storage. The key will be Last, First
+		if(typeof(Storage) !== "undefined")
+		{
+			localStorage.setItem(cit261[i].LastName + ", " + cit261[i].FirstName, JSON.stringify(cit261[i]));
+		}
+		else
+		{
+			document.getElementById("div").innerHTML = "Your browser doesn't support local storage";
+		}
+
+	}
+	out += "</table>";
+
+	document.getElementById("id01").innerHTML = out;
+}
+
+function highlightYear(obj)
+{
+	searchYear = obj.innerText;
+	var rowCount = document.getElementById("studentList").rows.length;
+
+	for(i = 1; i < rowCount; i++)
+	{
+		var row = document.getElementById("studentList").rows[i];
+		var setClass = (row.childNodes[2].innerText == searchYear) ? "highlight" : "";
+		row.childNodes[2].className = setClass;
+	}
+}
+
+function clearLS()
+{
+	localStorage.clear();
+	document.getElementById("div").innerHTML = "Local Storage is now empty<br><br><br>";
+}
+
+function deleteStudent(obj)
+{
+	var tableItem = JSON.parse(localStorage.getItem(obj.innerText));
+
+	var i = obj.parentNode.rowIndex;
+    document.getElementById("studentList").deleteRow(i);
+
+	localStorage.removeItem(obj.innerText);
+	document.getElementById("div").innerHTML = obj.innerText + "- DELETED<br><br><br>";
+}
+
+function getMajor(obj)
+{
+	var even = ((1*obj.innerText) & 1) == 0;
+	var nameCell = obj.nextSibling;
+	var localKey = nameCell.innerText
+	var tableItem = JSON.parse(localStorage.getItem(localKey));
+
+	/* change the look of the text. If the row is odd toggle between clicked and '' if even toggle between clicked and slidingText */
+	nameCell.classList.toggle("clicked");
+	if (even) nameCell.classList.toggle("slidingText");
+
+	/*	provide a few more details on the student */
+	document.getElementById("div").innerHTML = localKey + "<br>Major: " + tableItem.Major + "<br>gmail: " + tableItem.gmail + "<br>Class: " + nameCell.className + "<br>";
+
+	/* uppercase or normal case the Major field */
+	var major = obj.nextSibling.nextSibling.nextSibling;
+	major.innerText = (nameCell.className == 'clicked') ? major.innerText.toUpperCase() : tableItem.Major;
+}
+
+var	lastSortCol = null;
+function callSort (ele, column)
+{
+	ele.className = (ele.className == "ATOZ") ? "ZTOA" : "ATOZ";
+	if (lastSortCol !== null && lastSortCol !== ele)
+		lastSortCol.className = "";
+	lastSortCol = ele;
+	return sort_table_rows('studentList', column, (ele.className == "ATOZ") ? 1 : -1)
+}
+
+var is_number_pattern = /^\d+(\.\d+)?$/;
+  /* Column 0 is the first column */
+function sort_table_rows(id, column_number, sortOrder) {
+
+    function sort_by_chosen_column(a, b) {
+      /* Fetch the text from the row, excluding spaces */
+      a = a.cells.item( column_number );
+      a = (a.innerText || a.textContent);
+      a = a.replace(/^\s+/, "").replace(/\s+$/, "");
+
+      b = b.cells.item( column_number );
+      b = (b.innerText || b.textContent);
+      b = b.replace(/^\s+/, "").replace(/\s+$/, "");
+
+      /* Special handling for numbers */
+      if(a.match(is_number_pattern) && b.match(is_number_pattern)) return( parseFloat(a) - parseFloat(b) ) * sortOrder;
+
+      /* All the rest is alphabetical order */
+      else if	(a < b)	return -1 * sortOrder;
+      else if	(a > b)	return  1 * sortOrder;
+      else				return  0;
+    }
+
+    var table = document.getElementById(id);
+    /*
+     * To skip the header, ask for the tbodies. You actually can have
+     * more than one.
+     */
+    for(var i=0; i<table.tBodies.length; i++) {
+      var tbody = table.tBodies.item(i);
+      /* Move into an array */
+      var rows = [];
+      while(tbody.rows.length > 1) {
+        rows.push(tbody.rows.item(1));
+        tbody.deleteRow(1);
+      }
+      /* Sort the array */
+      rows = rows.sort( sort_by_chosen_column );
+      /* Move back out */
+      while(rows.length > 0)
+        tbody.appendChild( rows.shift() );
+    }
+    return false;
+}
+</script>
+<script>
+
+window.addEventListener('load', function(){
+
+    var touchsurface = document.getElementById('touchsurface'),
+    	tablesurface = document.getElementById('id01'),
+        startX,
+        startY,
+        dist,
+        threshold = 150, //required min distance traveled to be considered swipe
+        allowedTime = 200, // maximum time allowed to travel that distance
+        elapsedTime,
+        startTime;
+
+	addListeners (touchsurface);
+	addListeners (tablesurface);
+
+    function handleswipe(isrightswipe){
+        if (isrightswipe)
+            touchsurface.innerHTML = 'Congrats, you\'ve made a <span style="color:red">right swipe!</span>'
+        else{
+            touchsurface.innerHTML = 'Condition for right swipe not met yet'
+        }
+    }
+
+	function addListeners (surface)
+	{
+ 	   surface.addEventListener('touchstart', function(e){
+	        var touchobj = e.changedTouches[0]
+    	    dist = 0
+        	startX = touchobj.pageX
+	        startY = touchobj.pageY
+    	    startTime = new Date().getTime() // record time when finger first makes contact with surface
+        	e.preventDefault()
+	    }, false)
+
+    	surface.addEventListener('touchmove', function(e){
+        	e.preventDefault() // prevent scrolling when inside DIV
+	    }, false)
+
+    	surface.addEventListener('touchend', function(e){
+	        var touchobj = e.changedTouches[0]
+    	    dist = touchobj.pageX - startX // get total dist traveled by finger while in contact with surface
+        	elapsedTime = new Date().getTime() - startTime // get time elapsed
+	        // check that elapsed time is within specified, horizontal dist traveled >= threshold, and vertical dist traveled <= 100
+    	    var swiperightBol = (elapsedTime <= allowedTime && dist >= threshold && Math.abs(touchobj.pageY - startY) <= 100)
+        	handleswipe(swiperightBol)
+        	e.preventDefault()
+ 	   }, false)
+ 	}
+
+}, false) // end window.onload
+</script>
+</body>
+</html>
