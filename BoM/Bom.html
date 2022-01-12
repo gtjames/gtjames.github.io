@@ -67,7 +67,7 @@
 	}
 </style>
 
-<label for="special">Highlight these words: </label>
+<label for="special">Find this Phrase: </label>
 <input type="text" id="special" name="special">
 <span id="addHighlighting"> <button>Add Highlighting to:</button> </span>
 <br>If you enter a phrase instead of a single word, separate the words with "_" i.e. it_came_to_pass
@@ -196,7 +196,7 @@
 		document.getElementById('addHighlighting').addEventListener('click', () => {
 			addHighlighting(document.getElementById('special').value);
 		}, false);
-		document.getElementById('readBook'     ).addEventListener('click', () => readBlob(),   false);
+		document.getElementById('readBook').addEventListener('click', () => readBlob(), false);
 		document.getElementById('deleteSpecial').addEventListener('click', () => deleteWord(), false);
 
 		//	take the words in the entry field
@@ -329,8 +329,7 @@
 			let xmlhttp = new XMLHttpRequest();
 			let url = "TheBookOfMormon.txt";
 
-			xmlhttp.onreadystatechange = function()
-			{
+			xmlhttp.onreadystatechange = function () {
 				if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 					readTheBook(xmlhttp.responseText);
 				}
@@ -342,15 +341,15 @@
 		//	load the Book of Mormon from disk
 		function readBlob() {
 			var xobj = new XMLHttpRequest();
-    		xobj.overrideMimeType("application/text");
-    		xobj.open('GET', './TheBookOfMormon.txt', true);
-    		xobj.onreadystatechange = function() {
-        		if (xobj.readyState == 4 && (xobj.status === 200 || xobj.status === 0) ) {
-            		// .open will NOT return a value but simply returns undefined in async mode so use a callback
+			xobj.overrideMimeType("application/text");
+			xobj.open('GET', './TheBookOfMormon.txt', true);
+			xobj.onreadystatechange = function () {
+				if (xobj.readyState == 4 && (xobj.status === 200 || xobj.status === 0)) {
+					// .open will NOT return a value but simply returns undefined in async mode so use a callback
 					readTheBook(xobj.responseText);
-        		}
-    		}
-    		xobj.send(null);
+				}
+			}
+			xobj.send(null);
 		}
 
 		//	we have the book loaded
@@ -449,7 +448,7 @@
 			}
 			ul += "</ul>";
 			document.getElementById('references').innerHTML =
-			ul; // in the references column, stuff the list of all references
+				ul; // in the references column, stuff the list of all references
 			wordFrequency(hoverWord);
 			//	get a list of all of the verses
 			//	give them all an event for mouse over and mouse out
