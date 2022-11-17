@@ -1,12 +1,3 @@
-// F. Permadi 2005.
-// Print DOM tree
-// (C) F. Permadi
-// www.permadi.com
-// This notice and a linkback to www.permadi.com must be provided for any use of this script.
-//
-// Warning: This script is provided "as is" and without warranty of any kind.
-// Use at your own risk.
-
 ////////////////////////////////////////////
 // This function accepts a DOM element as parameter and prints
 // out the descendant DOM structure of the element on a new window.
