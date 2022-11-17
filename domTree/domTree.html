@@ -9,13 +9,12 @@
       border-collapse: collapse;
     }
   </style>
-  <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="../js/dom.js"></SCRIPT>
 </HEAD>
 
 <BODY id="myhtml2">
 <H1>Traversing the DOM</H1>
 <p>This is a fun piece of code to explore the DOM. Click on a cell to see the underlying DOM structure.<br>
-  An event listener has been added to ALL TD tags. Click the BLUE cell in 'Cell F'. We have TDs inside of TDs ...</p>
+  An event listener has been added to ALL TD tags.</p>
 <table id='myTable' style="background-color: lightblue;">
   <tr id="Row1">
     <td id="CellA">Cell <b>A<br>This is a bold</b> text</td>
@@ -112,44 +111,9 @@
 <script id="scriptID">
   let elements = document.getElementsByTagName("td");
   Array.from(elements).forEach(td => td.addEventListener("click",() => printDOMTree(td)))
-
-  //  or you can do it the long way
-  // for (let td of elements)
-  // {
-  //   td.addEventListener("click",function(){
-  //     printDOMTree(this);
-  //   });
-  // }
-
-  function moveIt ( cellId1, cellId2 ) {
-    let elements1 = document.getElementById(cellId1);
-    let elements2 = document.getElementById(cellId2);
-
-    let beforeOne = elements1.nextElementSibling;
-    let beforeTwo = elements2.nextElementSibling;
-
-    let parent1 = elements1.parentNode;
-    let parent2 = elements2.parentNode;
-
-    parent1.removeChild(elements1);
-    parent2.removeChild(elements2);
-
-    parent1.insertBefore(beforeTwo, elements1);
-    parent2.insertBefore(beforeOne, elements2);
-  }
-
 </script>
 
-<p>Enter an element ID (CellA...CellI, ElementE1, Row1,Row2,myTable,myHtml,scriptID)<p>
-  <label for="CellID">Click the button to see the DOM tree for the ID entered:</label>
-  <input type="text" value="CellA" id="CellID"/>
-  <input ID="inp" onClick="javascript=printDOMTree(document.getElementById(document.getElementById('CellID').value));" type="submit" value="Submit"> </p>
-
-<label for="Cell1">(WIP) Move this ID</label>
-<input type="text" id="Cell1"/>
-<label for="Cell2">to this ID</label>
-<input type="text" id="Cell2"/>
-<input ID="inp2" onClick="moveIt(document.getElementById('Cell1').value, document.getElementById('Cell2').value);" type="submit" value="Submit">
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="../js/dom.js"></SCRIPT>
 
 </BODY>
 </HTML>
