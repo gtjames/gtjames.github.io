@@ -4,181 +4,182 @@
 	"categories":
 	[
 		{
-			"category":"Java",
+			"category":"Dining",
 			"answers":
 			[
     			{
 					"amount":	"200",
-					"question":	"What is Java?",
-					"answer":	"This langage runs on move than 3,000,000,000 devices",
+					"question":	"What is to the Right?",
+					"answer":	"When passing a food dish, you should pass it in this direction",
 					"extra":	1
     			},
     			{
 					"amount":	"400",
-					"question":	"What is Java?",
-					"answer":	"This is the primary development language for most mobile devices",
+					"question":	"What is how to remove an unedible pice of meat from your mouth?",
+					"answer":	"Use your fork to remove it",
 					"extra":	1
     			},
     			{
 					"amount":	"600",
-					"question":	"What is Java?",
-					"answer":	"This language is supported by the most development tools and IDEs?",
+					"question":	"What is the correct placement for the knife and fork when you are done eating?",
+					"answer":	"The knife and fork are placed side by side at the 5:00 position or crossed in the middle",
+					"image":	"../images/knifeAndFork.jpg",
 					"extra":	1
     			},
     			{
 					"amount":	"800",
-					"question":	"What is Java?",
-					"answer":	"This language is taught in a 9 week boot camp at Edge Tech",
+					"question":	"What is how to butter your roll?",	
+					"anwer":	"Use your knife to spread the butter on a piece of the roll",
 					"extra":	1
     			},
     			{
 					"amount":	"1000",
-					"question":	"What is Java?",
-					"answer":	"This language can you start learning today with free downloads from the internet",
+					"question":	"What is Cut with a knife and fork? Not chewed from the fork?",
+					"answer":	"How meat should be eaten",
 					"extra":	1    
 				}
 			]
 		},
 		{
-			"category":"C#",
+			"category":"Social",
 			"answers":	
 			[
 		    	{
 					"amount":	"200",
-					"question":	"What is C#?",
-					"answer":	"This language is supported by one of the largest companies in the world",
+					"question":	"What is the proper thing to do when invited to a party?",
+					"answer":	"RSVP the host early",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"What is C#?",
-					"answer":	"This language is one of the most sought after skills in the DFW IT Market",
+					"question":	"What should you do with your phone at a social event?",
+					"answer":	"Put the phone away and on silent and engage with others",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"What is C#?",
-					"answer":	"This language offers the most consistency in development tools",
+					"question":	"What is the ratio of speaking to listening?",
+					"answer":	"Ask questions and listen 80% of the time and speak 20% of the time?",
 					"extra":	1
     			},
 		    	{
 					"amount":	"800",
-					"question":	"What is C#?",
-					"answer":	"This language is taught in a 9 week boot camp at Edge Tech?",
+					"question":	"What should you do if you see someone alone?",
+					"answer":	"Invite them to join the group",
 					"extra":	1
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"What is C#?",
-					"answer":	"Some other wonderful thing?",
+					"question":	"What should you do at the end of a social event?",
+					"answer":	"Thank the host and send a thank you note",
 					"extra":	1
 				}
 			]
 		},
 		{
-			"category":"JavaScript",
+			"category":"On the Job / At School",
 			"answers":	
 			[
 		    	{
 					"amount":	"200",
-					"question":	"What is JavaScript?",
-					"answer":	"This language is the common denominator for all web browsers.",
+					"question":	"What is how sick do you need to be to not show up for work?",
+					"answer":	"Not Contagious or have a High Fever",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"What is JavaScript?",
-					"answer":	"What language lets you rapidly create simple web apps?",
+					"question":	"How should you dress for a job interview?",
+					"answer":	"What is dress one level above the job you are applying for",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"What is JavaScript?",
-					"answer":	"What language is supported on every browser?",
+					"question":	"What should you do when you need to meet with your boss or professor?",
+					"answer":	"Schedule a meeting in advance and be on time",
 					"extra":	1
     			},
 		    	{
 					"amount":	"800",
-					"question":	"What is JavaScript?",
-					"answer":	"What language is taught in a 9 week boot camp at Edge Tech?",
+					"question":	"What is your part when working on a team?",
+					"answer":	"Carry your share of the load and be a team player",
 					"extra":	1
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"What is JavaScript?",
-					"answer":	"What language can you start learning today with free downloads from the internet?",
+					"question":	"What is 5 minutes early?",
+					"answer":	"This is when you should arrive for a meeting",
 					"extra":	1
 				}
 			]
 		},
 		{
-			"category":"Edge Tech Academy",
+			"category":"At Church",
 			"answers":	
 			[
 		    	{
 					"amount":	"200",
-					"question":	"What is Edge Tech Academy?",
-					"answer":	"They offer a free 3 week training course in Web development for $0?",
+					"question":	"What is wear hats in the chapel?",
+					"answer":	"Women can and Men should not",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"What is Edge Tech Academy?",
-					"answer":	"They offer training in state of the art languages for fullstack web development?",
+					"question":	"What is 'Sunday Best'?",
+					"answer":	"What you should wear when meeting with the Stake President",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"What is Edge Tech Academy?",
-					"answer":	"Who has two of the coolest IT trainers this planet has ever seen?",
+					"question":	"What are snacks and drinks?",
+					"answer":	"These do not belong in the chapel",
 					"extra":	1
     			},
 		    	{
 					"amount":	"800",
-					"question":	"What is Edge Tech Academy?",
-					"answer":	"They are starting a 9 week Java or JavaScript source in Oct",
+					"question":	"What is the best way to participate in class and feel the spirit?",
+					"answer":	"Reading the lesson in advance and participate in the discussion",
 					"extra":	1
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"What is Edge Tech Academy?",
-					"answer":	"They train you to create full-stack web applications you can be proud of",
+					"question":	"What is the foyer?",
+					"answer":	"Socializing before church happens here",
 					"extra":	1
 				}
 			]
 		},
 		{
-			"category":"",
+			"category":"General",
 			"answers":	
 			[
 		    	{
 					"amount":	"200",
-					"question":	"",
-					"answer":	"",
+					"question":	"What is proper phone etiquette in public?",
+					"answer":	"Speak softly and keep your phone on silent",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"",
-					"answer":	"",
+					"question":	"What can you do if you are always late?",
+					"answer":	"Set your clock 10 minutes fast",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"",
-					"answer":	"",
+					"question":	"What you should do if you depend on others for a ride?",
+					"answer":	"Offer to help pay for gas",
 					"extra":	1
     			},
 		    	{
 					"amount":	"800",
-					"question":	"",
-					"answer":	"",
+					"question":	"What should you do when meeting someone for the first time?",
+					"answer":	"Make eye contact, smile, shake hands and use their name",
 					"extra":	1
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"",
-					"answer":	"",
+					"question":	"How should you refer to Church and government leaders?",
+					"answer":	"Use their formal title",
 					"extra":	1
 				}
 			]

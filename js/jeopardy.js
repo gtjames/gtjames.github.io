@@ -42,7 +42,7 @@ function completeCard(ele)
 		attempts[answerKey]++;
 		if (attempts[answerKey] === 4)
 		{
-			localStorage.removeItem(answerKey);
+			// localStorage.removeItem(answerKey);
 			frontFace.innerHTML = "Oops!";
 			frontFace.classList.add( "Team0" );
 			frontFace.classList.remove( "value" + answerKey.slice(1,2) );
@@ -71,20 +71,29 @@ function buildTable(response)
 		out += "<td id='Team" + (row+1) + "' class= 'Team" + (row+1) + "'>Team " + (row+1) + "<p> $" + teams["Team" + (row+1)] + "</td>";
 		for(cat = 0; cat < jeopardy.categories.length; cat++) 
 		{
-			if (row >= jeopardy.counter) 
+			if (row >= jeopardy.answerCount) 
 				break;
 			let category = jeopardy.categories[cat];
 			out += "<td>";
 			out += "<div class='flip-container' >";
 			out += "<div id='card' class='card' onclick='flip(event)'>";
 			out += 		"<div id='frontR" + row + "-C" + cat + "' class='front face value" + row + "' ></div>";
-			out += 		"<div id='backR"  + row + "-C" + cat + "'  class='back face'><p>" + category.answers[row].answer + "<br>";
+
+			if(category.answers[row].image !== undefined)
+				out += `<div id="backR${row}-C${cat}" class="back face"`
+					+	`style="background-image: url('${category.answers[row].image}');`
+					+		` background-size: contain;`
+					+		` background-repeat: no-repeat;` 
+					+		` background-position: center;">`
+        			+	`<p><br>`;
+				else
+				out += 		`<div id='backR${row}-C${cat}'  class='back face'><p>${category.answers[row].answer}<br>`;
 			for (let team = 0; team < jeopardy.teamCount; team++)
-				out +=	 	"<img alt='' id='R"  + row + "-C" + cat + team + "' src='images/Team" + team + ".png' onclick='completeCard(this)'/>";
-			out += 			"<img alt='' id='R"  + row + "-C" + cat + "5' src='images/Answer.png' onclick='completeCard(this)'/>";
-			out += 			"</p></div>";
-			out += "</div></div>";
-			out += "</td>";
+				out +=	 	`<img alt='' id='R${row}-C${cat}${team}' src='images/Team${team}.png' onclick='completeCard(this)'/>`;
+			out += 			`<img alt='' id='R${row}-C${cat}5' src='images/Answer.png' onclick='completeCard(this)'/>`
+				+			`</p></div>`
+				+		`</div></div>`
+				+	`</td>`;
 						
 			if(typeof(Storage) !== "undefined") 
 			{
