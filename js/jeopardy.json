@@ -4,98 +4,97 @@
 	"categories":
 	[
 		{
-			"category":"Dining",
+			"category":"HTML Tags",
 			"answers":
 			[
     			{
 					"amount":	"200",
-					"question":	"What is to the Right?",
-					"answer":	"When passing a food dish, you should pass it in this direction",
+					"question":	"What is Anchor Tag or &lt;a&gt; Tag?",
+					"answer":	"When you need to link to another page or website use this tag",
 					"extra":	1
     			},
     			{
 					"amount":	"400",
-					"question":	"What is how to remove an unedible pice of meat from your mouth?",
-					"answer":	"Use your fork to remove it",
+					"question":	"What is the &lt;table&gt; Tag?",
+					"answer":	"Use this tag to show data in rows and columns",
 					"extra":	1
     			},
     			{
 					"amount":	"600",
-					"question":	"What is the correct placement for the knife and fork when you are done eating?",
-					"answer":	"The knife and fork are placed side by side at the 5:00 position or crossed in the middle",
-					"image":	"../images/knifeAndFork.jpg",
+					"question":	"What is the &lt;img&gt; Tag?",
+					"answer":	"You would use this tag to display an image",
 					"extra":	1
     			},
     			{
 					"amount":	"800",
-					"question":	"What is how to butter your roll?",	
-					"anwer":	"Use your knife to spread the butter on a piece of the roll",
+					"question":	"What is the &lt;h1&gt; to &lt;h6&gt; Tags?",
+					"answer":	"&lt;H3&gt;Small # Big Text&lt;/h3&gt;&lt;br&gt;&lt;H6&gt;Big # Small Text&lt;/h6&gt;&lt;br&gt;",
 					"extra":	1
     			},
     			{
 					"amount":	"1000",
-					"question":	"What is Cut with a knife and fork? Not chewed from the fork?",
-					"answer":	"How meat should be eaten",
-					"extra":	1    
-				}
-			]
-		},
-		{
-			"category":"Social",
-			"answers":	
-			[
-		    	{
-					"amount":	"200",
-					"question":	"What is the proper thing to do when invited to a party?",
-					"answer":	"RSVP the host early",
-					"extra":	1
-    			},
-		    	{
-					"amount":	"400",
-					"question":	"What should you do with your phone at a social event?",
-					"answer":	"Put the phone away and on silent and engage with others",
-					"extra":	1
-    			},
-		    	{
-					"amount":	"600",
-					"question":	"What is the ratio of speaking to listening?",
-					"answer":	"Ask questions and listen 80% of the time and speak 20% of the time?",
-					"extra":	1
-    			},
-		    	{
-					"amount":	"800",
-					"question":	"What should you do if you see someone alone?",
-					"answer":	"Invite them to join the group",
-					"extra":	1
-    			},
-		    	{
-					"amount":	"1000",
-					"question":	"What should you do at the end of a social event?",
-					"answer":	"Thank the host and send a thank you note",
+					"question":	"What is the Body Tag &lt;body&gt;?",
+					"answer":	"This tag is where the main content of the page goes.",
 					"extra":	1
 				}
 			]
 		},
 		{
-			"category":"On the Job / At School",
-			"answers":	
+			"category":"Protocol",
+			"answers":
 			[
 		    	{
 					"amount":	"200",
-					"question":	"What is how sick do you need to be to not show up for work?",
-					"answer":	"Not Contagious or have a High Fever",
+					"question":	"What is HTTP?",
+					"answer":	"If you want to transmit web pages you will use this protocol",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"How should you dress for a job interview?",
-					"answer":	"What is dress one level above the job you are applying for",
+					"question":	"What is SMTP?",
+					"answer":	"If you want to send email you will use this protocol",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"What should you do when you need to meet with your boss or professor?",
-					"answer":	"Schedule a meeting in advance and be on time",
+					"question":	"What is TCP?",
+					"answer":	"This protocol is used to ensure reliable data transmission over the internet",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"800",
+					"question":	"What is UDP?",
+					"answer":	"This protocol is used for fast, but unreliable data transmission",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"1000",
+					"question":	"What is FTP?",
+					"answer":	"Use this protocol to upload files to a server",
+					"extra":	1
+				}
+			]
+		},
+		{
+			"category":"Your Browser",
+			"answers":
+			[
+		    	{
+					"amount":	"200",
+					"question":	"What is the 'lock' icon or HTTPS in the URL bar?",
+					"answer":	"If you see this image (or text) in the URL bar of your browser the site is secure.",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"400",
+					"question":	"What is the <title> tag?",
+					"answer":	"The <head> tag contains this tag to put in the tab",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"600",
+					"question":	"What is URL or Universal Resource Locator?",
+					"answer":	"This is the address of a web page",
 					"extra":	1
     			},
 		    	{
@@ -106,80 +105,116 @@
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"What is 5 minutes early?",
-					"answer":	"This is when you should arrive for a meeting",
+					"question":	"What is a web browser?",
+					"answer":	"When I want to waste time on the internet I use this software to view web pages",
 					"extra":	1
 				}
 			]
 		},
 		{
-			"category":"At Church",
-			"answers":	
+			"category":"Office Applications",
+			"answers":
 			[
 		    	{
 					"amount":	"200",
-					"question":	"What is wear hats in the chapel?",
-					"answer":	"Women can and Men should not",
+					"question":	"What is Power Point or Keynote?",
+					"answer":	"Use this app to put your audience to sleep",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"What is 'Sunday Best'?",
-					"answer":	"What you should wear when meeting with the Stake President",
+					"question":	"What is Excel or Numbers?",
+					"answer":	"Use this app to make charts and graphs",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"What are snacks and drinks?",
-					"answer":	"These do not belong in the chapel",
+					"question":	"What is Word or Pages?",
+					"answer":	"Use this app to create your resume and cover letter",
 					"extra":	1
     			},
 		    	{
 					"amount":	"800",
-					"question":	"What is the best way to participate in class and feel the spirit?",
-					"answer":	"Reading the lesson in advance and participate in the discussion",
+					"question":	"What is no!?",
+					"answer":	"My browswer will alsways detect malicoius software and viruses and will block them from my computer",
 					"extra":	1
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"What is the foyer?",
-					"answer":	"Socializing before church happens here",
+					"question":	"What is Zoom?",
+					"answer":	"This app caused me to hate online learning and I will never use it again",
 					"extra":	1
 				}
 			]
 		},
 		{
 			"category":"General",
-			"answers":	
+			"answers":
 			[
 		    	{
 					"amount":	"200",
-					"question":	"What is proper phone etiquette in public?",
-					"answer":	"Speak softly and keep your phone on silent",
+					"question":	"What is 1/3 of the world population?",
+					"answer":	"This is how many people do not have access to the internet",
 					"extra":	1
     			},
 		    	{
 					"amount":	"400",
-					"question":	"What can you do if you are always late?",
-					"answer":	"Set your clock 10 minutes fast",
+					"question":	"What is a router?",
+					"answer":	"This device connects your home network to the internet",
 					"extra":	1
     			},
 		    	{
 					"amount":	"600",
-					"question":	"What you should do if you depend on others for a ride?",
-					"answer":	"Offer to help pay for gas",
+					"question":	"What is false?",
+					"answer":	"You can always trust caller ID to tell you who is calling you",
 					"extra":	1
     			},
 		    	{
 					"amount":	"800",
-					"question":	"What should you do when meeting someone for the first time?",
-					"answer":	"Make eye contact, smile, shake hands and use their name",
+					"question":	"What is 'phishing'?",
+					"answer":	"The email offers you a free gift card if you click on the link and enter your personal information",
 					"extra":	1
     			},
 		    	{
 					"amount":	"1000",
-					"question":	"How should you refer to Church and government leaders?",
-					"answer":	"Use their formal title",
+					"question":	"What is advertising, sell your information or subscriptions?",
+					"answer":	"This is now web sites make money",
+					"extra":	1
+				}
+			]
+		},
+		{
+			"category":"Internet Other",
+			"answers":
+			[
+		    	{
+					"amount":	"200",
+					"question":	"What is Anonymity?",
+					"answer":	"This is a significant enabler of cyber bullying.",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"400",
+					"question":	"What is B2B or business to business?",
+					"answer":	"This type of electronic commerce is to provide services to businesses",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"600",
+					"question":	"What is no!?",
+					"answer":	"Crypto Currencies are no less risky that investing in the stock market and should be treated as such",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"800",
+					"question":	"What is over 50%?",
+					"answer":	"This is how many crypto currencies have failed.",
+					"extra":	1
+    			},
+		    	{
+					"amount":	"1000",
+					"question":	"What is 11:59 PM on Oct 6.?",
+					"answer":	"This quiz must be submitted by",
 					"extra":	1
 				}
 			]
